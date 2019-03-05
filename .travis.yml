@@ -1,0 +1,33 @@
+# 使用语言
+language: node_js
+
+# nodejs 版本号
+node_js: "8"
+
+# git 分支
+branches:
+  only:
+  - hexo
+
+# 缓存
+cache:
+  directories:
+    - node_modules
+
+# 安装依赖的命令
+install: npm install
+
+# 每次推送后需要执行的脚本
+script: 
+  - hexo clean
+  - hexo generate
+
+# 脚本执行成功后的后续命令
+after_success:
+  - cd ./public
+  - git init
+  - git config user.name "f00bar"
+  - git config user.email "lancezhu2937@gmail.com"
+  - git add .
+  - git commit -m "Travis CI"
+  - git push --force https://$GITHUB_TOKEN@github.com/LanceZhu/lancezhu.github.io.git master:master
