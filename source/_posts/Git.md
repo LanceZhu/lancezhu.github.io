@@ -117,6 +117,28 @@ git log --pretty=oneline // 单行显示 commit 历史
 git log --graph --pretty=oneline --abbrev-commit // 图形显示 commit 历史，单行显示，缩略版本号
 ```
 
+### 标签管理
+```
+git tag v1.0 // 给当前 commit 打标签 v1.0
+git tag v1.0 30429e7 // 给指定 commit 打标签 v1.0
+git tag -a v1.0 -m "description about this tag" // 指定标签说明信息
+```
+
+```
+git tag // 查看所有标签
+git show v1.0 // 查看标签详细信息
+```
+
+```
+git tag -d v1.0 // 删除本地标签
+git tag origin :refs/tags/v1.0 // 删除远程标签
+```
+
+```
+git push origin v1.0 // 远程推送指定标签
+git push origin --tags // 远程推送本地尚未推送的所有标签
+```
+
 ### Reference
 
 [廖雪峰的官方网站-Git教程](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
