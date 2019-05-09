@@ -139,6 +139,31 @@ git push origin v1.0 // 远程推送指定标签
 git push origin --tags // 远程推送本地尚未推送的所有标签
 ```
 
+### Commits 提交记录修改
+
+```
+git commit --amend // 修改最新提交记录，比如修改注释信息、添加文件至提交中
+```
+
+```
+git revert // 安全的删除历史某条 commit 记录
+```
+
+```
+git cherry-pick commit-id// 在目的分支操作，选择性提交源分支 commits
+```
+
+```
+git rebase -i HEAD~5 // 修改分支历史记录，~5 操作5条 
+```
+
+### 同步远程库
+```
+git remote add upstream my-program.git // 添加远程库
+git fetch upstream // 取回最新远程库
+git rebase upstream/master // 变基
+```
+
 ### Reference
 
 [廖雪峰的官方网站-Git教程](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
@@ -146,6 +171,8 @@ git push origin --tags // 远程推送本地尚未推送的所有标签
 [常用Git命令清单-阮一峰的网络日志](http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html)
 
 [洁癖者用 Git：pull --rebase 和 merge --no-ff](http://hungyuhei.github.io/2012/08/07/better-git-commit-graph-using-pull---rebase-and-merge---no-ff.html)
+
+[git rebase -i 详解](https://thoughtbot.com/blog/git-interactive-rebase-squash-amend-rewriting-history)
 
 ## 遇到的问题
 
@@ -166,4 +193,9 @@ github 作为collaborators协作
 
 ```
 将owner的仓库克隆到本地，开发，正常提交即可
+```
+```
+忽略已提交到版本库中的文件
+modify .gitignore // 修改 .gitignore 文件
+git rm --cached test.txt // 从缓存中清除文件 test.txt, 文件夹 -r
 ```
