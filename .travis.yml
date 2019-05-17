@@ -12,10 +12,10 @@ branches:
 # 缓存
 cache:
   directories:
-    - node_modules
+    - "$HOME/.npm"
 
 # 安装依赖的命令
-install: npm install
+install: npm ci
 
 # 每次推送后需要执行的脚本
 script: 
