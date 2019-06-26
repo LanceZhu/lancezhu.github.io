@@ -24,6 +24,7 @@ git init
 
 ```
 git remote add origin git@github.com:username/program.git
+git remote set-url origin git@github.com:username/program.git // 修改源
 ```
 
 #### 从远程仓库克隆
