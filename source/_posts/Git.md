@@ -177,20 +177,19 @@ git rebase upstream/master // 变基
 
 ## 遇到的问题
 
-
-向远程仓库提交失败
+- 向远程仓库提交失败
 
 ```
 git pull --rebase git@github.com:username/program.git
 ```
 
-[一台电脑上使用两个github账户](https://blog.csdn.net/wolfking0608/article/details/78512171)
+- [一台电脑上使用两个github账户](https://blog.csdn.net/wolfking0608/article/details/78512171)
 
-[git 使用ssh-add添加密钥](https://blog.csdn.net/u012900536/article/details/50951099)
+- [git 使用ssh-add添加密钥](https://blog.csdn.net/u012900536/article/details/50951099)
 
-[git merge和git rebase小结](https://blog.csdn.net/wh_19910525/article/details/7554489)
+- [git merge和git rebase小结](https://blog.csdn.net/wh_19910525/article/details/7554489)
 
-github 作为collaborators协作
+- github 作为collaborators协作
 
 ```
 将owner的仓库克隆到本地，开发，正常提交即可
@@ -200,3 +199,9 @@ github 作为collaborators协作
 modify .gitignore // 修改 .gitignore 文件
 git rm --cached test.txt // 从缓存中清除文件 test.txt, 文件夹 -r
 ```
+- **windows 下拉取的 git repository 在 windows subsystem linux 中执行 `git status` 中文件显示`modified`**
+
+  windows 中关闭 `autocrlf` : `git config --global core.autocrlf false`
+
+  wsl 中 关闭 `filemode`: `git config core.filemode false // --global`
+
