@@ -9,6 +9,7 @@ block description
 
 block container
     include mixins/post
+    != toc(page.content)
     +post(page)
 
 block pagination
