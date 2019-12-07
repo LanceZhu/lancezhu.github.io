@@ -955,8 +955,12 @@ footer .copyright a:hover {
 .toc {
   position: sticky;
   top: 10px;
-  transform: translateX(100%);
+  width: 400px;
+  overflow-x: scroll;
+  white-space: nowrap;
   float: right;
+  margin-right: -400px;
+  padding: 0;
   z-index: 1;
 }
 @media mq-mobile {
