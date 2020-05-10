@@ -52,6 +52,7 @@ git commit -m "description about this commit"
 ```
 git push origin local:remote // 其中remote可省略
 git push origin :remote // 删除远程分支
+git push origin HEAD // HEAD: current branch
 ```
 
 ### 多分支工作
@@ -95,8 +96,9 @@ git merge dev // 合并 dev 分支修改到 master 分支
 ### 版本回退 
 
 #### 丢弃工作区修改
-```
+```shell
 git checkout -- filename
+git clean -f // remove untracked files. -f force
 ```
 
 #### 暂存区回退到工作区
