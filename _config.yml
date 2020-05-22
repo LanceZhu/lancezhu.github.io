@@ -82,3 +82,10 @@ deploy:
   type: git
   repository: git@github.com:LanceZhu/blog.git
   branch: gh-pages
+
+## emoji
+emoji:
+  enable: true
+  className: github-emoji
+  styles:
+  customEmojis:
