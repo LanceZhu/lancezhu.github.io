@@ -3,6 +3,7 @@ title: centos7禁用root用户登陆
 categories: Linux
 tags: 
 date: 2018-01-20 12:43:00
+updated: 2018-01-20 12:43:00
 ---
 **添加新用户**
 

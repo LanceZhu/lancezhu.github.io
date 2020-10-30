@@ -1,6 +1,7 @@
 ---
 title: ELK-stack
 date: 2020-10-12 17:48:22
+updated: 2020-10-12 17:48:22
 tags:
 ---
 # [Note] ELK Stack(Elasticsearch、Logstash、Kibana)

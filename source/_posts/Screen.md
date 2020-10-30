@@ -3,6 +3,7 @@ title: Screen
 categories: Linux
 tags: 
 date: 2018-03-18 15:29:00
+updated: 2018-03-18 15:29:00
 ---
 # Screen
 ## 主bash界面

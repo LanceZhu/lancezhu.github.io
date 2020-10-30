@@ -3,6 +3,7 @@ title: tmux
 categories: Linux,cheatsheet
 tags: Linux,tmux,Software
 date: 2020-07-11 19:01:00
+updated: 2020-07-11 19:01:00
 ---
 # tmux
 
