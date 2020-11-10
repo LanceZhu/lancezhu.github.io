@@ -5,15 +5,17 @@ tags: cheatsheet,Linux
 date: 2020-02-05 14:41:00
 updated: 2020-10-30 16:12:00
 ---
-# linux cheatsheet
+# Linux Cheatsheet
+
+本文记录了使用 Linux 操作系统进行软件开发时的常用操作。
 
 ## 远程访问
 
 ### ssh
 
 ``` bash
-$ ssh-keygen // 生成 rsa 公私钥对
-$ ssh-copy-id [-i 公钥文件] [远程主机地址] // 向远程主机添加公钥
+$ ssh-keygen # 生成 rsa 公私钥对
+$ ssh-copy-id [-i 公钥文件] [远程主机地址] # 向远程主机添加公钥
 $ ssh-agent
 $ ssh-add
 ```
@@ -24,26 +26,32 @@ Host blog
 	HostName example.com
 	User f00bar
 
-ssh blog // 登录到 blog
+$ ssh blog # 登录到 blog
 ```
-
-#### reference
 
 - https://www.digitalocean.com/community/tutorials/how-to-configure-custom-connection-options-for-your-ssh-client
 - [ssh-agent 使用](https://blog.csdn.net/zhouguoqionghai/article/details/92134462)
+
+### scp
+
+```bash
+$ scp file.txt user@ip:/home/user # 复制本机文件至远程主机
+$ scp user@ip:/home/user/file.txt file.txt # 复制远程主机文件至本机
+$ scp -r dir user@ip:/home/user # 复制本机文件夹至远程主机，-r recrusive 递归复制
+```
 
 ## 网络管理
 
 ### netstat
 
-``` shell
-$ netstat -ntlp // 查看开放 tcp 端口及对应应用
+``` bash
+$ netstat -ntlp # 查看开放 tcp 端口及对应应用
 ```
 
 ### iptables
 
 ``` shell
-$ iptables -F // 清除所有规则
+$ iptables -F # 清除所有规则
 ```
 
 ## 磁盘管理
@@ -51,22 +59,23 @@ $ iptables -F // 清除所有规则
 ### df
 
 ``` bash
-$ df -h // 查看磁盘信息
+$ df -h # 查看磁盘信息
 ```
 
 ### du
 
-```
-$ du /home -h // 查看文件夹磁盘占用
+```bash
+$ du /home -h # 查看文件夹磁盘占用
 ```
 
 ##  进程管理
 
-### top
+### top/htop
 
 ``` bash
-$ top // 查看 CPU 占用信息
-$ htop // 信息显示更清晰
+$ top # 查看 CPU 占用信息
+$ top -d 10 # 信息刷新时间为10s
+$ htop # 信息显示更清晰
 ```
 
 ### ps
@@ -79,12 +88,12 @@ $ ps aux
 ### lsof
 
 ```bash
-$ lsof // 查看开放文件
+$ lsof # 查看开放文件
 ```
 
-## 文本编辑
-
 ## 文本处理
+
+### more/tail/less
 
 ### vi 或 vim
 ### awk
@@ -102,9 +111,7 @@ grep 默认正则为基本正则即 BRE，egrep 默认正则为扩展正则即 E
 
 ### 软件源
 
-``` shell
-# 编辑 /etc/apt/sources.list // 添加 Ubuntu 国内软件源
-```
+对于 Ubuntu，编辑 /etc/apt/sources.list，添加 Ubuntu 国内软件源：[阿里镜像源](https://developer.aliyun.com/mirror/ubuntu)、[清华镜像源](https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/)
 
 ### 常用软件
 
@@ -169,7 +176,7 @@ done
 $ find . | egrep tmp # 列出当前文件夹内容，并查找名称包含 tmp 的文件
 ```
 
-
+---
 
 xargs
 
@@ -189,7 +196,7 @@ $ ls . > debug.log # > 每次运行命令会对 debug.log 内容进行覆盖
 $ ls . >> debug.log # >> 每次运行命令会将后续内容补充至 debug.log
 ```
 
-
+---
 
 标准输入：用户键盘输入
 
@@ -202,7 +209,7 @@ $ non_exist_cmd 2>error.log # 标准错误输出值 error.log
 $ non_exist_cmd 1>debug.log 2>&1 # 标准错误传递给标准输出，并将标准输出记录到 debug.log
 ```
 
-
+---
 
 tee
 
