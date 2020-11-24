@@ -3,7 +3,7 @@ title: Linux Cheatsheet
 categories: Linux,cheatsheet
 tags: cheatsheet,Linux
 date: 2020-02-05 14:41:00
-updated: 2020-10-30 16:12:00
+updated: 2020-11-24 18:33:00
 ---
 # Linux Cheatsheet
 
@@ -27,6 +27,12 @@ Host blog
 	User f00bar
 
 $ ssh blog # 登录到 blog
+```
+
+#### ssh 远程登录保持连接不断开
+
+```bash
+$ ssh blog -o ServerAliveInterval=60 # 每60s发送心跳包
 ```
 
 - https://www.digitalocean.com/community/tutorials/how-to-configure-custom-connection-options-for-your-ssh-client
@@ -220,3 +226,45 @@ tee
 # 输出至终端可以试试查看运行进度，输出至文件用于记录和后续分析
 $ find / -name 'tmp' | tee run.log
 ```
+
+#### 特殊变量
+
+| 变量 | 含义                                    |
+| ---- | --------------------------------------- |
+| $#   | 参数数量                                |
+| $$   | 当前进程号                              |
+| $*   | 所有参数                                |
+| $@   | 所有参数                                |
+| $?   | shell 运行返回值（正常运行，返回值为0） |
+| $0   | 运行文件名称                            |
+| $1   | 第一个参数                              |
+
+示例脚本如下
+
+```bash
+$ cat variables.sh # 程序内容
+#/bin/bash
+echo '$# 参数数量'： $#
+echo '$$ 当前进程号：' $$
+echo '$* 所有参数：' $*
+echo '$@ 所有参数：' $@
+
+test 1 -eq 1
+echo '$? 1 == 1 返回值：' $?
+test 1 -eq 2
+echo '$? 1 == 2 返回值：' $?
+
+echo '$0 文件名称：' $0
+echo '$1 第一个参数：' $1
+
+$ bash variables.sh hello world # 执行
+$# 参数数量： 2
+$$ 当前进程号： 4323
+$* 所有参数： hello world
+$@ 所有参数： hello world
+$? 1 == 1 返回值： 0
+$? 1 == 2 返回值： 1
+$0 文件名称： variables.sh
+$1 第一个参数： hello
+```
+
