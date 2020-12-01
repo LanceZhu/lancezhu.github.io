@@ -268,3 +268,113 @@ $0 文件名称： variables.sh
 $1 第一个参数： hello
 ```
 
+#### 操作符
+
+加减乘除：+ - * /
+
+比较：
+
+- 字符串比较
+
+  ==
+
+  !==
+
+  [ -z $string ] 字符串长度为0
+
+  [ -n $string ] 字符串长度非0
+
+- 整数比较
+
+  [ $num1 -eq $num2 ] 两数是否相等
+
+  [ $num1 -ge $num2 ] num1 >= num2
+
+  [ $num1 -le $num2 ] num1 <= num2
+
+- 文件比较
+
+  [ -f $file ] file 存在且为常规文件
+
+  [ -d $file ] file 存在且为文件夹
+
+  [ -e $file ] file 存在
+
+#### 程序结构
+
+if 条件结构
+
+```bash
+$ cat if.sh
+if [ 1 -le 1 ]
+then
+        echo '1 == 1'
+else
+        echo '1 !== 1'
+fi
+$ bash if.sh
+1 == 1
+```
+
+while 循环结构
+
+```bash
+$ cat while.sh
+x=1
+while [ $x -le 5 ]
+do
+        echo $x
+        let x=$x+1
+done
+$ bash while.sh
+1
+2
+3
+4
+5
+```
+
+for 循环结构
+
+```bash
+$ cat for.sh
+for v in `seq 5`
+do
+        echo $v
+done
+$ bash for.sh
+1
+2
+3
+4
+5
+```
+
+break: 跳出循环体
+
+continue: 跳出当前循环
+
+exit: 退出程序，后跟返回码 exit 1
+
+#### 函数
+
+函数定义及调用
+
+```bash
+$ cat function.sh
+# 函数声明
+func1() {
+        echo 'parameters number: ' $#
+        echo 'parameters: ' $*
+        echo 'parameter 1: ' $1
+        echo 'process id: ' $$
+}
+
+# 函数调用
+func1 $*
+$ bash function.sh 1 2
+parameters number:  2
+parameters:  1 2
+parameter 1:  1
+process id:  897
+```
