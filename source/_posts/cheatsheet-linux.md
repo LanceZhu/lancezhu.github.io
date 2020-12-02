@@ -3,7 +3,7 @@ title: Linux Cheatsheet
 categories: Linux,cheatsheet
 tags: cheatsheet,Linux
 date: 2020-02-05 14:41:00
-updated: 2020-11-24 18:33:00
+updated: 2020-12-02 18:33:00
 ---
 # Linux Cheatsheet
 
