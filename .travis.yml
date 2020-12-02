@@ -22,12 +22,12 @@ script:
   - hexo clean
   - hexo generate
 
-# 脚本执行成功后的后续命令
-after_success:
-  - cd ./public
-  - git init
-  - git config user.name "f00bar"
-  - git config user.email "lancezhu2937@gmail.com"
-  - git add .
-  - git commit -m "Travis CI"
-  - git push --force https://$GITHUB_TOKEN@github.com/LanceZhu/lancezhu.github.io.git master:master
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  local_dir: public
+  fqdn: hexo.f00bar.top
+  on:
+    branch: master
