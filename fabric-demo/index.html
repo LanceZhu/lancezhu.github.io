@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fabric demo</title>
+  <style>
+    html, body {
+      height: 100%;
+    }
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+    .container {
+      height: 100%;
+      display: flex;
+    }
+    .toolbar {
+      height: 100%;
+      width: 100px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid black;
+      background-color: aliceblue;
+    }
+    .toolbar > button {
+      height: 50px;
+      line-height: 50px;
+      width: 100px;
+      text-align: center;
+      border: 1px solid gray;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="toolbar">
+      <button onclick="addText()">文本</button >
+      <button onclick="addRect()">矩形</button>
+      <button onclick="addArrow()">箭头</button>
+      <button onclick="addLine()">连接线</button>
+
+      <button onclick="deleteActiveObject()" style="margin-top: 10px; background-color: bisque;">删除</button>
+
+      <button onclick="saveToImage()" style="margin-top: 10px;">保存为图片</button>
+      <button onclick="saveToJSON()">保存为JSON</button>
+    </div>
+    <canvas id="c" height="500" width="500"></canvas>
+    </div>
+ <script src="./fabric.js"></script>
+ <script>
+   // fabric.js JavaScript Canvas Library https://github.com/fabricjs/fabric.js
+   
+   // 初始化 fabric
+    var canvas = new fabric.Canvas('c');
+
+    window.addEventListener('resize', resizeCanvas, false);
+
+    function resizeCanvas() {
+      canvas.setHeight(window.innerHeight);
+      canvas.setWidth(window.innerWidth - 100);
+      canvas.renderAll();
+    }
+
+    // resize on init
+    resizeCanvas();
+
+    /************************************** 事件处理 *******************************************/
+    // 添加初始元素
+    function init () {
+      var rect = new fabric.Rect({
+        left: 100,
+        top: 100,
+        fill: 'grey',
+        width: 50,
+        height: 50
+      });
+
+      var points = [{
+        x: 0, y: 0
+      }, {
+        x: 0, y: 50
+      }, {
+        x: 60, y: 50
+      }, {
+        x: 70, y: 25
+      }, {
+        x: 60, y: 0
+      }]
+
+      var arrow = new fabric.Polygon(points, {
+        left: 0,
+        top: 0,
+        fill: 'grey'
+      })
+
+      var line = new fabric.Line([0, 0, 0, 200], {
+        left: 200,
+        top: 0,
+        stroke: 'red'
+      })
+
+      // 贝叶斯曲线平滑连接点 控制点选择 https://wenku.baidu.com/view/c790f8d46bec0975f565e211.html
+      var p = new fabric.Path('M 100 400 L 100 100 C 150 150 200 325 300 300 C 400 275 450 75 500 0 L 500 400',{
+        left: 0,
+        top: 100,
+        fill: 'rgb(250, 250, 250)',
+        stroke: 'black'
+      });
+
+
+      canvas.add(p);
+
+      var text = new fabric.IText('asdf', {left: 0, top: 100})
+      text.on('selected', () => {
+        console.log('选择文本框')
+      })
+
+      // canvas.add(text);
+      // canvas.add(rect);
+      // canvas.add(arrow)
+      // canvas.add(line)
+    }
+
+    init()
+
+    function add (object) {
+      canvas.add(object)
+      canvas.setActiveObject(object)
+    }
+
+    function addText () {
+      const text = new fabric.IText('新建文本', { left: 0, top: 0 })
+      add(text)
+    }
+
+    function addRect () {
+      const rect = new fabric.Rect({
+          left: 0,
+          top: 0,
+          fill: 'rgb(160,192,227)',
+          width: 50,
+          height: 50
+        })
+        add(rect)
+    }
+
+    function addArrow () {
+      const points = [{
+        x: 0, y: 0
+      }, {
+        x: 0, y: 50
+      }, {
+        x: 60, y: 50
+      }, {
+        x: 70, y: 25
+      }, {
+        x: 60, y: 0
+      }]
+      const arrow = new fabric.Polygon(points, {
+        left: 0,
+        top: 0,
+        fill: 'rgb(231,233,237)'
+      })
+      add(arrow)
+    }
+
+    function addLine () {
+      const line = new fabric.Line([0, 0, 0, 200], {
+      left: 200,
+      top: 0,
+      stroke: 'red'
+    })
+    add(line)
+    }
+
+    function deleteActiveObject () {
+      canvas.remove(canvas.getActiveObject())
+    }
+
+    function saveToImage () {
+      console.log(canvas.toDataURL('png'))
+      alert(canvas.toDataURL('png'))
+    }
+
+    function saveToJSON () {
+      const json = canvas.toJSON()
+      console.log(json)
+      alert(JSON.stringify(json))
+    }
+ </script>
+</body>
+</html>
