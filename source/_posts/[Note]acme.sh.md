@@ -1,6 +1,5 @@
 ---
 title: [Note]acme.sh
-categories: 默认分类
 tags: Linux,Web,en
 date: 2020-05-14 18:02:00
 updated: 2020-05-14 18:02:00

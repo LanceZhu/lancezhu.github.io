@@ -2,12 +2,7 @@
 language: node_js
 
 # nodejs 版本号
-node_js: "8"
-
-# git 分支
-branches:
-  only:
-  - hexo
+node_js: "lts/*"
 
 # 缓存
 cache:
@@ -30,4 +25,4 @@ deploy:
   local_dir: public
   fqdn: hexo.f00bar.top
   on:
-    branch: master
+    branch: hexo

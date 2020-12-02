@@ -1,6 +1,5 @@
 ---
 title: [译文] PDF 文本提取难在哪？
-categories: 默认分类
 tags: 译文
 date: 2020-03-13 18:22:00
 updated: 2020-03-13 18:22:00
