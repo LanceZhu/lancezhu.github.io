@@ -1,5 +1,5 @@
 ---
-title: [Note]acme.sh
+title: acme.sh
 tags: Linux,Web,en
 date: 2020-05-14 18:02:00
 updated: 2020-05-14 18:02:00
