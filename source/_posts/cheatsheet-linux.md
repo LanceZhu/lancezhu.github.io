@@ -99,10 +99,57 @@ $ lsof # 查看开放文件
 
 ## 文本处理
 
-### more/tail/less
+### more/head/tail/less
+
+```bash
+$ more file
+$ head file
+$ head file -n 5 # 显示文件
+$ tail file
+$ tail file -n 5 # 显示文件后5行
+$ less file
+```
 
 ### vi 或 vim
+
+命令行文本编辑器
+
+常用两种模式：浏览模式、编辑模式，还有可视化模式
+
+`vim file` 后默认进入浏览模式，按`i`，`a`进入编辑模式，`ESC`退回至浏览模式。`v`进入可视化模式。浏览模式下，`:q`退出文件编辑，`:!q`强制退出
+
+```bash
+$ vim file
+```
+
+**常用操作：**
+
+- 跳转
+  - `h j k l` 左下上右 移动光标
+  - `gg G` 跳转至文件头，文件尾
+  - `n`+`gg` 跳转至第n行
+  - `^ $` 跳转至行首，行尾
+
+- 编辑
+  - `i` 当前光标处进入编辑模式
+  - `a` 当前光标后进入编辑模式
+  - `x` 删除当前光标所在处字符
+  - `dd` 删除当前行
+  - `dw` 删除当前word
+  - `yy` 复制当前行
+  - `p` 粘贴复制内容
+  - `v` 进入可视化模式，进入后可通过光标移动选择内容
+  - `:w `保存文件
+
+- 退出vim（浏览模式下操作）
+  - `:q` 直接退出
+  - `:wq` 保存并退出
+  - `!q` 强制退出
+
+对于vim意外退出情况，所编辑文件同一目录下出现备份文件，`file`对应`.file.swp`，如不需要恢复，应删除。
+
 ### awk
+
 ### grep
 
 推荐 egrep，等价于 grep -E
@@ -112,6 +159,32 @@ grep 默认正则为基本正则即 BRE，egrep 默认正则为扩展正则即 E
 扩展正则相比于基本正则去掉了许多转义字符，方便使用。
 
 ### sed
+
+流式编辑器
+
+文本显示/过滤
+
+```bash
+# 显示文件全部内容
+$ sed -n p file
+# 显示文件第5行内容
+$ sed -n 5p file
+# 显示文件中所有包含 LANG 的行
+$ sed -n /LANG/p file
+```
+
+文本修改
+
+```bash
+# 第一个出现 foo 的行中，foo 替换为 bar。s表示substitude
+$ sed 's/foo/bar/' file
+# 所有包含 foo 的行中，foo 替换为 bar。g表示global
+$ sed 's/foo/bar/g' file
+# 支持正则表达式，将!或多个连续出现的！替换为.。\+表示对+转义
+$ sed 's/!\+/./g' file
+# 启用扩展正则表达式，无需对+转义
+$ sed 's/!+/./g' file
+```
 
 ## 软件管理
 
@@ -378,3 +451,4 @@ parameters:  1 2
 parameter 1:  1
 process id:  897
 ```
+
