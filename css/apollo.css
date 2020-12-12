@@ -648,7 +648,7 @@ header .nav-list-item a {
 
 code,
 pre {
-  font-size: 0.8em;
+  font-size: 1em;
   background-color: #f8f8f8;
   font-family: "Roboto Mono", Monaco, courier, monospace;
 }
@@ -960,6 +960,8 @@ footer .copyright a:hover {
   margin-right: -400px;
   padding: 0;
   z-index: 1;
+  border-left: 1px solid lightblue;
+  padding-left: 1em;
 }
 .toc ol {
   display: block;
