@@ -52,4 +52,4 @@ Sigmoid，tanh，ReLU，leakly ReLU
 
 ## 实践（手写数字识别）
 
-TODO
+见博客『MNIST 手写数字识别实践』
