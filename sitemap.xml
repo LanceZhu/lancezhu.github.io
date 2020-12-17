@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lancezhu.github.io/2020/12/17/handwriting-number-recognition-mnist/</loc>
+    
+    <lastmod>2020-12-17T02:34:20.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lancezhu.github.io/2020/12/12/neural-networks-summary/</loc>
     
     <lastmod>2020-12-12T09:13:52.000Z</lastmod>
