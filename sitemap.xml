@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lancezhu.github.io/2018/06/23/%E4%B9%A6%E5%8D%95/</loc>
+    
+    <lastmod>2020-12-31T15:49:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://lancezhu.github.io/2019/09/29/%E5%BD%B1%E8%AE%B0/</loc>
+    
+    <lastmod>2020-12-31T11:45:45.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lancezhu.github.io/2020/12/17/handwriting-number-recognition-mnist/</loc>
     
     <lastmod>2020-12-17T02:34:20.000Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>https://lancezhu.github.io/2020/12/12/neural-networks-summary/</loc>
     
     <lastmod>2020-12-12T09:13:52.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://lancezhu.github.io/2019/09/29/%E5%BD%B1%E8%AE%B0/</loc>
-    
-    <lastmod>2020-12-03T11:45:45.000Z</lastmod>
     
   </url>
   
@@ -243,13 +250,6 @@
     <loc>https://lancezhu.github.io/2018/07/24/%E3%80%90%E7%AC%94%E8%AE%B0%E3%80%91%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/</loc>
     
     <lastmod>2018-07-24T14:15:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://lancezhu.github.io/2018/06/23/%E4%B9%A6%E5%8D%95/</loc>
-    
-    <lastmod>2018-06-23T15:49:00.000Z</lastmod>
     
   </url>
   
