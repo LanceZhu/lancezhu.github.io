@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lancezhu.github.io/"/>
-  <updated>2020-12-17T02:34:20.000Z</updated>
+  <updated>2020-12-31T13:50:00.000Z</updated>
   <id>https://lancezhu.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2020年终总结</title>
+    <link href="https://lancezhu.github.io/2020/12/31/2020%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
+    <id>https://lancezhu.github.io/2020/12/31/2020%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</id>
+    <published>2020-12-31T12:53:54.000Z</published>
+    <updated>2020-12-31T13:50:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="2020年终总结"><a href="#2020年终总结" class="headerlink" title="2020年终总结"></a>2020年终总结</h1><p>一年就浑浑噩噩的过去了。</p><h2 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h2><p>相比于去年，在技术上的投入少了很多。花费的时间和学到的新知识都少了。</p><p>参与阿里巴巴编程之夏（ASoC）算是今年内值得一提的事情，将近两个月的编程之夏参与了 <a href="https://github.com/alibaba/ice" target="_blank" rel="noopener">alibaba/ice</a>。经历整个过程，也学到不少东西。一是了解了开源项目的维护和开发情况，二是借此机会较为深入使用和学习了 React 和 Webpack，三是大致感受了阿里巴巴的工作氛围（感觉比当时在字节跳动实习时工作强度高）。不过因为疫情最后结业没去杭州有些遗憾。</p><p>另一件投入比较多的一个东西是 <a href="https://github.com/miniprogram-analyzer" target="_blank" rel="noopener">miniprogram-analyzer</a>。一个针对微信小程序的代码分析平台，不过进展不太乐观，主要原因在于投入时间有些少，有些懈怠了。</p><h2 id="科研"><a href="#科研" class="headerlink" title="科研"></a>科研</h2><p>下半年，正式成为研究生了，虽然很早前就在参与实验室的项目。</p><p>虽说成了研究生，不过感觉学习上倒没有本科时投入和专注。这学期主要的科研内容主要是 <a href="https://github.com/miniprogram-analyzer" target="_blank" rel="noopener">miniprogram-analyzer</a>。因项目需要和自己想尝试新方向，学了些机器学习/深度学习。不过相比于前端，对机器学习的掌握情况还是有差距，缺少真实项目的实践。</p><h2 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h2><p>减少了对技术上的时间投入，科研也比较划水，日常生活自然要悠闲些了。</p><p>游戏时间明显增多，导致看电影时间都少了，运动也是三天打鱼两天上网。</p><p>不过总算尝试了些正向的事情。年初看了些理财相关内容，年末尝试了下滑雪、游泳。</p><p>悟已往之不谏，之来者犹可追。</p><h2 id="FLAG"><a href="#FLAG" class="headerlink" title="FLAG"></a>FLAG</h2><p>总体目标：更专注和投入、勇敢些、不将就。</p><ul><li><input disabled="" type="checkbox"> 论文</li><li><input disabled="" type="checkbox"> 游泳</li><li><input disabled="" type="checkbox"> 滑板</li><li><input disabled="" type="checkbox"> 英语</li><li><input disabled="" type="checkbox"> 攒机</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;2020年终总结&quot;&gt;&lt;a href=&quot;#2020年终总结&quot; class=&quot;headerlink&quot; title=&quot;2020年终总结&quot;&gt;&lt;/a&gt;2020年终总结&lt;/h1&gt;&lt;p&gt;一年就浑浑噩噩的过去了。&lt;/p&gt;
+&lt;h2 id=&quot;技术&quot;&gt;&lt;a href=&quot;#技术&quot; cla
+      
+    
+    </summary>
+    
+    
+    
+      <category term="年终总结" scheme="https://lancezhu.github.io/tags/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
+    
+  </entry>
   
   <entry>
     <title>MNIST 手写数字识别实践</title>
@@ -466,30 +491,6 @@
     
     
       <category term="cheatsheet,Linux" scheme="https://lancezhu.github.io/tags/cheatsheet-Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>React 笔记</title>
-    <link href="https://lancezhu.github.io/2019/11/22/%E3%80%90%E7%AC%94%E8%AE%B0%E3%80%91React/"/>
-    <id>https://lancezhu.github.io/2019/11/22/%E3%80%90%E7%AC%94%E8%AE%B0%E3%80%91React/</id>
-    <published>2019-11-22T08:23:00.000Z</published>
-    <updated>2019-11-22T08:23:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="React-js-笔记"><a href="#React-js-笔记" class="headerlink" title="React.js 笔记"></a>React.js 笔记</h1><p><a href="https://reactjs.org/" target="_blank" rel="noopener">官网</a></p><h2 id="概念解释"><a href="#概念解释" class="headerlink" title="概念解释"></a>概念解释</h2><h3 id="受控组件与非受控组件"><a href="#受控组件与非受控组件" class="headerlink" title="受控组件与非受控组件"></a>受控组件与非受控组件</h3><p>受控组件：被调用者显示数据由调用者维护。</p><p>非受控组件：被调用者显示数据由自身维护。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;React-js-笔记&quot;&gt;&lt;a href=&quot;#React-js-笔记&quot; class=&quot;headerlink&quot; title=&quot;React.js 笔记&quot;&gt;&lt;/a&gt;React.js 笔记&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://reactjs.org/&quot; tar
-      
-    
-    </summary>
-    
-    
-      <category term="Web 前端" scheme="https://lancezhu.github.io/categories/Web-%E5%89%8D%E7%AB%AF/"/>
-    
     
   </entry>
   
