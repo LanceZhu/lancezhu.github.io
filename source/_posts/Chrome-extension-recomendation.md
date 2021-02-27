@@ -3,7 +3,7 @@ title: Chrome 浏览器插件推荐
 categories: Software
 tags: 插件,Chrome
 date: 2019-03-15 18:45:00
-updated: 2020-11-10 18:45:00
+updated: 2021-02-27 18:45:00
 ---
 # Chrome 浏览器插件推荐
 
@@ -76,6 +76,12 @@ bitwarden 密码生成：
 ![bitwarden](https://i.loli.net/2020/11/10/IRXKgntaefEcTkq.png)
 
 ### Anything to QRcode
+
+> Update(2021/02/27):  Chrome 88 版本内置为页面创建二维码功能。
+>
+> 操作：任意网页-右键-为此页面创建二维码。
+>
+> ![Chrome88-QRcode](https://i.loli.net/2021/02/27/MzUL2dhZPTJfcAX.png)
 
 网页链接生成二维码。
 
