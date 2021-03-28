@@ -3,7 +3,7 @@ title: Linux Cheatsheet
 categories: Linux,cheatsheet
 tags: cheatsheet,Linux
 date: 2020-02-05 14:41:00
-updated: 2020-12-02 18:33:00
+updated: 2021-03-28 18:33:00
 ---
 # Linux Cheatsheet
 
@@ -58,6 +58,15 @@ $ netstat -ntlp # 查看开放 tcp 端口及对应应用
 
 ``` shell
 $ iptables -F # 清除所有规则
+```
+
+### configure proxy
+
+```bash
+$ cat ~/.bash_profile
+export http_proxy=username:password@proxyhost.com:8080
+export https_proxy=username:password@proxyhost.com:8081
+export no_proxy=localhost, 127.0.0.1, *.my.lan
 ```
 
 ## 磁盘管理
