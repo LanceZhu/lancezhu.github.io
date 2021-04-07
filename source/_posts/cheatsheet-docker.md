@@ -3,7 +3,7 @@ title: docker cheatsheet
 categories: cheatsheet
 tags: cheatsheet
 date: 2020-02-05 16:24:00
-updated: 2020-02-05 16:24:00
+updated: 2021-04-07 16:24:00
 ---
 # docker cheatsheet
 
@@ -32,14 +32,23 @@ $ docker build -t docker-demo:v0.0.1 . # 在当前目录根据 Dockerfile 构建
 
 ## 容器 container
 
-``` shell
+``` bash
 $ docker container ls # 查看本机容器
+$ docker ps -all # 查看本机容器，包含 stopped container
 $ docker exec -it container_id /bin/bash # 进入容器 shell ctrl+p+q 退出容器
 $ docker stop container_id # 关闭容器
-$ docker delete container_id
+$ docker rm container_id
 $ docker start container_id
+$ docker logs container_id # 查看容器运行日志
 ```
 
 ##  集群管理
 
-TODO
+### docker-compose
+
+```bash
+$ docker-compose up -d # 在 docker-compose.yaml 同目录下运行，启动多个容器
+$ docker-compose ps # 查看所有 container
+$ docker-compose down # 停止 -rmi all 移除 images
+```
+
