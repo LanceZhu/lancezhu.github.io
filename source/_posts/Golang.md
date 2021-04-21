@@ -1,7 +1,7 @@
 ---
 title: Golang
 date: 2021-03-22 09:26:20
-updated: 2021-04-15 09:26:20
+updated: 2021-04-21 09:26:20
 tags:
 ---
 
@@ -24,6 +24,15 @@ tags:
   https://github.com/go-gorm/gorm
 
   ORM 库
+
+## 配置
+
+### 切换代理
+
+```bash
+$ export GO111MODULE=on
+$ export GOPROXY=https://goproxy.cn
+```
 
 ## 推荐阅读
 
