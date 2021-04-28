@@ -52,3 +52,9 @@ $ docker-compose ps # 查看所有 container
 $ docker-compose down # 停止 -rmi all 移除 images
 ```
 
+### 账户管理
+
+```bash
+$ docker login -u username # 登录至 docker hub
+$ docker push username/image # 将本地 image 推送至 docker hub
+```
