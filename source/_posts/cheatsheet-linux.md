@@ -3,7 +3,7 @@ title: Linux Cheatsheet
 categories: Linux,cheatsheet
 tags: cheatsheet,Linux
 date: 2020-02-05 14:41:00
-updated: 2021-03-28 18:33:00
+updated: 2021-05-13 18:33:00
 ---
 # Linux Cheatsheet
 
@@ -28,6 +28,36 @@ Host blog
 
 $ ssh blog # 登录到 blog
 ```
+
+#### ssh 三种代理功能(-L -R -D)
+
+-L 正向代理，将本地端口转发至远程端口。访问 local_host:local_port 的流量会转发至 remote_host:remote:port
+
+```bash
+$ ssh -L local_host:local_port:remote_host:remote_port user@remote_host # 本地机器执行
+```
+
+-R 反向代理，将远程端口转发至本地端口。访问 remote_host:remote_port 的流量会转发至 local_host:local_port
+
+```bash
+$ ssh -R remote_host:remote_port:local_host:local_port user@remote_host # 本地机器执行
+```
+
+使用场景示例：
+
+内网穿透：本地机器无公网IP，将本地机器某个端口反向代理至存在公网IP的主机，使得不与本地机器处于同一内网中的机器访问本地机器提供的服务，即访问存在公网IP的机器。
+
+-D 动态端口转发
+
+```bash
+$ ssh -D local_host:local_port user@remote_host # 本地机器执行
+```
+
+本地机器配置 sockets5 代理，IP、端口号为 local_host、local_port。之后本地机器网络请求均通过远程机器转发
+
+参考：
+
+- [SSH 命令的三种代理功能（-L/-R/-D）](https://zhuanlan.zhihu.com/p/57630633)
 
 #### ssh 远程登录保持连接不断开
 

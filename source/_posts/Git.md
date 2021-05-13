@@ -10,165 +10,173 @@ tags:
 ### 单分支工作
 #### 创建版本库  
 
-```
-git init
+```bash
+$ git init
 ```
 
 #### 配置用户名及邮箱 
 
-``` 
- git config --global user.name "Your Name"  // --global参数表示对本机所有仓库生效
- git config --global user.email "Your Email" 
+``` bash
+$ git config --global user.name "Your Name"  # --global参数表示对本机所有仓库生效
+$ git config --global user.email "Your Email" 
 ```
 
 #### 添加远程仓库
 
-```
-git remote add origin git@github.com:username/program.git
-git remote set-url origin git@github.com:username/program.git // 修改源
+```bash
+$ git remote add origin git@github.com:username/program.git
+$ git remote set-url origin git@github.com:username/program.git # 修改源
 ```
 
 #### 从远程仓库克隆
 
-```
-git clone git@github.com:username/program.git
+```bash
+$ git clone git@github.com:username/program.git
 ```
 
 #### 添加到本地stage
 
-```
-git add test.txt // 添加指定文件
-git add . //添加当前目录下所有修改文件
+```bash
+$ git add test.txt # 添加指定文件
+$ git add . # 添加当前目录下所有修改文件
 ```
 
 #### 提交到本地仓库
 
-```
-git commit -m "description about this commit"
+```bash
+$ git commit -m "description about this commit"
 ```
 
 #### 向远程仓库提交
 
-```
-git push origin local:remote // 其中remote可省略
-git push origin :remote // 删除远程分支
-git push origin HEAD // HEAD: current branch
+```bash
+$ git push origin local:remote # 其中remote可省略
+$ git push origin :remote # 删除远程分支
+$ git push origin HEAD # HEAD: current branch
 ```
 
 ### 多分支工作
 
 #### 新建分支并切换到新分支
 
-```
-git branch dev
-git checkout dev
+```bash
+$ git branch dev
+$ git checkout dev
 ```
 
 or
 
-```
-git branch -b dev
+```bash
+$ git branch -b dev
 ```
 
 #### 删除分支
 
-```
-git branch -d dev // 删除无新提交分支
-git branch -D dev // 删除未 merge 分支
+```bash
+$ git branch -d dev # 删除无新提交分支
+$ git branch -D dev # 删除未 merge 分支
 ```
 
 #### 查看分支
 
-```
-git branch // 查看本地分支
-git branch -a // 查看本地+远程分支
-git remote // 查看远程分支
-git remote -v // 查看远程分支具体信息
+```bash
+$ git branch # 查看本地分支
+$ git branch -a # 查看本地+远程分支
+$ git remote # 查看远程分支
+$ git remote -v # 查看远程分支具体信息
 ```
 
 #### 开发分支修改合并到主分支
 
-```
-git checkout master // 切换到主分支
-git merge dev // 合并 dev 分支修改到 master 分支
+```bash
+$ git checkout master # 切换到主分支
+
+$ git merge dev # 合并 dev 分支修改到 master 分支，merge 形式
+$ git rebase dev # 合并 dev 分支修改到 master 分支，rebase 形式
 ```
 
 ### 版本回退 
 
 #### 丢弃工作区修改
-```shell
-git checkout -- filename
-git clean -f // remove untracked files. -f force
+```bash
+$ git checkout -- filename
+$ git clean -f # remove untracked files. -f force
 ```
 
 #### 暂存区回退到工作区
-```
-git reset HEAD filename // 指定文件从暂存区回退到工作区
+```bash
+$ git reset HEAD filename # 指定文件从暂存区回退到工作区
 ```
 
 #### 版本回退
-```
-git reset --hard HEAD^ // 回退到上次 commit 版本
-git reset --hard HEAD^ // 回退到上上次 commit 版本
-git reset --hard asdfasdf // 回退到指定 commit 版本
+```bash
+$ git reset --hard HEAD^ # 回退到上次 commit 版本
+$ git reset --hard HEAD^ # 回退到上上次 commit 版本
+$ git reset --hard asdfasdf # 回退到指定 commit 版本
 ```
 
 #### commit 历史查看
-```
-git log // 查看 commit 历史，排列顺序由新到旧
-git reflog // 查看分支所有操作，版本回退后根据版本号可恢复
-git log --pretty=oneline // 单行显示 commit 历史
-git log --graph --pretty=oneline --abbrev-commit // 图形显示 commit 历史，单行显示，缩略版本号
+```bash
+$ git log # 查看 commit 历史，排列顺序由新到旧
+$ git reflog # 查看分支所有操作，版本回退后根据版本号可恢复
+$ git log --pretty=oneline # 单行显示 commit 历史
+$ git log --graph --pretty=oneline --abbrev-commit # 图形显示 commit 历史，单行显示，缩略版本号
 ```
 
 ### 标签管理
-```
-git tag v1.0 // 给当前 commit 打标签 v1.0
-git tag v1.0 30429e7 // 给指定 commit 打标签 v1.0
-git tag -a v1.0 -m "description about this tag" // 指定标签说明信息
-```
-
-```
-git tag // 查看所有标签
-git show v1.0 // 查看标签详细信息
+```bash
+$ git tag v1.0 # 给当前 commit 打标签 v1.0
+$ git tag v1.0 30429e7 # 给指定 commit 打标签 v1.0
+$ git tag -a v1.0 -m "description about this tag" # 指定标签说明信息
 ```
 
-```
-git tag -d v1.0 // 删除本地标签
-git tag origin :refs/tags/v1.0 // 删除远程标签
+```bash
+$ git tag # 查看所有标签
+$ git show v1.0 # 查看标签详细信息
 ```
 
+```bash
+$ git tag -d v1.0 # 删除本地标签
+$ git tag origin :refs/tags/v1.0 # 删除远程标签
 ```
-git push origin v1.0 // 远程推送指定标签
-git push origin --tags // 远程推送本地尚未推送的所有标签
+
+```bash
+$ git push origin v1.0 # 远程推送指定标签
+$ git push origin --tags # 远程推送本地尚未推送的所有标签
 ```
 
 ### Commits 提交记录修改
 
-```
-git commit --amend // 修改最新提交记录，比如修改注释信息、添加文件至提交中
-```
-
-```
-git revert // 安全的删除历史某条 commit 记录
+```bash
+$ git commit --amend # 修改最新提交记录，比如修改注释信息、添加文件至提交中
 ```
 
-```
-git cherry-pick commit-id// 在目的分支操作，选择性提交源分支 commits
+```bash
+$ git revert # 安全的删除历史某条 commit 记录
 ```
 
+```bash
+$ git cherry-pick commit-id # 在目的分支操作，选择性提交源分支 commits
 ```
-git rebase -i HEAD~5 // 修改分支历史记录，~5 操作5条 
+
+```bash
+$ git rebase -i HEAD~5 # 修改分支历史记录，~5 操作5条 
 ```
 
 ### 同步远程库
-```
-git remote add upstream my-program.git // 添加远程库
-git fetch upstream // 取回最新远程库
-git rebase upstream/master // 变基
+```bash
+$ git remote add upstream my-program.git # 添加远程库
+$ git fetch upstream # 取回最新远程库
+$ git rebase upstream/master # 变基
 ```
 
-### Reference
+or
+
+```bash
+$ git pull origin your_branch --rebase
+```
+
+## Reference
 
 [廖雪峰的官方网站-Git教程](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
 
