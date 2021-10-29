@@ -3,7 +3,7 @@ title: Linux Cheatsheet
 categories: Linux,cheatsheet
 tags: cheatsheet,Linux
 date: 2020-02-05 14:41:00
-updated: 2021-05-13 18:33:00
+updated: 2021-10-29 18:33:00
 ---
 # Linux Cheatsheet
 
@@ -114,6 +114,30 @@ $ du /home -h # 查看文件夹磁盘占用
 ```
 
 ##  进程管理
+
+### systemctl
+
+开机自启动 以clash为例
+
+```bash
+$ cat /etc/systemd/system/clash.service # 新建service
+[Unit]
+Description=clash - proxy
+
+[Service]
+ExecStart=/home/lz/bin/clash/clash -d /home/lz/bin/clash
+
+[Install]
+WantedBy=multi-user.target
+$ systemctl start clash.service　# 添加为service
+$ systemctl enable clash.service # 设置开机自启动
+```
+
+ubuntu gnome GUI方法
+
+```bash
+$ gnome-session-properties
+```
 
 ### top/htop
 
