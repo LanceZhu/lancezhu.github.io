@@ -2,7 +2,7 @@
 language: node_js
 
 # nodejs 版本号
-node_js: "lts/*"
+node_js: 12
 
 # 缓存
 cache:
