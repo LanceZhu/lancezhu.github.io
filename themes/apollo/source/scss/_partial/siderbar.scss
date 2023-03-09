@@ -8,9 +8,23 @@
 .toc{
     position: sticky;
     top: 10px;
-    transform: translateX(100%);
+    white-space: nowrap;
     float: right;
+    margin-right: -400px;
+    padding: 0;
     z-index: 1;
+    border-left: 1px solid lightblue;
+    padding-left: 1em;
+    ol {
+      display: block;
+    }
+    li {
+      display: block;
+    }
+    a:hover {
+      text-decoration: underline;
+      font-weight: bold;
+    }
     @media mq-mobile{
         display: none;
     }

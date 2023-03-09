@@ -1,29 +1,30 @@
 {
-  "name": "hexo-theme-apollo",
+  "name": "hexo-theme-apollo-f00bar",
   "version": "1.0.0",
-  "description": "A hexo theme inspired by vuejs.org",
-  "main": "index.js",
+  "description": "A hexo theme based on hexo-theme-apollo",
   "scripts": {
-    "sass": "gulp sass"
+    "gulp": "npm run gulp:build",
+    "gulp:build": "gulp build",
+    "gulp:watch": "gulp"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pinggod/hexo-theme-apollo"
+    "url": "https://github.com/LanceZhu/lancezhu.github.io"
   },
   "keywords": [
     "hexo",
     "theme",
     "apollo"
   ],
-  "author": "Sean Sun",
+  "author": "Lance Zhu",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/pinggod/hexo-theme-apollo/issues"
-  },
-  "homepage": "https://github.com/pinggod/hexo-theme-apollo#readme",
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^3.0.2",
-    "gulp-sass": "^2.0.4"
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.58.3"
+  },
+  "engines": {
+    "node": "^16.0.0"
   }
 }
