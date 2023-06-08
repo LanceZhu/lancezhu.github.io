@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 博客迁移 · f00bar</title><meta name="description" content="博客迁移 - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#博客迁移"><span class="toc-number">1.</span> <span class="toc-text">博客迁移</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#迁移内容"><span class="toc-number">1.1.</span> <span class="toc-text">迁移内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主机数据"><span class="toc-number">1.2.</span> <span class="toc-text">主机数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统级"><span class="toc-number">1.2.1.</span> <span class="toc-text">系统级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用级"><span class="toc-number">1.2.2.</span> <span class="toc-text">应用级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库"><span class="toc-number">1.2.3.</span> <span class="toc-text">数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#迁移过程"><span class="toc-number">1.3.</span> <span class="toc-text">迁移过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#依赖安装"><span class="toc-number">1.3.1.</span> <span class="toc-text">依赖安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库-1"><span class="toc-number">1.3.2.</span> <span class="toc-text">数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nginx"><span class="toc-number">1.3.3.</span> <span class="toc-text">nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#typecho-主题、插件及上传内容"><span class="toc-number">1.3.4.</span> <span class="toc-text">typecho 主题、插件及上传内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#推荐阅读"><span class="toc-number">1.3.5.</span> <span class="toc-text">推荐阅读</span></a></li></ol></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">博客迁移</h1><div class="post-info">Mar 10, 2020</div><div class="post-content"><h1 id="博客迁移"><a href="#博客迁移" class="headerlink" title="博客迁移"></a>博客迁移</h1><p><a href="https://cloud.tencent.com/act/campus" target="_blank" rel="noopener">腾讯云 学生优惠服务器</a> 将于 2020/7到期</p>
+<p>腾讯云迁移至阿里云</p>
+<hr>
+<h2 id="迁移内容"><a href="#迁移内容" class="headerlink" title="迁移内容"></a>迁移内容</h2><ul>
+<li>博客 <a href="http://typecho.org/" target="_blank" rel="noopener">typecho</a></li>
+<li>图床 <a href="https://github.com/Chevereto/Chevereto-Free" target="_blank" rel="noopener">chevereto</a></li>
+</ul>
+<hr>
+<h2 id="主机数据"><a href="#主机数据" class="headerlink" title="主机数据"></a>主机数据</h2><h3 id="系统级"><a href="#系统级" class="headerlink" title="系统级"></a>系统级</h3><pre><code class="hljs sh">top // 查看 CPU 内存占用
+df // 查看磁盘占用</code></pre>
+
+<blockquote>
+<p>CPU 平均占用率 3%</p>
+<p>内存 总 1G 平均占用率 50%</p>
+<p>磁盘 总 50G 占用 15G</p>
+</blockquote>
+<h3 id="应用级"><a href="#应用级" class="headerlink" title="应用级"></a>应用级</h3><pre><code class="hljs sh">ps // 查看进程 -aux  --sort=%mem --sort=%cpu</code></pre>
+
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><pre><code class="hljs sh">mysqldump -u root -p database &gt; database.sql // 备份</code></pre>
+
+<hr>
+<h2 id="迁移过程"><a href="#迁移过程" class="headerlink" title="迁移过程"></a>迁移过程</h2><h3 id="依赖安装"><a href="#依赖安装" class="headerlink" title="依赖安装"></a>依赖安装</h3><pre><code class="hljs sh">php-fpm // php fastcgi process manager</code></pre>
+
+<h3 id="数据库-1"><a href="#数据库-1" class="headerlink" title="数据库"></a>数据库</h3><pre><code class="hljs sh">create user <span class="hljs-string">'user'</span>@<span class="hljs-string">'localhost'</span> identified by <span class="hljs-string">'password'</span>; // 创建新用户
+drop user <span class="hljs-string">'username'</span>@<span class="hljs-string">'localhost'</span>;
+grant all privileges on `database`.* to <span class="hljs-string">'user'</span>@<span class="hljs-string">'localhost'</span>; // 数据库授权
+mysql -u user -p database &lt; database.sql // 导入数据</code></pre>
+
+<h3 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h3><p><strong>nginx 配置支持 php</strong></p>
+<pre><code class="hljs sh">location ~ .*\.(jpg|gif|png|bmp)$ &#123;
+                gzip on;
+                gzip_http_version 1.1;
+                gzip_comp_level 3;
+                gzip_types text/plain application/json application/x-javascript application/css application/xml application/xml+rss text/javascript application/x-httpd-php image/jpeg image/gif image/png image/x-ms-bmp;
+        &#125;
+
+        location / &#123;
+                <span class="hljs-comment"># First attempt to serve request as file, then</span>
+                <span class="hljs-comment"># as directory, then fall back to displaying a 404.</span>
+                <span class="hljs-comment">#deal with fake static problems</span>
+                <span class="hljs-keyword">if</span> (-f <span class="hljs-variable">$request_filename</span>/index.html)&#123;
+                        rewrite (.*) <span class="hljs-variable">$1</span>/index.html <span class="hljs-built_in">break</span>;
+                &#125;
+                <span class="hljs-keyword">if</span> (-f <span class="hljs-variable">$request_filename</span>/index.php)&#123;
+                        rewrite (.*) <span class="hljs-variable">$1</span>/index.php;
+                &#125;
+                <span class="hljs-keyword">if</span> (!-f <span class="hljs-variable">$request_filename</span>)&#123;
+                        rewrite (.*) /index.php;
+                &#125;
+                try_files <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ =404;
+
+
+        <span class="hljs-comment"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span>
+        <span class="hljs-comment">#</span>
+        location ~ \.php$ &#123;
+                include snippets/fastcgi-php.conf;
+               <span class="hljs-comment"># With php7.0-cgi alone:</span>
+        	   <span class="hljs-comment"># fastcgi_pass 127.0.0.1:9000;</span>
+               <span class="hljs-comment"># With php7.0-fpm:</span>
+                fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+        &#125;
+        <span class="hljs-comment"># deny access to .htaccess files, if Apache's document root</span>
+        <span class="hljs-comment"># concurs with nginx's one</span>
+        <span class="hljs-comment">#</span>
+        <span class="hljs-comment">#location ~ /\.ht &#123;</span>
+        <span class="hljs-comment">#       deny all;</span>
+        &#125;</code></pre>
+<p><strong>fastcgi-php.conf</strong></p>
+<pre><code class="hljs sh"><span class="hljs-comment"># regex to split $uri to $fastcgi_script_name and $fastcgi_path</span>
+fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+<span class="hljs-comment"># Check that the PHP script exists before passing it</span>
+try_files <span class="hljs-variable">$fastcgi_script_name</span> =404;
+
+<span class="hljs-comment"># Bypass the fact that try_files resets $fastcgi_path_info</span>
+<span class="hljs-comment"># see: http://trac.nginx.org/nginx/ticket/321</span>
+<span class="hljs-built_in">set</span> <span class="hljs-variable">$path_info</span> <span class="hljs-variable">$fastcgi_path_info</span>;
+fastcgi_param PATH_INFO <span class="hljs-variable">$path_info</span>;
+
+fastcgi_index index.php;
+include fastcgi.conf;</code></pre>
+<h3 id="typecho-主题、插件及上传内容"><a href="#typecho-主题、插件及上传内容" class="headerlink" title="typecho 主题、插件及上传内容"></a>typecho 主题、插件及上传内容</h3><pre><code class="hljs sh">打包 typecho 中 usr 目录
+usr
+├── plugins
+├── themes
+└── uploads</code></pre>
+
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://www.digitalocean.com/community/tutorials/understanding-and-implementing-fastcgi-proxying-in-nginx" target="_blank" rel="noopener">understanding and implementing fastcgi proxying in nginx</a></li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/03/13/%E3%80%90%E8%AF%91%E6%96%87%E3%80%91PDF%20%E6%96%87%E6%9C%AC%E6%8F%90%E5%8F%96%E9%9A%BE%E5%9C%A8%E5%93%AA%EF%BC%9F/" class="prev">PREV</a><a href="/2020/02/05/cheatsheet-nodejs/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>

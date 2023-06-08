@@ -1,0 +1,675 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> icejs-todos-server · f00bar</title><meta name="description" content="icejs-todos-server - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何同时开发小程序-中后台应用-feat-icejs-服务端篇"><span class="toc-number">1.</span> <span class="toc-text">如何同时开发小程序+中后台应用(feat: icejs) - 服务端篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number">1.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端"><span class="toc-number">1.2.</span> <span class="toc-text">服务端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#项目初始化"><span class="toc-number">1.2.1.</span> <span class="toc-text">项目初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库"><span class="toc-number">1.2.2.</span> <span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建数据库"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">创建数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建用户"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">创建用户</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建数据表"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">创建数据表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#添加数据"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">添加数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管理数据库"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">管理数据库</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接数据库"><span class="toc-number">1.2.3.</span> <span class="toc-text">连接数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装所需依赖"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">安装所需依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置-egg-sequelize"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">配置 egg-sequelize</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#连接示例"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">连接示例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#账户管理"><span class="toc-number">1.2.4.</span> <span class="toc-text">账户管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#后台管理系统"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">后台管理系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#小程序"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">小程序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-设计"><span class="toc-number">1.2.5.</span> <span class="toc-text">API 设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#API-路由列表"><span class="toc-number">1.2.5.1.</span> <span class="toc-text">API 路由列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#API-实现"><span class="toc-number">1.2.5.2.</span> <span class="toc-text">API 实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前后端联调"><span class="toc-number">1.2.6.</span> <span class="toc-text">前后端联调</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#小程序-1"><span class="toc-number">1.2.6.1.</span> <span class="toc-text">小程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#后台管理系统-1"><span class="toc-number">1.2.6.2.</span> <span class="toc-text">后台管理系统</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">1.2.7.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-number">1.3.</span> <span class="toc-text">结语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐阅读及参考"><span class="toc-number">1.4.</span> <span class="toc-text">推荐阅读及参考</span></a></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">icejs-todos-server</h1><div class="post-info">Oct 12, 2020</div><div class="post-content"><h1 id="如何同时开发小程序-中后台应用-feat-icejs-服务端篇"><a href="#如何同时开发小程序-中后台应用-feat-icejs-服务端篇" class="headerlink" title="如何同时开发小程序+中后台应用(feat: icejs) - 服务端篇"></a>如何同时开发小程序+中后台应用(feat: icejs) - 服务端篇</h1><blockquote>
+<p>知乎：<a href="https://zhuanlan.zhihu.com/p/217932764" target="_blank" rel="noopener">使用 React + icejs 开发一个完整的 Todo 应用 - 服务端篇</a><br>语雀：<a href="https://www.yuque.com/f00bar/bsa44q/pt2tsh" target="_blank" rel="noopener">如何同时开发小程序+中后台应用(feat: icejs) - 服务端篇</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://ice.work/" target="_blank" rel="noopener">icejs</a> 主要应用场景为开发中后台应用。但 <a href="mailto:icejs@1.7.0">icejs@1.7.0</a> 版本开始支持<a href="https://ice.work/docs/miniprogram/start" target="_blank" rel="noopener">小程序开发</a>。如果你想使用 React 同时开发中后台应用和小程序，那么 icejs 即可满足你。使用同一套技术体系，减少技术切换成本，提高研发效率。</p>
+</blockquote>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文将演示如何使用 icejs 构建 Todo 小程序 + 后台管理系统，同时包括相应服务端。</p>
+<p>Todo 应用的功能或需求为：</p>
+<ul>
+<li>小程序端：展示 Todo 列表，支持增删改查，以及同步数据到服务端。</li>
+<li>后台管理系统：小程序用户信息和增删改查的管理系统。</li>
+</ul>
+<p>整体的技术栈设计如下：</p>
+<ul>
+<li>*<em>小程序 *</em><ul>
+<li>icejs 框架</li>
+<li>universal-request 数据请求</li>
+</ul>
+</li>
+<li><strong>后台管理系统</strong><ul>
+<li>icejs 框架</li>
+<li>icejs build-plugin-ice-auth 插件，权限管理</li>
+<li>fusion design UI 组件库</li>
+</ul>
+</li>
+<li><strong>服务端</strong> + <strong>数据库</strong><ul>
+<li>eggjs 服务端框架</li>
+<li>egg-sequelize + mysql2 用于 eggjs 连接 MySQL 数据库</li>
+<li>MySQL 数据库</li>
+<li>uuid 唯一 id 生成</li>
+</ul>
+</li>
+</ul>
+<p>因篇幅较长，如何同时开发小程序+中后台应用（feat: icejs）将分为三篇分别介绍。</p>
+<ul>
+<li>小程序篇</li>
+</ul>
+<p>使用 icejs 开发 Todo 小程序。</p>
+<ul>
+<li>后台管理系统篇</li>
+</ul>
+<p>使用 icejs 开发 Todo 小程序后台管理系统。</p>
+<ul>
+<li>服务端篇（本文）</li>
+</ul>
+<p>搭建服务 Todo 小程序及后台管理系统的服务端。</p>
+<h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><blockquote>
+<p>项目代码见 <a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/server" target="_blank" rel="noopener">icejs-miniapp-admin/server</a><br>服务端基于 eggjs，详细文档参考<a href="https://eggjs.org/" target="_blank" rel="noopener">官网</a></p>
+</blockquote>
+<h3 id="项目初始化"><a href="#项目初始化" class="headerlink" title="项目初始化"></a>项目初始化</h3><p>首先创建文件夹用于存放服务端代码</p>
+<pre><code class="hljs bash">$ mkdir icejs-todos/server -p &amp;&amp; <span class="hljs-built_in">cd</span> icejs-todos/server</code></pre>
+
+
+<p>使用脚手架生成项目</p>
+<pre><code class="hljs bash">$ npm init egg --<span class="hljs-built_in">type</span>=simple</code></pre>
+
+
+<p>启动项目</p>
+<pre><code class="hljs bash">$ npm install &amp;&amp; npm run dev
+
+<span class="hljs-comment"># 浏览器打开 http://localhost:7001 可看到项目正常启动</span></code></pre>
+
+
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598521003072-d6f23f24-2bff-4222-b240-7ef2e0559590.png#align=left&display=inline&height=1031&margin=%5Bobject%20Object%5D&originHeight=1031&originWidth=1927&status=done&style=none&width=1927" alt=""></p>
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>下面设计数据表结构。数据库采用 MySQL 5.7。</p>
+<blockquote>
+<p>可通过 <a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/server/config/db/sql" target="_blank" rel="noopener">icejs-miniapp-admin#db/sql</a> 建库、建表、导入数据。</p>
+</blockquote>
+<h4 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h4><p>首先连接 MySQL 数据库。</p>
+<pre><code class="hljs bash"><span class="hljs-comment"># 以 root 用户身份登录，密码在运行命令后按照提示输入</span>
+$ mysql -u root -p</code></pre>
+
+
+<p>连接到 MySQL 数据库后，在 MySQL 终端中通过以下命令，创建 icejs_todos 数据库。</p>
+<pre><code class="hljs mysql">create database icejs_todos;</code></pre>
+
+
+<p>通过</p>
+<pre><code class="hljs mysql">show databases;</code></pre>
+
+
+<p>查看所有数据库。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598521003846-722656db-7b93-4ee0-a149-edba4e7a031b.png#align=left&display=inline&height=175&margin=%5Bobject%20Object%5D&originHeight=175&originWidth=238&status=done&style=none&width=238" alt=""></p>
+<h4 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h4><p>创建 icejs_todos 用户并配置相应权限以管理数据。</p>
+<pre><code class="hljs mysql">create user &#39;icejs_todos&#39;@&#39;%&#39; identified by &#39;icejs_todos&#39;;
+grant all privileges on icejs_todos.* to &#39;icejs_todos&#39;@&#39;%&#39;;
+flush privileges;</code></pre>
+
+
+<p>在之后的数据库创建的操作中，切换为 icejs_todos 用户。</p>
+<h4 id="创建数据表"><a href="#创建数据表" class="headerlink" title="创建数据表"></a>创建数据表</h4><p>本应用涉及三个实体：</p>
+<ul>
+<li>管理员 admin</li>
+<li>用户 users</li>
+<li>代办事项 todos</li>
+</ul>
+<p>分别对应三个表</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598521004341-5923f3c1-b023-4816-89b9-171e0f4bc3a6.png#align=left&display=inline&height=186&margin=%5Bobject%20Object%5D&originHeight=186&originWidth=253&status=done&style=none&width=253" alt=""></p>
+<p>admin 对应后台管理系统管理员</p>
+<p>users 对应小程序用户</p>
+<p>todos 对应代办事项</p>
+<p>其中 users 与 todos 存在一对多关系，即一个用户对应多个 todo。</p>
+<p>各表字段结构为</p>
+<p><strong>admin</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>int(11)</td>
+<td>管理员 id</td>
+</tr>
+<tr>
+<td>username</td>
+<td>varchar(63)</td>
+<td>管理员 用户名</td>
+</tr>
+<tr>
+<td>password</td>
+<td>varchar(63)</td>
+<td>管理员密码</td>
+</tr>
+</tbody></table>
+<p><strong>users</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>openId</td>
+<td>varchar(45)</td>
+<td>用户 id，通过微信小程序认证获取</td>
+</tr>
+<tr>
+<td>username</td>
+<td>varchar(45)</td>
+<td>用户名</td>
+</tr>
+</tbody></table>
+<p><strong>todos</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>varchar(45)</td>
+<td>todo id</td>
+</tr>
+<tr>
+<td>content</td>
+<td>json</td>
+<td>todo 内容</td>
+</tr>
+<tr>
+<td>openId</td>
+<td>varchar(45)</td>
+<td>对应 users 表中的 openId</td>
+</tr>
+</tbody></table>
+<p>可通过以下命令创建数据表：</p>
+<pre><code class="hljs jsx">use icejs_todos; -- 选择数据库
+
+CREATE TABLE <span class="hljs-string">`admin`</span> (
+  <span class="hljs-string">`id`</span> int(<span class="hljs-number">11</span>) NOT NULL AUTO_INCREMENT,
+  <span class="hljs-string">`username`</span> varchar(<span class="hljs-number">63</span>) NOT NULL DEFAULT <span class="hljs-string">''</span> COMMENT <span class="hljs-string">'管理员名称'</span>,
+  <span class="hljs-string">`password`</span> varchar(<span class="hljs-number">63</span>) NOT NULL DEFAULT <span class="hljs-string">''</span> COMMENT <span class="hljs-string">'管理员密码'</span>,
+  PRIMARY KEY (<span class="hljs-string">`id`</span>)
+) ENGINE=InnoDB AUTO_INCREMENT=<span class="hljs-number">2</span> DEFAULT CHARSET=utf8mb4 COMMENT=<span class="hljs-string">'管理员'</span>;
+
+CREATE TABLE <span class="hljs-string">`todos`</span> (
+  <span class="hljs-string">`id`</span> varchar(<span class="hljs-number">45</span>) NOT NULL,
+  <span class="hljs-string">`content`</span> json DEFAULT NULL COMMENT <span class="hljs-string">'TODO 内容'</span>,
+  <span class="hljs-string">`openId`</span> varchar(<span class="hljs-number">45</span>) NOT NULL,
+  PRIMARY KEY (<span class="hljs-string">`id`</span>)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=<span class="hljs-string">'TODO 列表'</span>;
+
+CREATE TABLE <span class="hljs-string">`users`</span> (
+  <span class="hljs-string">`openId`</span> varchar(<span class="hljs-number">45</span>) NOT NULL COMMENT <span class="hljs-string">'微信小程序 用户 openid'</span>,
+  <span class="hljs-string">`username`</span> varchar(<span class="hljs-number">45</span>) DEFAULT <span class="hljs-string">''</span> COMMENT <span class="hljs-string">'用户名'</span>,
+  PRIMARY KEY (<span class="hljs-string">`openId`</span>)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=<span class="hljs-string">'用户列表'</span>;</code></pre>
+
+
+<p>可通过 desc table_name 命令查看表字段</p>
+<pre><code class="hljs mysql">desc admin; -- 查看 admin</code></pre>
+
+
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598862229820-6259535d-12bb-4865-8bc6-d0a241d484d0.png#align=left&display=inline&height=189&margin=%5Bobject%20Object%5D&name=mysql-desc.png&originHeight=189&originWidth=616&size=10780&status=done&style=none&width=616" alt="mysql-desc.png"></p>
+<h4 id="添加数据"><a href="#添加数据" class="headerlink" title="添加数据"></a>添加数据</h4><p>添加管理员</p>
+<pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-string">`admin`</span> <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>,<span class="hljs-string">'user'</span>,<span class="hljs-string">'password'</span>); <span class="hljs-comment">-- 管理员用户名：user 密码：password</span></code></pre>
+<p>添加测试 Todo</p>
+<pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-string">`todos`</span> <span class="hljs-keyword">VALUES</span> (<span class="hljs-string">'14624e16-ba83-4fac-acb0-474502d0d18d'</span>,<span class="hljs-string">'&#123;\"text\": \"Learning ES2016\", \"completed\": true&#125;'</span>,<span class="hljs-string">'1'</span>),(<span class="hljs-string">'1e7158d5-c687-4a11-9a62-755e35a88491'</span>,<span class="hljs-string">'&#123;\"text\": \"Learning 小程序\", \"completed\": false&#125;'</span>,<span class="hljs-string">'1'</span>),(<span class="hljs-string">'f111d741-294b-44a2-8200-9f9b805fd9d2'</span>,<span class="hljs-string">'&#123;\"text\": \"Learning Javascript\", \"completed\": true&#125;'</span>,<span class="hljs-string">'1'</span>);</code></pre>
+<p>添加测试用户</p>
+<pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-string">`users`</span> <span class="hljs-keyword">VALUES</span> (<span class="hljs-string">'1'</span>,<span class="hljs-string">'测试用户1'</span>),(<span class="hljs-string">'2'</span>,<span class="hljs-string">'测试用户2'</span>);</code></pre>
+<h4 id="管理数据库"><a href="#管理数据库" class="headerlink" title="管理数据库"></a>管理数据库</h4><p>可通过 <a href="https://www.mysql.com/products/workbench/" target="_blank" rel="noopener">MySQL Workbench</a> 管理数据库。<br>连接数据库<br><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1599113402608-33d8a2e8-7e48-4d36-bb9c-c5cf322bb982.png#align=left&display=inline&height=1031&margin=%5Bobject%20Object%5D&name=server5.png&originHeight=1031&originWidth=1915&size=196824&status=done&style=none&width=1915" alt="server5.png"><br>查看数据表及表内容<br><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1599113627138-ace00ace-aacc-41c6-8289-62ba702cc76e.png#align=left&display=inline&height=1028&margin=%5Bobject%20Object%5D&name=server6.png&originHeight=1028&originWidth=1918&size=234355&status=done&style=none&width=1918" alt="server6.png"></p>
+<h3 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h3><p>通过 egg-sequelize、mysql2 连接 MySQL 数据库。</p>
+<h4 id="安装所需依赖"><a href="#安装所需依赖" class="headerlink" title="安装所需依赖"></a>安装所需依赖</h4><pre><code class="hljs bash">$ npm install --save egg-sequelize mysql2</code></pre>
+
+
+<h4 id="配置-egg-sequelize"><a href="#配置-egg-sequelize" class="headerlink" title="配置 egg-sequelize"></a>配置 egg-sequelize</h4><ul>
+<li><p>首先启用 egg-sequelize 插件，即在 config/plugin.js 中配置</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// config/plugin.js</span>
+<span class="hljs-built_in">module</span>.exports = &#123;
+  <span class="hljs-comment">// had enabled by egg</span>
+  <span class="hljs-comment">// static: &#123;</span>
+  <span class="hljs-comment">//   enable: true,</span>
+  <span class="hljs-comment">// &#125;</span>
+  sequelize: &#123;
+    enable: <span class="hljs-literal">true</span>,
+    package: <span class="hljs-string">'egg-sequelize'</span>
+  &#125;
+&#125;;</code></pre>
+</li>
+<li><p>并在配置 egg-sequelize 以连接到 MySQL</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// config/config.default.js</span>
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-params">appInfo</span> =&gt;</span> &#123;
+  <span class="hljs-comment">/**</span>
+<span class="hljs-comment">   * built-in config</span>
+<span class="hljs-comment">   * @type &#123;Egg.EggAppConfig&#125;</span>
+<span class="hljs-comment">   **/</span>
+  <span class="hljs-keyword">const</span> config = exports = &#123;&#125;;
+
+  <span class="hljs-comment">// ...</span>
+
+  <span class="hljs-comment">// 配置 sequelize</span>
+  config.sequelize = &#123;
+    dialect: <span class="hljs-string">'mysql'</span>,        <span class="hljs-comment">// 所用数据库为 MySQL</span>
+    host: <span class="hljs-string">'localhost'</span>,       <span class="hljs-comment">// 连接配置</span>
+    port: <span class="hljs-number">3306</span>,
+    username: <span class="hljs-string">'icejs_todos'</span>,
+    password: <span class="hljs-string">'icejs_todos'</span>,
+    database: <span class="hljs-string">'icejs_todos'</span>,
+    define: &#123;
+      freezeTableName: <span class="hljs-literal">true</span>,  <span class="hljs-comment">// 保持数据库中表名不变，避免 admin 变为 admins</span>
+    &#125;
+  &#125;
+
+  <span class="hljs-comment">// ...</span>
+&#125;;</code></pre>
+
+
+</li>
+</ul>
+<h4 id="连接示例"><a href="#连接示例" class="headerlink" title="连接示例"></a>连接示例</h4><p>下面以查询数据库中的所有 todos 为例演示如何查询数据。即访问 <a href="http://localhost:3001/api/todos" target="_blank" rel="noopener">http://localhost:3001/api/todos</a> 路由查看所有 todos。</p>
+<ol>
+<li><p>为 todos 表建立 model<br>建立 app/model/todos.js 文件，实现 model Todos 与 MySQL 数据表 todos 的对应。</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// app/model/todos.js</span>
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-params">app</span> =&gt;</span> &#123;
+  <span class="hljs-keyword">const</span> &#123; STRING &#125; = app.Sequelize;
+
+  <span class="hljs-keyword">const</span> Todos = app.model.define(<span class="hljs-string">'todos'</span>, &#123;
+    id: &#123; <span class="hljs-attr">type</span>: STRING(<span class="hljs-number">45</span>), <span class="hljs-attr">primaryKey</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">allowNull</span>: <span class="hljs-literal">false</span> &#125;,
+    content: <span class="hljs-built_in">JSON</span>,
+    openId: STRING(<span class="hljs-number">45</span>),
+  &#125;, &#123;
+    timestamps: <span class="hljs-literal">false</span>,
+  &#125;);
+
+  <span class="hljs-keyword">return</span> Todos;
+&#125;;</code></pre>
+</li>
+<li><p>具体查询<br>建立 app/controller/admin/todos.js 文件，通过 Todos model 查询相应数据，并添加到返回体中。</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// app/controller/admin/todos.js</span>
+<span class="hljs-keyword">const</span> Controller = <span class="hljs-built_in">require</span>(<span class="hljs-string">'egg'</span>).Controller;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TodosController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span> </span>&#123;
+  <span class="hljs-keyword">async</span> list() &#123;
+    <span class="hljs-keyword">const</span> &#123; ctx, app &#125; = <span class="hljs-keyword">this</span>;
+
+    <span class="hljs-comment">// 查询所有 todos</span>
+    <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> app.model.Todos.findAndCountAll();
+
+    <span class="hljs-comment">// 添加到返回体上</span>
+    ctx.body = &#123;
+      code: <span class="hljs-number">1000</span>,
+      data: &#123;
+        total: res.count,
+        list: res.rows,
+      &#125;,
+    &#125;;
+  &#125;
+&#125;
+
+<span class="hljs-built_in">module</span>.exports = TodosController;</code></pre>
+</li>
+<li><p>添加路由 /api/todos 实现访问该路由返回所有 Todos 数据。</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// app/router.js</span>
+<span class="hljs-keyword">const</span> ROUTER_PREFIX = <span class="hljs-string">'/api'</span>;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * @param &#123;Egg.Application&#125; app - egg application</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-params">app</span> =&gt;</span> &#123;
+  <span class="hljs-keyword">const</span> &#123; router, controller &#125; = app;
+  
+  <span class="hljs-comment">// ...</span>
+
+  <span class="hljs-comment">// todos 路由 /api/todos</span>
+  router.get(<span class="hljs-string">`<span class="hljs-subst">$&#123;ROUTER_PREFIX&#125;</span>/todos`</span>, controller.admin.todos.list);
+&#125;;</code></pre>
+</li>
+<li><p>启动项目，查看效果</p>
+</li>
+</ol>
+<p>启动服务端</p>
+<pre><code class="hljs bash">$ npm run dev</code></pre>
+<p>浏览器访问 <a href="http://localhost:7001/api/todos" target="_blank" rel="noopener">http://localhost:7001/api/todos</a> 可看到所有 Todos。<br>    <img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598861614362-e3ba787b-bd1a-4bc3-9b4d-95fcb13c3736.png#align=left&display=inline&height=1026&margin=%5Bobject%20Object%5D&originHeight=1026&originWidth=1920&status=done&style=none&width=1920" alt=""></p>
+<h3 id="账户管理"><a href="#账户管理" class="headerlink" title="账户管理"></a>账户管理</h3><h4 id="后台管理系统"><a href="#后台管理系统" class="headerlink" title="后台管理系统"></a>后台管理系统</h4><p>功能包括账户的登录/登出与对用户请求的权限验证。</p>
+<p><strong>登录/登出</strong></p>
+<p>首先添加 admin Model，实现到数据库表 admin 的映射。Controller 中可调用该 model 查询或添加管理员。</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// app/model/admin.js</span>
+<span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-params">app</span> =&gt;</span> &#123;
+  <span class="hljs-keyword">const</span> &#123; STRING, INTEGER &#125; = app.Sequelize;
+
+  <span class="hljs-keyword">const</span> Admin = app.model.define(<span class="hljs-string">'admin'</span>, &#123;
+    id: &#123; <span class="hljs-attr">type</span>: INTEGER, <span class="hljs-attr">primaryKey</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">allowNull</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">autoIncrement</span>: <span class="hljs-literal">true</span> &#125;,
+    username: STRING(<span class="hljs-number">63</span>),
+    password: STRING(<span class="hljs-number">63</span>),
+  &#125;, &#123;
+    timestamps: <span class="hljs-literal">false</span>,
+  &#125;);
+
+  <span class="hljs-keyword">return</span> Admin;
+&#125;;</code></pre>
+<p>配置 session，标识用户账户状态（登录态/登出态）</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// app/config/config.default.js</span>
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-params">appInfo</span> =&gt;</span> &#123;
+  <span class="hljs-comment">// ...</span>
+  
+  <span class="hljs-comment">// disable csrf 避免前端跨域发起 POST 请求时，请求被拦截</span>
+  config.security = &#123;
+    csrf: &#123;
+      enable: <span class="hljs-literal">false</span>,
+    &#125;,
+  &#125;;
+
+  <span class="hljs-comment">// session</span>
+  <span class="hljs-keyword">const</span> authKey = <span class="hljs-string">'icejs-todos'</span>;
+  config.session = &#123;
+    key: authKey,
+    maxAge: <span class="hljs-number">24</span> * <span class="hljs-number">3600</span> * <span class="hljs-number">1000</span>, <span class="hljs-comment">// 有效期 1 天</span>
+    httpOnly: <span class="hljs-literal">true</span>,
+    encrypt: <span class="hljs-literal">true</span>,            <span class="hljs-comment">// 加密</span>
+  &#125;;
+  
+  <span class="hljs-comment">// session auth key</span>
+  config.authKey = authKey;
+  
+  <span class="hljs-comment">// ...</span>
+&#125;;</code></pre>
+<p>添加 controller 处理登录/登出逻辑</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// app/controller/admin/auth.js</span>
+<span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">const</span> Controller = <span class="hljs-built_in">require</span>(<span class="hljs-string">'egg'</span>).Controller;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span> </span>&#123;
+  <span class="hljs-keyword">async</span> login() &#123;
+    <span class="hljs-keyword">const</span> &#123; ctx, app &#125; = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">const</span> &#123; authKey &#125; = app.config;
+    <span class="hljs-keyword">const</span> formData = ctx.request.body;
+    <span class="hljs-keyword">const</span> &#123; name, password &#125; = formData; <span class="hljs-comment">// 获取用户名及密码</span>
+
+    <span class="hljs-comment">// 查询用户是否存在</span>
+    <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> app.model.Admin.findAll(&#123;
+      where: &#123;
+        username: name,
+        password,
+      &#125;,
+    &#125;);
+
+    <span class="hljs-keyword">let</span> code = <span class="hljs-number">2000</span>;
+
+    <span class="hljs-keyword">if</span> (user.length) &#123;
+      code = <span class="hljs-number">1000</span>;
+      <span class="hljs-comment">// 通过 session 保存登录状态</span>
+      ctx.session.auth = authKey;
+    &#125;
+
+    ctx.body = &#123;
+      code,
+    &#125;;
+  &#125;
+
+  <span class="hljs-keyword">async</span> logout() &#123;
+    <span class="hljs-keyword">const</span> &#123; ctx &#125; = <span class="hljs-keyword">this</span>;
+    ctx.body = &#123;
+      code: <span class="hljs-number">1000</span>,
+    &#125;;
+    <span class="hljs-comment">// 登出后清除登录状态</span>
+    ctx.session.auth = <span class="hljs-literal">null</span>;
+  &#125;
+&#125;
+
+<span class="hljs-built_in">module</span>.exports = AuthController;</code></pre>
+<p>配置路由，前端可通过 API 进行登录和登出</p>
+<pre><code class="hljs javascript"><span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">const</span> ROUTER_PREFIX = <span class="hljs-string">'/api'</span>;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * @param &#123;Egg.Application&#125; app - egg application</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-params">app</span> =&gt;</span> &#123;
+  <span class="hljs-keyword">const</span> &#123; router, controller &#125; = app;
+
+  <span class="hljs-comment">// ############### admin #############</span>
+  <span class="hljs-comment">// auth</span>
+  router.post(<span class="hljs-string">`<span class="hljs-subst">$&#123;ROUTER_PREFIX&#125;</span>/auth/login`</span>, controller.admin.auth.login);
+  router.get(<span class="hljs-string">`<span class="hljs-subst">$&#123;ROUTER_PREFIX&#125;</span>/auth/logout`</span>, controller.admin.auth.logout);
+  
+  <span class="hljs-comment">// ...</span>
+&#125;;</code></pre>
+<p>此时后台管理系统登录登出功能已完成。</p>
+<p><strong>鉴权</strong></p>
+<p>对于某些操作需要对用户进行鉴权，如添加 Todo（/api/todos/add）。<br>鉴权可通过中间件 middleware 的形式。</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// app/middleware/auth.js</span>
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function">(<span class="hljs-params">options = &#123;&#125;</span>) =&gt;</span> &#123;
+  <span class="hljs-keyword">const</span> &#123; authKey &#125; = options;
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">ctx, next</span>) </span>&#123;
+    <span class="hljs-keyword">const</span> auth = ctx.session.auth;
+    <span class="hljs-comment">// 根据 session 鉴权</span>
+    <span class="hljs-keyword">if</span> (auth === authKey) &#123;
+      <span class="hljs-keyword">await</span> next();
+    &#125; <span class="hljs-keyword">else</span> &#123;
+      ctx.body = &#123;
+        code: <span class="hljs-number">2000</span>,
+        msg: <span class="hljs-string">'auth fail'</span>,
+      &#125;;
+      <span class="hljs-keyword">return</span>;
+    &#125;
+  &#125;;
+&#125;;</code></pre>
+<p>对需要鉴权的操作启用该中间件</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// app/router.js</span>
+<span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">const</span> ROUTER_PREFIX = <span class="hljs-string">'/api'</span>;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * @param &#123;Egg.Application&#125; app - egg application</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-params">app</span> =&gt;</span> &#123;
+  <span class="hljs-keyword">const</span> &#123; router, controller, middleware &#125; = app;
+  <span class="hljs-keyword">const</span> authMiddleware = middleware.auth(&#123;
+    authKey: app.config.authKey,
+  &#125;);
+
+  <span class="hljs-comment">// /api/todos/add 路由启用 authMiddleware</span>
+  <span class="hljs-comment">// 此处未编写 controller.admin.todos.add，仅做示例说明，可自行添加。</span>
+  router.post(<span class="hljs-string">`<span class="hljs-subst">$&#123;ROUTER_PREFIX&#125;</span>/todos/add`</span>, authMiddleware, controller.admin.todos.add);
+&#125;;</code></pre>
+<p>后台管理系统的账户管理功能已完成。<br>主要使用情形包括：</p>
+<ul>
+<li><p>前端发起登录请求（用户名，密码）-&gt;服务端验证用户信息-&gt;验证通过-&gt;返回登录凭证（session）</p>
+</li>
+<li><p>前端发起登出请求-&gt;服务端删除登录凭证（session）</p>
+</li>
+<li><p>前端访问需登录接口-&gt;服务端验证登录信息（session）-&gt;验证通过-&gt;返回数据</p>
+<h4 id="小程序"><a href="#小程序" class="headerlink" title="小程序"></a>小程序</h4><p>小程序的登录凭证为 openId，从微信开放数据中获取。<br>具体逻辑为：</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// app/controller/miniapp/auth.js</span>
+<span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">const</span> Controller = <span class="hljs-built_in">require</span>(<span class="hljs-string">'egg'</span>).Controller;
+
+<span class="hljs-comment">// 获取 openId</span>
+<span class="hljs-comment">// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">code2Session</span>(<span class="hljs-params">ctx, &#123; appId, appSecret, code, grantType = <span class="hljs-string">'authorization_code'</span> &#125;</span>) </span>&#123;
+  <span class="hljs-keyword">const</span> URL = <span class="hljs-string">'https://api.weixin.qq.com/sns/jscode2session'</span>;
+  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> ctx.curl(<span class="hljs-string">`<span class="hljs-subst">$&#123;URL&#125;</span>?appid=<span class="hljs-subst">$&#123;appId&#125;</span>&amp;secret=<span class="hljs-subst">$&#123;appSecret&#125;</span>&amp;js_code=<span class="hljs-subst">$&#123;code&#125;</span>&amp;grant_type=<span class="hljs-subst">$&#123;grantType&#125;</span>`</span>, &#123;
+    dataType: <span class="hljs-string">'json'</span>,
+  &#125;);
+  <span class="hljs-keyword">return</span> result.data;
+&#125;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span> </span>&#123;
+  <span class="hljs-keyword">async</span> login() &#123;
+    <span class="hljs-keyword">const</span> &#123; ctx, app &#125; = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">const</span> formData = ctx.request.body;
+    <span class="hljs-keyword">const</span> &#123; code &#125; = formData; <span class="hljs-comment">// code 在小程序端通过 wx.login 获取</span>
+
+    <span class="hljs-keyword">const</span> &#123; appId, appSecret &#125; = app.config.miniapp;
+
+    <span class="hljs-keyword">const</span> session = <span class="hljs-keyword">await</span> code2Session(ctx, &#123;
+      appId,
+      appSecret,
+      code,
+    &#125;);
+
+    <span class="hljs-keyword">const</span> &#123; <span class="hljs-attr">openid</span>: openId &#125; = session;
+
+    <span class="hljs-comment">// openId 保存至数据库</span>
+    <span class="hljs-keyword">await</span> app.model.Users.findOrCreate(&#123;
+      where: &#123;
+        openId,
+      &#125;,
+    &#125;);
+
+    ctx.body = &#123;
+      code: <span class="hljs-number">1000</span>,
+      data: &#123;
+        openId,
+      &#125;,
+    &#125;;
+  &#125;
+&#125;
+
+<span class="hljs-built_in">module</span>.exports = AuthController;</code></pre>
+<p>添加路由</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// app/router.js</span>
+<span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">const</span> ROUTER_PREFIX = <span class="hljs-string">'/api'</span>;
+<span class="hljs-keyword">const</span> MINIAPP_PREFIX = <span class="hljs-string">'/mp'</span>;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * @param &#123;Egg.Application&#125; app - egg application</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-params">app</span> =&gt;</span> &#123;
+  <span class="hljs-keyword">const</span> &#123; router, controller &#125; = app;
+
+  <span class="hljs-comment">// ############### miniapp #############</span>
+  <span class="hljs-comment">// auth</span>
+  router.post(<span class="hljs-string">`<span class="hljs-subst">$&#123;ROUTER_PREFIX&#125;</span><span class="hljs-subst">$&#123;MINIAPP_PREFIX&#125;</span>/auth/login`</span>, controller.miniapp.auth.login);
+  
+  <span class="hljs-comment">// ...</span>
+&#125;;</code></pre>
+<p>小程序的账户管理逻辑完成。<br>主要使用情形有：</p>
+</li>
+<li><p>用户发起登录请求（code wx.login 获取）-&gt; 服务端获取 openId，并返回</p>
+</li>
+<li><p>用户发起操作请求（携带 openId）-&gt;服务端执行操作（依据 openId）</p>
+<h3 id="API-设计"><a href="#API-设计" class="headerlink" title="API 设计"></a>API 设计</h3></li>
+</ul>
+<p>分别为后台管理系统和小程序设置不同 API 路由。<br>后台管理系统 API 前缀为  <code>/api</code><br>小程序 API 前缀为 <code>/api/mp</code> </p>
+<h4 id="API-路由列表"><a href="#API-路由列表" class="headerlink" title="API 路由列表"></a>API 路由列表</h4><ul>
+<li>后台管理系统<ul>
+<li><code>/api/auth/roles</code> 获取用户权限</li>
+<li><code>/api/auth/login</code> 登录</li>
+<li><code>/api/auth/logout</code> 登出</li>
+<li><code>/api/users</code> 获取用户列表</li>
+<li><code>/api/todos</code> 获取 Todo 列表</li>
+<li><code>/api/todos/add</code> 添加 Todo</li>
+<li><code>/api/todo/edit</code> 编辑 Todo</li>
+<li><code>/api/todo/del/:id</code> 删除 Todo</li>
+<li><code>/api/todo/view/:id</code> 查看 Todo</li>
+</ul>
+</li>
+<li>小程序<ul>
+<li><code>/api/mp/auth/login</code> 登录</li>
+<li><code>/api/mp/todos</code> 获取 Todo 列表</li>
+<li><code>/api/mp/todos/add</code> 添加 Todo</li>
+<li><code>/api/mp/todo/edit</code> 编辑 Todo</li>
+<li><code>/api/mp/todo/del/:id</code> 删除 Todo</li>
+<li><code>/api/mp/todo/view/:id</code> 查看 Todo</li>
+<li><code>/api/mp/user/edit</code> 更改用户信息</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598861644202-bc0e8bee-43fc-4f75-ad1b-78af4151dc98.png#align=left&display=inline&height=769&margin=%5Bobject%20Object%5D&originHeight=769&originWidth=949&status=done&style=none&width=949" alt=""></p>
+<h4 id="API-实现"><a href="#API-实现" class="headerlink" title="API 实现"></a>API 实现</h4><p>连接数据库-连接示例小节介绍了 <code>/api/todos</code> 获取 Todo 列表的逻辑；账户管理小节介绍了 <code>/api/auth/login</code><br>、 <code>/api/auth/logout</code> 及 <code>/api/mp/auth/login</code> 的逻辑。<br>其余 API 与以上所介绍内容类似，不再详细介绍。可查看 <a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/server/app/controller" target="_blank" rel="noopener">icejs-miniapp-admin#/controller</a></p>
+<h3 id="前后端联调"><a href="#前后端联调" class="headerlink" title="前后端联调"></a>前后端联调</h3><p>当服务端完成后，便可使用真实后端接口替换小程序篇及后台管理系统篇开发时使用的 Mock 接口。</p>
+<h4 id="小程序-1"><a href="#小程序-1" class="headerlink" title="小程序"></a>小程序</h4><p>以获取 Todo 列表为例</p>
+<ul>
+<li><p>修改 todos service</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// src/services/todos.js</span>
+<span class="hljs-keyword">import</span> request <span class="hljs-keyword">from</span> <span class="hljs-string">'universal-request'</span>;
+
+<span class="hljs-comment">// 替换原有 mock 接口</span>
+<span class="hljs-keyword">const</span> URL_PREFIX = <span class="hljs-string">'http://localhost:7001/api/mp'</span>;
+
+<span class="hljs-comment">// // 此处为 mock 接口，仅包含查询固定 todos 列表。其他功能如对小程序的增删改查需要服务端</span>
+<span class="hljs-comment">// const URL_PREFIX = 'https://easy-mock.bookset.io/mock/5f4f05642ff5d50508b3d21b/todos_mock'</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+  <span class="hljs-keyword">async</span> list (&#123; openId &#125;) &#123;
+    <span class="hljs-keyword">let</span> todos = [];
+    <span class="hljs-keyword">try</span> &#123;
+      <span class="hljs-keyword">const</span> URL = <span class="hljs-string">`<span class="hljs-subst">$&#123;URL_PREFIX&#125;</span>/todos?openId=<span class="hljs-subst">$&#123;openId&#125;</span>`</span>;
+      <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> request(&#123;
+        url: URL
+      &#125;);
+      todos = res.data.data.todos;
+    &#125; <span class="hljs-keyword">catch</span> (err) &#123;
+      <span class="hljs-built_in">console</span>.error(err);
+    &#125;
+    <span class="hljs-keyword">return</span> todos;
+  &#125;
+&#125;;</code></pre>
+</li>
+<li><p>todos 页面中调用</p>
+<pre><code class="hljs jsx"><span class="hljs-comment">// src/pages/todos/index.jsx</span>
++ <span class="hljs-keyword">import</span> todosService <span class="hljs-keyword">from</span> <span class="hljs-string">'@/services/todos'</span>; <span class="hljs-comment">// 引入 todos service</span>
+
+<span class="hljs-keyword">const</span> Todos = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;
+  <span class="hljs-comment">// ...</span>
+  <span class="hljs-comment">// lifecycle function</span>
+  <span class="hljs-comment">// usePageShow 函数修改如下</span>
+  usePageShow(<span class="hljs-keyword">async</span> () =&gt; &#123;
+    <span class="hljs-comment">// 通过数据请求获取 Todos 数据</span>
+    <span class="hljs-keyword">const</span> openId = <span class="hljs-string">'1'</span>; <span class="hljs-comment">// 此处省略 openId 获取逻辑</span>
+    <span class="hljs-keyword">const</span> todos = <span class="hljs-keyword">await</span> todosService.list(openId);
+    setTodos(todos);
+  &#125;)
+
+  <span class="hljs-keyword">return</span> (
+    <span class="hljs-comment">// 渲染 todos</span>
+  );
+&#125;;</code></pre>
+<p>Todo 的增删改查逻辑与获取 Todo 列表类似。可直接查看</p>
+<h4 id="后台管理系统-1"><a href="#后台管理系统-1" class="headerlink" title="后台管理系统"></a>后台管理系统</h4><p>后台管理系统篇已将各接口及调用逻辑编写完整，只需编辑 build.json 将接口地址指向服务端即可</p>
+<pre><code class="hljs json">// build.json
+&#123;
+  <span class="hljs-attr">"proxy"</span>: &#123;
+    <span class="hljs-attr">"/api"</span>: &#123;
+      <span class="hljs-attr">"enable"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"target"</span>: <span class="hljs-string">"http://localhost:7001"</span>
+    &#125;
+  &#125;
+&#125;</code></pre>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3></li>
+</ul>
+<p>服务端已完成。数据存储在 MySQL 数据库中，前端应用可通过 API 接口与后端交互。</p>
+<p>本文介绍了服务端的开发，主要包括数据库的设计及具体使用；账户系统的设计及实现；整体 API 的设计。</p>
+<p>项目代码见 <a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/server" target="_blank" rel="noopener">icejs-miniapp-admin/server</a>。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>到此为止，如何同时开发小程序+中后台应用（feat: icejs）内容已全部完成。</p>
+<p>通过三篇文章</p>
+<ul>
+<li>小程序篇</li>
+<li>后台管理系统篇</li>
+<li>服务端篇</li>
+</ul>
+<p>进行说明。</p>
+<p>以开发一个 Todo 小程序及后台管理系统为例，并提供相应的服务端，演示了如何使用 icejs 同时开发小程序和中后台应用。</p>
+<p>项目代码包括：</p>
+<ul>
+<li>小程序 <a href="https://github.com/ice-lab/miniprogram-materials/tree/master/scaffolds/todos" target="_blank" rel="noopener">miniprogram-materials/scaffolds/todos</a></li>
+<li>后台管理系统 <a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/client" target="_blank" rel="noopener">icejs-miniapp-admin/client</a></li>
+<li>服务端 <a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/server" target="_blank" rel="noopener">icejs-miniapp-admin/server</a></li>
+</ul>
+<p>文章中未详细描述的内容可直接查看以上代码。也可运行上述代码查看效果。</p>
+<p>小程序已发布，可微信搜索** icejs todos 示例** 或直接扫描下方小程序码体验。</p>
+<blockquote>
+<p>因微信小程序限制，个人主体无法发布备忘录性质小程序。该实例仅包含展示页面。</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/2070295/1598521000847-41b20dba-08f0-4248-be35-dc3cfaf4dc45.jpeg#align=left&display=inline&height=258&margin=%5Bobject%20Object%5D&originHeight=258&originWidth=258&status=done&style=none&width=258" alt=""></p>
+<p>使用 icejs 开发小程序和中后台应用，使得开发者免于在不同技术栈中切换，减少学习成本和使用不同技术栈带来的切换成本，提升开发效率。</p>
+<p>欢迎使用 icejs 开发小程序和提供反馈！</p>
+<h2 id="推荐阅读及参考"><a href="#推荐阅读及参考" class="headerlink" title="推荐阅读及参考"></a>推荐阅读及参考</h2><ul>
+<li><a href="https://ice.work/" target="_blank" rel="noopener">飞冰</a></li>
+<li><a href="https://ice.work/docs/miniprogram/start" target="_blank" rel="noopener">icejs 小程序官方文档</a></li>
+<li><a href="https://eggjs.org/" target="_blank" rel="noopener">eggjs</a></li>
+<li><a href="https://eggjs.org/zh-cn/tutorials/sequelize.html" target="_blank" rel="noopener">eggjs sequelize 教程</a></li>
+<li><a href="https://github.com/ice-lab/miniprogram-materials/tree/master/scaffolds/todos" target="_blank" rel="noopener">Todos 小程序代码</a></li>
+<li><a href="https://github.com/ice-lab/icejs-miniapp-admin/client" target="_blank" rel="noopener">Todos 后台管理系统代码</a></li>
+<li><a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/server" target="_blank" rel="noopener">Todos 服务端代码</a></li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/10/12/ELK-stack/" class="prev">PREV</a><a href="/2020/10/12/icejs-todos-management/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>

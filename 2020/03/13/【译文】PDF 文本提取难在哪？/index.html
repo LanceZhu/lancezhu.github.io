@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> PDF 文本提取难在哪？ · f00bar</title><meta name="description" content="PDF 文本提取难在哪？ - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PDF文本提取难在哪"><span class="toc-number">1.</span> <span class="toc-text">PDF文本提取难在哪?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PDF-读保护"><span class="toc-number">1.1.</span> <span class="toc-text">PDF 读保护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#页面外字符"><span class="toc-number">1.2.</span> <span class="toc-text">页面外字符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#页面中的小或不可见字符"><span class="toc-number">1.3.</span> <span class="toc-text">页面中的小或不可见字符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过多空格"><span class="toc-number">1.4.</span> <span class="toc-text">过多空格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#没有足够的空格"><span class="toc-number">1.5.</span> <span class="toc-text">没有足够的空格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内嵌字体"><span class="toc-number">1.6.</span> <span class="toc-text">内嵌字体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文字和段落识别"><span class="toc-number">1.7.</span> <span class="toc-text">文字和段落识别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文本和段落顺序"><span class="toc-number">1.8.</span> <span class="toc-text">文本和段落顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内嵌图片"><span class="toc-number">1.9.</span> <span class="toc-text">内嵌图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么不总是通过-OCR-识别？"><span class="toc-number">1.10.</span> <span class="toc-text">为什么不总是通过 OCR 识别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-number">1.11.</span> <span class="toc-text">测试</span></a></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">PDF 文本提取难在哪？</h1><div class="post-info">Mar 13, 2020</div><div class="post-content"><h1 id="PDF文本提取难在哪"><a href="#PDF文本提取难在哪" class="headerlink" title="PDF文本提取难在哪?"></a>PDF文本提取难在哪?</h1><blockquote>
+<p>原文地址：<a href="https://www.filingdb.com/pdf-text-extraction" target="_blank" rel="noopener">What’s so hard about PDF text extraction?</a></p>
+<p>译者：<a href="https://f00bar.cn/" target="_blank" rel="noopener">f00bar/LanceZhu</a></p>
+<p>译文仅供个人学习，不用于任何形式商业目的，转载请注明文章来源、翻译作者及译文链接，版权归原文作者所有。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>译者按：直观感觉，PDF 中复制文本应当如从 Microsoft Word 中复制文本一样容易。然而事实是，并不能从 PDF 中直接选择复制文本。本文则指出了导致 PDF 文本提取的几个难点，并予以例证，解决了存在的疑惑。还简要给出了 PDF 文本提取的方案。</p>
+</blockquote>
+<hr>
+<p>大家通常认为从 PDF 文件中提取文本不会太难。毕竟文字就在我们眼前而且我们也一直非常成功地消费着 PDF 格式的内容。那么，为什么自动提取文本数据这么难呢？</p>
+<p><a href="https://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/" target="_blank" rel="noopener">处理人名的难点在于存在大量的边界情况和错误假设</a>，处理 PDF 文件的难点则在于 PDF 格式的极度灵活性。</p>
+<p>PDF 格式的主要问题在于其并不是作为输入数据格式来设计的，而是被设计成一种能够精细地调整以适应目标外观的输出格式。</p>
+<p>PDF格式的核心点为用来描述如何绘制页面的一系列指令。特别是文本数据不是以段落甚至以单字来存储的，而是作为放置在页面固定位置的字符来存储。这样做的结果就是，当把文本文件转为 PDF 后，大部分文本语义丢失了，内在的文本结构在页面中也异常混乱。</p>
+<p>作为构建 <a href="https://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/" target="_blank" rel="noopener">FilingDB</a> 的一部分，我们提取了上万份 PDF 文件中的文本数据。在这个过程中，我们做的关于 PDF 文件是如何被组织的假设全被推翻了。我们要处理来自各种源，各种样式、排版的 PDF 文件，这更加增加了文本提取的难度。</p>
+<p>以下列出了一些使文本提取工作操作困难甚至不可能的 PDF 处理方法。</p>
+<h2 id="PDF-读保护"><a href="#PDF-读保护" class="headerlink" title="PDF 读保护"></a>PDF 读保护</h2><p>你可能遇到过 PDF 禁止复制其内容的情况。比如说，这里是当从 SumatraPDF 中尝试复制一份禁止复制的文件时的结果。</p>
+<p><img src="https://static.wixstatic.com/media/81906c_79a1e440e9634570a032d9f9a8da2aa0~mv2.png/v1/fill/w_748,h_208,al_c,q_85,usm_0.66_1.00_0.01/1.webp" alt=""></p>
+<p>有趣的是，文本是可见的但是 PDF 阅读器仍拒绝将高亮部分内容复制到剪切板上。</p>
+<p>这是通过设置 访问控制 标志位实现的，其中的一个标志位控制着是否允许复制内容。但是我们要知道这种限制并不是由 PDF 文件内部强制实现，PDF 的实际内容并没有收到影响而是取决于 PDF 阅读器遵循标志位来限制文本复制。</p>
+<p>更不必说，这种限制根本不会对 PDF 内容的提取起到保护作用，因为任何稍复杂的 PDF 处理库都会允许使用者选择遵循或忽略标志位。</p>
+<h2 id="页面外字符"><a href="#页面外字符" class="headerlink" title="页面外字符"></a>页面外字符</h2><p>相较于肉眼可见的文本，PDF 文件中通常包含更多文本内容。以2010年 Nestle 年度报告来说。</p>
+<p><img src="https://static.wixstatic.com/media/81906c_d3da4ca8f50c4776a27f2b340ad3b16c~mv2.png/v1/fill/w_619,h_773,al_c,lg_1,q_90/Picture2.webp" alt=""></p>
+<p>相较于肉眼所见的部分，这个页面中包含更多的文字。具体就是，以下内容可以在页面里找到。</p>
+<blockquote>
+<p>“KitKat celebrated its 75th anniversary in 2010 but remains young and in touch with trends, having over 2.5 million Facebook fans. It is sold in over 70 countries and enjoys good growth in the developed world and emerging markets, such as the Middle East, India and Russia. Japan is its second biggest market.” </p>
+</blockquote>
+<p>这类文本通常被插在页面边界外，因此不会被大多数 PDF 阅读器显示出来，但是它们确实存在于 PDF 文件中，可以通过程序提取出来。</p>
+<p>这种情况时常发生于排版过程中的文本移除或替代的最后决策。</p>
+<h2 id="页面中的小或不可见字符"><a href="#页面中的小或不可见字符" class="headerlink" title="页面中的小或不可见字符"></a>页面中的小或不可见字符</h2><p>PDF 偶尔会在页面中引入非常小的或者不可见字符。例如，下面是2010年 Nestle年度报告中的一页。</p>
+<p><img src="https://static.wixstatic.com/media/81906c_4c44717e024f422188d867b30a2c338e~mv2.png/v1/fill/w_748,h_393,al_c,q_85,usm_0.66_1.00_0.01/Picture3.webp" alt=""></p>
+<p>这个页面在白色背景中包含了以下白色小字：</p>
+<blockquote>
+<p>“Wyeth Nutrition logo Identity Guidance to markets</p>
+<p>​        Vevey Octobre 2012 RCC/CI&amp;D”</p>
+</blockquote>
+<p>有时这么做是出于可访问性的考量，类似于 <code>HTML</code> 中 <code>alt</code> 标签的作用。</p>
+<h2 id="过多空格"><a href="#过多空格" class="headerlink" title="过多空格"></a>过多空格</h2><p>有时 PDF 会在文字间插入额外的空格。这主要是为了调整字符间距。</p>
+<p><strong>例子：</strong>2013年 Hikma Pharma 年度报告中包含有以下内容。</p>
+<p><img src="https://static.wixstatic.com/media/81906c_519d88671701440788fb4db54148820f~mv2.png/v1/fill/w_748,h_165,al_c,q_85,usm_0.66_1.00_0.01/Picture4.webp" alt=""></p>
+<p>复制文本得到：</p>
+<blockquote>
+<p>“ch a i r m a n ‘ s s tat em en t” </p>
+</blockquote>
+<p>重构出原始文本通常来说是个困难的问题。我们采取的最有效的方法是利用 OCR 识别。</p>
+<h2 id="没有足够的空格"><a href="#没有足够的空格" class="headerlink" title="没有足够的空格"></a>没有足够的空格</h2><p>有时 PDF 中不包含空格或者是使用其他字符来替换掉空格。</p>
+<p><strong>例证1</strong>： 2017年 SEB 年度报告</p>
+<p><img src="https://static.wixstatic.com/media/81906c_c39121f329b141599870de1202862794~mv2.png/v1/fill/w_748,h_209,al_c,q_85,usm_0.66_1.00_0.01/Picture5.webp" alt=""></p>
+<p>提取文本：</p>
+<blockquote>
+<p>“Tenyearsafterthefinancialcrisisstarted” </p>
+</blockquote>
+<p><strong>例证2</strong>：2013你那 Eurobank 年度报告</p>
+<p><img src="https://static.wixstatic.com/media/81906c_77ea0a38c52c4bc49d9cf32c5564e5a2~mv2.png/v1/fill/w_748,h_129,al_c,q_85,usm_0.66_1.00_0.01/Picture6.webp" alt=""></p>
+<p>提取文本：</p>
+<blockquote>
+<p>“On_April_7,_2013,_the_competent_authorities” </p>
+</blockquote>
+<p>再次强调，我们在此类 PDF 中提取文本的最有效方法就是使用 OCR。</p>
+<h2 id="内嵌字体"><a href="#内嵌字体" class="headerlink" title="内嵌字体"></a>内嵌字体</h2><p>即使是退一步说，PDF 字体处理也是复杂的。为了理解 PDF 是如何存储文本数据的，我们首先要知道字形，字形名和字体。</p>
+<ul>
+<li><p>字形：一组用来描述如何绘制符号或字符的指令。</p>
+</li>
+<li><p>字形名：与字形相关的名称。</p>
+<p>例如<code>商标</code>之于</p>
+</li>
+<li><p>字体：一系列字形和与字形匹配的字形名。</p>
+<p>例如，大多数字体都会有一个为大多数人识别成 <code>a</code> 的字形，只是不同字体有不同的绘制方式。</p>
+</li>
+</ul>
+<p>在 PDF 中，字符被存作数字，称为”码点“。当在屏幕上绘制时，渲染器要经过以下过程：</p>
+<blockquote>
+<p>码点 -&gt; 字形名 -&gt; 字形</p>
+</blockquote>
+<p>比如说，一个 PDF 文档包含 码点 <code>116</code>，映射到字形名则为 <code>t</code>，再次映射到字形则为屏幕上的 <code>t</code>。</p>
+<p><img src="https://static.wixstatic.com/media/81906c_96f20d4ef14e4466b9c979ee34ac2f8d~mv2.png/v1/fill/w_750,h_345,al_c,lg_1,q_85/Picture7.webp" alt=""></p>
+<p>当下，大多数 PDF 文件使用标准码点编码。码点编码是指用来为码点赋予具体含义一组规则。例如：</p>
+<ul>
+<li>ASCII 和 Unicode 编码均使用码点来代表字符 <code>t</code>。</li>
+<li>Unicode 用笑脸 ☺ 代表 码点9786，在 ASCII 中则没有对应的符号。</li>
+</ul>
+<p>然而，PDF 文件有时会使用自定义编码规则。这可能看起来有些奇怪，但是这样的话就可以使用码点<code>1</code>来代表字符<code>t</code>。这种编码规会将码点<code>1</code>映射到字形名<code>c1</code>，然后在映射到字形<code>t</code>。</p>
+<p><img src="https://static.wixstatic.com/media/81906c_f10bbca89c5248fc9dfd8f8108eac484~mv2.png/v1/fill/w_750,h_345,al_c,lg_1,q_85/Picture8.webp" alt=""></p>
+<p>尽管对于人来说，最后的结果可能一致，但是机器则会感到疑惑。如果一个码点不遵循标注编码规则，那么就不可能通过编程得出码点 <code>1</code>、<code>2</code>、<code>3</code>分别代表什么。</p>
+<p>为什么一个 PDF 文件会包含非标准字体和编码呢？</p>
+<ul>
+<li>加大文本提取难度。</li>
+<li>使用字体子集。大多数字体包含非常多的码点，PDF  文件则可能只使用其中的一部分。为了节省空间，PDF 创建者把无用字形全部移除，然后创造一个更紧凑的子集字体，而这种字体有极大可能性使用非标准编码。</li>
+</ul>
+<p>对于此类问题的一个解决方案就是通过 OCR 识别建立字形到 unicode 的映射关系。这种方法可以使你将字体级别的编码转成 unicode 编码。例如：码点 <code>1</code>被映射到字形名<code>c1</code>，通过 OCR 识别，识别为字形<code>t</code>，在 unicode 编码中则为码点<code>116</code>。</p>
+<p>我们刚阐述的，<code>1</code> -&gt; <code>116</code>。这种编码关系的映射在 PDF 标准中称作 ToUnicode 映射。PDF 文件可以提供它们自己的 ToUnicode 映射表，但是这是可选的而且大多数都不这么做。</p>
+<h2 id="文字和段落识别"><a href="#文字和段落识别" class="headerlink" title="文字和段落识别"></a>文字和段落识别</h2><p>从混乱的字符集中重构出段落甚至文字都是一个困难的任务。</p>
+<p>PDF 文件仅提供了一组页面上的字符，文字和段落取决于消费者去识别。因为阅读是一个普遍的技巧，人类天生擅长做此类事情。</p>
+<p>处理此类问题的通用方法是使用一个分组或聚类算法来比较字符大小、位置和对齐来决定其是否为文字或段落。</p>
+<p>简单的实现方法复杂度很容易超过 O(n²) ，导致页面处理时间过长。</p>
+<h2 id="文本和段落顺序"><a href="#文本和段落顺序" class="headerlink" title="文本和段落顺序"></a>文本和段落顺序</h2><p>决定文本和段落顺序的困难性有两层原因。</p>
+<p>第一，有时根本没有正确的顺序。单列排版有很自然的阅读顺序，然而有着更独特排版的文件决定顺序则具有挑战性。举例来说，并不清晰以下的插入部分应当出现在其相邻文章的前中后位置。</p>
+<p><img src="https://static.wixstatic.com/media/81906c_f308ba1095f04834b7cfc388bf724143~mv2.png/v1/fill/w_748,h_460,al_c,q_85,usm_0.66_1.00_0.01/Picture9.webp" alt=""></p>
+<p>第二，即使对人来说可以决定顺序，但是是决定段落顺序仍是一个非常困难的问题，甚至对 AI 来说仍是困难的。这可能听起来是一个极端的陈述，然而会有在只有理解文本内容时才能得出正确段落顺序的情形。</p>
+<p>阅读以下两列结构的内容，描述如何做一个蔬菜沙拉。</p>
+<p><img src="https://static.wixstatic.com/media/81906c_b6163a284f024c56b59e37d35fefad67~mv2.png/v1/fill/w_750,h_179,al_c,q_85,usm_0.66_1.00_0.01/Picture11.webp" alt=""></p>
+<p>在西方世界里，阅读顺序通常是从左到右，自上及下。所以我们可以在不看其中内容的情况下将可能结果减少到两种情况： A B C D 和 A C B D。</p>
+<p>通过阅读其中内容，理解了文中所述，得知蔬菜应当先洗再切，我们便能得出 A C B D 才是正确顺序。通过算法来决定顺序则是困难的问题。</p>
+<p>话虽如此，在大多数情况下奏效的方法却是依赖 PDF 文件中文本存储的顺序。这通常与文本在创建时被插入的顺序相关，在包含多个段落的大文本中，插入顺序往往反映了写作者的意向顺序。</p>
+<h2 id="内嵌图片"><a href="#内嵌图片" class="headerlink" title="内嵌图片"></a>内嵌图片</h2><p>PDF 内容是扫描件的情况并不少见。在这种情况下，无法直接提取文本数据，我们只能通过 OCR 识别。</p>
+<p>比如2011年 Yell 的年度报告只能获得一份扫描件。</p>
+<p><img src="https://static.wixstatic.com/media/81906c_12d77b102507427e9e0c580e198a490e~mv2.png/v1/fill/w_535,h_753,al_c,q_90/Picture10.webp" alt=""></p>
+<h2 id="为什么不总是通过-OCR-识别？"><a href="#为什么不总是通过-OCR-识别？" class="headerlink" title="为什么不总是通过 OCR 识别？"></a>为什么不总是通过 OCR 识别？</h2><p>尽管 OCR 在以上一些问题中有帮助，但它仍有自己的一些缺点。</p>
+<ol>
+<li><p><strong>处理时间长</strong></p>
+<p>通过 OCR 识别 PDF 文档的时间通常要比直接从 PDF 中提取文本要高一个数量级。</p>
+</li>
+<li><p><strong>处理非标准字符和字形难</strong></p>
+<p>OCR 识别算法难以处理新兴字符，比如说笑脸，星星、圆圈、方块（在点状列表中使用），上标和复杂的数学符号等等。</p>
+</li>
+<li><p><strong>无文本顺序提示</strong></p>
+<p>在插入顺序（大多数情况下是正确的阅读顺序）的提示下，为 PDF 中提取出的文本排序会更容易。然而从图片中提取出的文本没有这种提示。</p>
+</li>
+</ol>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>到目前为止，我们未提到的困难是如何确认所提取出文本是否是正确的或者是预期的。我们得到的最有用方法是通过大量测试集去校验基础标准（比如说文本长度，空格文字比率）、更复杂的标准（比如说英文文本与不能识别文字的比率，数字占比）和检查异常标记比如可疑或非预期字符。</p>
+<p>所以，我们关于从 PDF 中提取文本的意见是什么呢？在进行 PDF 提取前确保没有更好的其它数据源。</p>
+<p>如果你感兴趣的数据只有 PDF 格式，那么你务必要意识到 PDF 文本提取是一个具有欺骗性的看似简单的问题，100% 正确提取的方案有可能是无法实现的。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/05/10/wsl/" class="prev">PREV</a><a href="/2020/03/10/blog-migration/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>

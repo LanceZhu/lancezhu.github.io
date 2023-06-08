@@ -1,0 +1,541 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> icejs-todos-management · f00bar</title><meta name="description" content="icejs-todos-management - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何同时开发小程序-中后台应用-feat-icejs-后台管理系统篇"><span class="toc-number">1.</span> <span class="toc-text">如何同时开发小程序+中后台应用(feat: icejs) - 后台管理系统篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number">1.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后台管理系统"><span class="toc-number">1.2.</span> <span class="toc-text">后台管理系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#项目初始化"><span class="toc-number">1.2.1.</span> <span class="toc-text">项目初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#起步"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">起步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#目录结构"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">目录结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面编写"><span class="toc-number">1.2.2.</span> <span class="toc-text">页面编写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#路由配置"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">路由配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#侧边栏配置"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">侧边栏配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据请求"><span class="toc-number">1.2.3.</span> <span class="toc-text">数据请求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#service-编写"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">service 编写</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mock-数据"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">Mock 数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#权限管理"><span class="toc-number">1.2.4.</span> <span class="toc-text">权限管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#项目逻辑"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">项目逻辑</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">1.2.5.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐阅读"><span class="toc-number">1.3.</span> <span class="toc-text">推荐阅读</span></a></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">icejs-todos-management</h1><div class="post-info">Oct 12, 2020</div><div class="post-content"><h1 id="如何同时开发小程序-中后台应用-feat-icejs-后台管理系统篇"><a href="#如何同时开发小程序-中后台应用-feat-icejs-后台管理系统篇" class="headerlink" title="如何同时开发小程序+中后台应用(feat: icejs) - 后台管理系统篇"></a>如何同时开发小程序+中后台应用(feat: icejs) - 后台管理系统篇</h1><blockquote>
+<p>知乎：<a href="https://zhuanlan.zhihu.com/p/217929230" target="_blank" rel="noopener">使用 React + icejs 开发一个完整的 Todo 应用 - 后台系统篇</a><br>语雀：<a href="https://www.yuque.com/f00bar/bsa44q/qov20h" target="_blank" rel="noopener">如何同时开发小程序+中后台应用(feat: icejs) - 后台管理系统篇</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://ice.work/" target="_blank" rel="noopener">icejs</a> 主要应用场景为开发中后台应用。但 <a href="mailto:icejs@1.7.0">icejs@1.7.0</a> 版本开始支持<a href="https://ice.work/docs/miniprogram/start" target="_blank" rel="noopener">小程序开发</a> 。如果你想使用 React 同时开发中后台应用和小程序，那么 icejs 即可满足你。使用同一套技术体系，减少技术切换成本，提高研发效率。</p>
+</blockquote>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文将演示如何使用 icejs 构建 Todo 小程序 + 后台管理系统，同时包括相应服务端。</p>
+<p>Todo 应用的功能或需求为：</p>
+<ul>
+<li>小程序端：展示 Todo 列表，支持增删改查，以及同步数据到服务端。</li>
+<li>后台管理系统：小程序用户信息和增删改查的管理系统。</li>
+</ul>
+<p>整体的技术栈设计如下：</p>
+<ul>
+<li>*<em>小程序 *</em><ul>
+<li>icejs 框架</li>
+<li>universal-request 数据请求</li>
+</ul>
+</li>
+<li><strong>后台管理系统</strong><ul>
+<li>icejs 框架</li>
+<li>icejs build-plugin-ice-auth 插件，权限管理</li>
+<li>fusion design UI 组件库</li>
+</ul>
+</li>
+<li><strong>服务端</strong> + <strong>数据库</strong><ul>
+<li>eggjs 服务端框架</li>
+<li>egg-sequelize + mysql2 用于 eggjs 连接 MySQL 数据库</li>
+<li>MySQL 数据库</li>
+<li>uuid 唯一 id 生成</li>
+</ul>
+</li>
+</ul>
+<p>因篇幅较长，如何同时开发小程序+中后台应用（feat: icejs）将分为三篇分别介绍。</p>
+<ul>
+<li>小程序篇</li>
+</ul>
+<p>使用 icejs 开发 Todo 小程序。</p>
+<ul>
+<li>后台管理系统篇（本文）</li>
+</ul>
+<p>使用 icejs 开发 Todo 小程序后台管理系统。</p>
+<ul>
+<li>服务端篇</li>
+</ul>
+<p>搭建服务 Todo 小程序及后台管理系统的服务端。</p>
+<h2 id="后台管理系统"><a href="#后台管理系统" class="headerlink" title="后台管理系统"></a>后台管理系统</h2><blockquote>
+<p>项目代码见 <a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/client" target="_blank" rel="noopener">icejs-miniapp-admin/client</a><br>后台管理系统基于 <a href="https://ice.work/docs/guide/about" target="_blank" rel="noopener">icejs</a></p>
+</blockquote>
+<p>后台管理系统实现对小程序内容的管理。</p>
+<p>具体功能包括：</p>
+<ul>
+<li>账户登录/登出</li>
+<li>用户列表查看、查看某个用户所有代办事项（Todo）</li>
+<li>代办事项列表查看、增删改查</li>
+</ul>
+<h3 id="项目初始化"><a href="#项目初始化" class="headerlink" title="项目初始化"></a>项目初始化</h3><h4 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h4><p>创建文件夹存放后台管理系统代码</p>
+<pre><code class="hljs bash">$ mkdir icejs-todos/client -p &amp;&amp; <span class="hljs-built_in">cd</span> icejs-todos/client</code></pre>
+
+
+<p>基于 React 模板 <a href="https://ice.work/scaffold" target="_blank" rel="noopener">Fusion Design Pro - JS</a> 创建项目</p>
+<blockquote>
+<p>后台管理系统绝大部分内容基于该模板，可先尝试熟悉该模板。</p>
+</blockquote>
+<pre><code class="hljs bash">$ npm init ice . @alifd/fusion-design-pro-js <span class="hljs-comment"># 当前目录初始化项目</span></code></pre>
+
+
+<p>启动项目</p>
+<pre><code class="hljs bash">$ npm install &amp;&amp; npm run start
+
+<span class="hljs-comment"># 打开浏览器 http://localhost:3333 可看到项目正常启动</span></code></pre>
+
+
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598520996962-f9a09e46-d343-4862-b277-51cd5be73f17.png#align=left&display=inline&height=900&margin=%5Bobject%20Object%5D&originHeight=900&originWidth=1890&status=done&style=none&width=1890" alt=""></p>
+<h4 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h4><pre><code class="hljs markdown">.
+├── .ice                                // icejs 运行时临时目录
+├── public
+│   ├── favicon.png                     // favicon
+│   └── index.html                      // 应用入口
+├── src                                 // 源码目录
+│   ├── components                      // 全局组件
+│   │   ├── LocaleProvider              // 多语言
+│   │   │   └── index.jsx
+│   │   └── PageHeader                  // 页首
+│   │       ├── index.jsx
+│   │       └── index.module.scss
+│   ├── layouts                         // 布局组件
+│   │   ├── BasicLayout                 // 基本布局
+│   │   │   ├── components
+│   │   │   ├── index.jsx
+│   │   │   └── menuConfig.js           // 侧边栏配置
+│   │   └── UserLayout                  // 登录/注册页布局
+│   │       ├── index.jsx
+│   │       └── index.module.scss
+│   ├── locales                         // 多语言
+│   │   ├── en-US
+│   │   │   └── index.js
+│   │   └── zh-CN
+│   │       └── index.js
+│   ├── models                          // 全局状态
+│   │   └── user.js
+│   ├── pages                           // 页面组件 包含较多页面，此处省略
+│   ├── utils                           // 工具函数
+│   │   └── locale.js
+│   ├── app.jsx                         // 应用入口
+│   ├── global.scss                     // 全局样式
+│   └── routes.js                       // 路由配置
+├── .editorconfig
+├── .eslintignore
+├── .eslintrc.js
+├── .gitignore
+├── .prettierignore
+├── .prettierrc.js
+├── .stylelintignore
+├── .stylelintrc.js
+├── README.md                            // README
+├── build.json                           // icejs 工程配置
+├── jsconfig.json
+├── package-lock.json
+├── package.json
+├── screenshot.png
+└── tsconfig.json</code></pre>
+
+
+<h3 id="页面编写"><a href="#页面编写" class="headerlink" title="页面编写"></a>页面编写</h3><p>根据 Todo 应用需求对 Fusion Design Pro - JS 模板加以修改，编写相应页面，通过 API 接口与服务端交互。</p>
+<p>调整目录结构：</p>
+<ul>
+<li>删除 src/pages 未使用页面</li>
+<li>添加用户管理页和代办事项页（基于 src/pages/FusionDialogTable）</li>
+<li>修改基本页面布局组件 src/layouts/BasicLayout</li>
+<li>添加数据请求文件夹 src/services</li>
+</ul>
+<p>调整后的页面主要包括：</p>
+<ul>
+<li>登录页 src/pages/Login</li>
+</ul>
+<p>该页用于账户登录</p>
+<ul>
+<li>首页 src/pages/Home</li>
+</ul>
+<p>该页用于介绍后台管理系统</p>
+<ul>
+<li>用户管理页：src/pages/Users<br>该页面实现用户的展示及查看用户所创建的 Todo。</li>
+<li>代办事项页：src/pages/Todos<br>该页面提供对于 Todo 的增删改查操作。</li>
+</ul>
+<p>调整后的目录结构如下：</p>
+<pre><code class="hljs diff">  .
+  ├── .ice
+  ├── public
+  │   ├── favicon.png
+  │   └── index.html
+  ├── src
+  │   ├── components
+  │   │   ├── LocaleProvider
+  │   │   └── PageHeader
+  │   ├── layouts
+  │   │   ├── BasicLayout
+  │   │   └── UserLayout
+  │   ├── locales
+  │   │   ├── en-US
+  │   │   └── zh-CN
+  │   ├── models
+  │   │   └── user.js
+  │   ├── pages                  // 移除无用页面，只保留 Home Login Register
+  │   │   ├── Home
+  │   │   ├── Login
+  │   │   ├── Register
+<span class="hljs-addition">+ │   │   ├── Todos              // 代办事项页</span>
+<span class="hljs-addition">+ │   │   └── Users              // 用户页</span>
+<span class="hljs-addition">+ │   ├── services               // 数据请求</span>
+<span class="hljs-addition">+ │   │   ├── auth.js            // 登录登出</span>
+<span class="hljs-addition">+ │   │   ├── todos.js           // 代码事项</span>
+<span class="hljs-addition">+ │   │   └── users.js           // 用户</span>
+  │   ├── utils
+  │   │   └── locale.js
+  │   ├── app.jsx
+  │   ├── global.scss
+  │   └── routes.js
+  ├── .editorconfig
+  ├── .eslintcache
+  ├── .eslintignore
+  ├── .eslintrc.js
+  ├── .prettierignore
+  ├── .prettierrc.js
+  ├── .stylelintignore
+  ├── .stylelintrc.js
+  ├── README.md
+  ├── build.json
+  ├── jsconfig.json
+  ├── package-lock.json
+  ├── package.json
+  └── tsconfig.json</code></pre>
+
+
+<p>UI 主要基于 Fusion Design Pro - JS 模板修改。故不在进行具体介绍。可直接查看项目代码。<br>可将 Todos、Users、Home 页从此处复制到本项目中，完成页面编写。</p>
+<p>页面编写完成后，可配置对应路由和配置侧边栏</p>
+<h4 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h4><pre><code class="hljs javascript"><span class="hljs-comment">// route.js</span>
+<span class="hljs-comment">// 引入路由组件</span>
+<span class="hljs-keyword">import</span> UserLayout <span class="hljs-keyword">from</span> <span class="hljs-string">'@/layouts/UserLayout'</span>;
+<span class="hljs-keyword">import</span> Login <span class="hljs-keyword">from</span> <span class="hljs-string">'@/pages/Login'</span>;
+<span class="hljs-keyword">import</span> BasicLayout <span class="hljs-keyword">from</span> <span class="hljs-string">'@/layouts/BasicLayout'</span>;
+<span class="hljs-keyword">import</span> Home <span class="hljs-keyword">from</span> <span class="hljs-string">'@/pages/Home'</span>;
+<span class="hljs-keyword">import</span> Users <span class="hljs-keyword">from</span> <span class="hljs-string">'@/pages/Users'</span>;
+<span class="hljs-keyword">import</span> Todos <span class="hljs-keyword">from</span> <span class="hljs-string">'@/pages/Todos'</span>;
+
+<span class="hljs-keyword">const</span> routerConfig = [
+  &#123;
+    path: <span class="hljs-string">'/user'</span>,         <span class="hljs-comment">// 配置路由</span>
+    component: UserLayout, <span class="hljs-comment">// 配置路由对应组件</span>
+    children: [            <span class="hljs-comment">// 配置子路由</span>
+      &#123;
+        path: <span class="hljs-string">'/login'</span>,
+        component: Login,
+      &#125;,
+      &#123;
+        path: <span class="hljs-string">'/'</span>,
+        redirect: <span class="hljs-string">'/user/login'</span>,
+      &#125;,
+    ],
+  &#125;,
+  &#123;
+    path: <span class="hljs-string">'/'</span>,
+    component: BasicLayout,
+    children: [
+      &#123;
+        path: <span class="hljs-string">'/home'</span>,
+        component: Home,
+      &#125;,
+      &#123;
+        path: <span class="hljs-string">'/users/:openId'</span>,
+        component: Todos,
+      &#125;,
+      &#123;
+        path: <span class="hljs-string">'/users'</span>,
+        component: Users
+      &#125;,
+      &#123;
+        path: <span class="hljs-string">'/todos'</span>,
+        component: Todos
+      &#125;,
+      &#123;
+        path: <span class="hljs-string">'/'</span>,
+        redirect: <span class="hljs-string">'/home'</span>,
+      &#125;,
+    ],
+  &#125;,
+];
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> routerConfig;</code></pre>
+<h4 id="侧边栏配置"><a href="#侧边栏配置" class="headerlink" title="侧边栏配置"></a>侧边栏配置</h4><p>侧边栏通过 menuConfig.js 进行配置</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// src/layouts/BasicLayout/menuConfig.js</span>
+<span class="hljs-keyword">const</span> headerMenuConfig = [];
+<span class="hljs-comment">// 侧边栏配置</span>
+<span class="hljs-keyword">const</span> asideMenuConfig = [
+  &#123;
+    name: <span class="hljs-string">'首页'</span>,
+    path: <span class="hljs-string">'/home'</span>,
+    icon: <span class="hljs-string">'chart-pie'</span>
+  &#125;,
+  &#123;
+    name: <span class="hljs-string">'代办事项'</span>,
+    path: <span class="hljs-string">'/todos'</span>,
+    icon: <span class="hljs-string">'calendar'</span>
+  &#125;,
+  &#123;
+    name: <span class="hljs-string">'用户列表'</span>,
+    path: <span class="hljs-string">'/users'</span>,
+    icon: <span class="hljs-string">'account'</span>
+  &#125;
+];
+<span class="hljs-keyword">export</span> &#123; headerMenuConfig, asideMenuConfig &#125;;</code></pre>
+<p>到现在为止，页面编写已完成。此时还不能查看页面效果。各页面中有调用数据请求服务，下面需要添加数据请求。</p>
+<h3 id="数据请求"><a href="#数据请求" class="headerlink" title="数据请求"></a>数据请求</h3><p>数据请求直接采用 icejs 中的<a href="https://ice.work/docs/guide/basic/request" target="_blank" rel="noopener">数据请求方案</a>。用户只需从 ice 中导出 request 模块即可发起数据请求。<br>即：</p>
+<pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123; request &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'ice'</span>; <span class="hljs-comment">// 引入数据请求库</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+  <span class="hljs-comment">// 发起 GET 请求</span>
+	<span class="hljs-keyword">async</span> list () &#123;
+  	<span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> request.get(<span class="hljs-string">'/todos'</span>);
+    <span class="hljs-keyword">return</span> res;
+  &#125;,
+  <span class="hljs-comment">// 发起 POST 请求</span>
+  <span class="hljs-keyword">async</span> del (id) &#123;
+  	<span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> request.post(<span class="hljs-string">'/todos/del'</span>, &#123;
+      id
+    &#125;)
+    <span class="hljs-keyword">return</span> res;
+  &#125;
+&#125;</code></pre>
+<h4 id="service-编写"><a href="#service-编写" class="headerlink" title="service 编写"></a>service 编写</h4><p>本项目中的数据请求主要包括</p>
+<ul>
+<li>账户登录、登出</li>
+<li>用户列表展示</li>
+<li>Todo 列表展示及增删改查</li>
+</ul>
+<p>具体的逻辑在 src/services 中。</p>
+<pre><code class="hljs markdown">src/services
+├── auth.js   // 账户登录登出
+├── todos.js  // Todo 列表查询及增删改查
+└── users.js  // 用户列表查询</code></pre>
+<p>auth 包括获取用户角色，登录，登出</p>
+<pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123; request &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'ice'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+  <span class="hljs-comment">// 获取用户角色</span>
+  <span class="hljs-keyword">async</span> getRoles () &#123;
+    <span class="hljs-keyword">let</span> roles = [];
+    <span class="hljs-keyword">try</span> &#123;
+      <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> request.get(<span class="hljs-string">'/auth/roles'</span>);
+      roles = res.data.roles;
+    &#125; <span class="hljs-keyword">catch</span> (err) &#123;
+      <span class="hljs-built_in">console</span>.error(err);
+    &#125;
+    <span class="hljs-keyword">return</span> roles;
+  &#125;,
+  <span class="hljs-comment">// 登录</span>
+  <span class="hljs-keyword">async</span> login (data) &#123;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> request.post(<span class="hljs-string">'/auth/login'</span>, data)
+  &#125;,
+  <span class="hljs-comment">// 登出</span>
+  <span class="hljs-keyword">async</span> logout () &#123;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> request.get(<span class="hljs-string">'/auth/logout'</span>);
+  &#125;
+&#125;</code></pre>
+<p>users 包括用户列表的获取</p>
+<pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123; request &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'ice'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+  <span class="hljs-comment">// 获取用户列表，支持分页查询</span>
+  <span class="hljs-keyword">async</span> list(&#123; current, pageSize &#125;) &#123;
+    <span class="hljs-keyword">let</span> data = &#123;&#125;;
+    <span class="hljs-keyword">try</span> &#123;
+      <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> request.get(<span class="hljs-string">`/users?current=<span class="hljs-subst">$&#123;current&#125;</span>&amp;size=<span class="hljs-subst">$&#123;pageSize&#125;</span>`</span>);
+      data = res.data;
+    &#125; <span class="hljs-keyword">catch</span> (err) &#123;
+      <span class="hljs-built_in">console</span>.error(err);
+    &#125;
+    <span class="hljs-keyword">return</span> data;
+  &#125;
+&#125;</code></pre>
+<p>todos 包括查询 Todo 列表，及对 Todo 的增删改查</p>
+<pre><code class="hljs jsx"><span class="hljs-keyword">import</span> &#123; request &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'ice'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+  <span class="hljs-comment">// 根据分页数据及用户 id 查询 Todo 列表</span>
+  <span class="hljs-keyword">async</span> list (&#123; current, pageSize, openId &#125;) &#123;
+    <span class="hljs-keyword">let</span> data = &#123;&#125;;
+    <span class="hljs-keyword">try</span> &#123;
+      <span class="hljs-keyword">let</span> URL = <span class="hljs-string">`/todos?current=<span class="hljs-subst">$&#123;current&#125;</span>&amp;size=<span class="hljs-subst">$&#123;pageSize&#125;</span>`</span>
+      <span class="hljs-keyword">if</span> (openId) &#123;
+        URL = <span class="hljs-string">`<span class="hljs-subst">$&#123;URL&#125;</span>&amp;openId=<span class="hljs-subst">$&#123;openId&#125;</span>`</span>
+      &#125;
+      <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> request.get(URL);
+      data = res.data;
+    &#125; <span class="hljs-keyword">catch</span> (err) &#123;
+      <span class="hljs-built_in">console</span>.error(err);
+    &#125;
+    <span class="hljs-keyword">return</span> data;
+  &#125;,
+  <span class="hljs-comment">// 为用户添加 Todo</span>
+  <span class="hljs-keyword">async</span> add (&#123; content, openId &#125;) &#123;
+    <span class="hljs-keyword">let</span> data = &#123;&#125;;
+    <span class="hljs-keyword">try</span> &#123;
+      <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> request.post(<span class="hljs-string">'/todos/add'</span>, &#123;
+        openId,
+        content
+      &#125;)
+      data = res.data;
+    &#125; <span class="hljs-keyword">catch</span> (err) &#123;
+      <span class="hljs-built_in">console</span>.error(err);
+    &#125;
+    <span class="hljs-keyword">return</span> data;
+  &#125;,
+  <span class="hljs-comment">// 根据 id 删除 Todo</span>
+  <span class="hljs-keyword">async</span> del (id) &#123;
+    <span class="hljs-keyword">let</span> data = &#123;&#125;;
+    <span class="hljs-keyword">try</span> &#123;
+      <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> request.get(<span class="hljs-string">`/todos/del/<span class="hljs-subst">$&#123;id&#125;</span>`</span>)
+      data = res.data;
+    &#125; <span class="hljs-keyword">catch</span> (err) &#123;
+      <span class="hljs-built_in">console</span>.error(err);
+    &#125;
+    <span class="hljs-keyword">return</span> data;
+  &#125;,
+  <span class="hljs-comment">// 编辑 Todo</span>
+  <span class="hljs-keyword">async</span> edit (id, &#123; openId, content &#125;) &#123;
+    <span class="hljs-keyword">let</span> data = &#123;&#125;;
+    <span class="hljs-keyword">try</span> &#123;
+      <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> request.post(<span class="hljs-string">'/todos/edit'</span>, &#123;
+        id,
+        openId,
+        content
+      &#125;)
+      data = res.data;
+    &#125; <span class="hljs-keyword">catch</span> (err) &#123;
+      <span class="hljs-built_in">console</span>.error(err);
+    &#125;
+    <span class="hljs-keyword">return</span> data;
+  &#125;,
+  <span class="hljs-comment">// 查看 Todo</span>
+  <span class="hljs-keyword">async</span> view (id) &#123;
+    <span class="hljs-keyword">let</span> data = &#123;&#125;;
+    <span class="hljs-keyword">try</span> &#123;
+      <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> request.get(<span class="hljs-string">`/todos/view/<span class="hljs-subst">$&#123;id&#125;</span>`</span>)
+      data = res.data;
+    &#125; <span class="hljs-keyword">catch</span> (err) &#123;
+      <span class="hljs-built_in">console</span>.error(err);
+    &#125;
+    <span class="hljs-keyword">return</span> data;
+  &#125;,
+&#125;</code></pre>
+
+
+<p>可对 request 请求进行全局配置，使各请求均以 /api 开头。编辑 src/app.jsx</p>
+<pre><code class="hljs jsx"><span class="hljs-comment">// src/app.jsx</span>
+<span class="hljs-keyword">const</span> appConfig = &#123;
+  app: &#123;
+    rootId: <span class="hljs-string">'ice-container'</span>,
+    addProvider: <span class="hljs-function">(<span class="hljs-params">&#123; children &#125;</span>) =&gt;</span> &lt;LocaleProvider locale=&#123;locale&#125;&gt;&#123;children&#125;&lt;<span class="hljs-regexp">/LocaleProvider&gt;,</span>
+<span class="hljs-regexp">  &#125;,</span>
+<span class="hljs-regexp">  /</span><span class="hljs-regexp">/ 配置 request</span>
+<span class="hljs-regexp">  request: &#123;</span>
+<span class="hljs-regexp">    baseURL: '/</span>api<span class="hljs-string">'</span>
+<span class="hljs-string">  &#125;</span>
+<span class="hljs-string">&#125;;</span></code></pre>
+<p>此时运行项目查看效果</p>
+<pre><code class="hljs bash">$ npm run start</code></pre>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1599104099586-e35c0a8b-7384-4deb-9dad-6c867635a0e4.png#align=left&display=inline&height=2079&margin=%5Bobject%20Object%5D&name=icejs8.png&originHeight=2079&originWidth=3874&size=450837&status=done&style=none&width=3874" alt="icejs8.png"></p>
+<h4 id="Mock-数据"><a href="#Mock-数据" class="headerlink" title="Mock 数据"></a>Mock 数据</h4><p>此时数据均为空，service 发起的请求均为 404 not found。因具体的数据需要服务端支持，暂时可通过 mock 数据查看效果。<br>编辑 build.json 使得 request 指向 mock 服务 <a href="https://easy-mock.bookset.io/mock/5f4f05642ff5d50508b3d21b/todos_mock" target="_blank" rel="noopener">https://easy-mock.bookset.io/mock/5f4f05642ff5d50508b3d21b/todos_mock</a></p>
+<blockquote>
+<p>该 mock 服务只提供 Todo 及用户列表查询，Todo 增删改查无效。</p>
+</blockquote>
+<pre><code class="hljs json">// build.json
+&#123;
+	<span class="hljs-attr">"proxy"</span>: &#123;
+    <span class="hljs-attr">"/api"</span>: &#123;
+      <span class="hljs-attr">"enable"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"target"</span>: <span class="hljs-string">"https://easy-mock.bookset.io/mock/5f4f05642ff5d50508b3d21b/todos_mock"</span>
+    &#125;
+  &#125;
+&#125;</code></pre>
+
+
+<p>查看效果<br><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1599104513719-ac84fda3-8b1f-4c5d-8f84-3b59e52cd94f.png#align=left&display=inline&height=1984&margin=%5Bobject%20Object%5D&name=icejs11.png&originHeight=1984&originWidth=1920&size=171944&status=done&style=none&width=1920" alt="icejs11.png"></p>
+<h3 id="权限管理"><a href="#权限管理" class="headerlink" title="权限管理"></a>权限管理</h3><p>只有登录用户才能访问用户管理页和 Todo 页，未登录用户应重定向到登录页。要实现该逻辑，需要对各页面设置权限。</p>
+<p>权限管理主要通过 icejs 插件 <a href="https://ice.work/docs/guide/advance/auth" target="_blank" rel="noopener">build-plugin-ice-auth</a> 实现。</p>
+<p>需要安装该插件</p>
+<pre><code class="hljs bash">$ npm install build-plugin-ice-auth --save-dev</code></pre>
+
+
+<p>并配置</p>
+<pre><code class="hljs json">// build.json
+&#123;
+  <span class="hljs-attr">"plugins"</span>: [
+    <span class="hljs-string">"build-plugin-ice-auth"</span>
+  ]
+&#125;</code></pre>
+
+
+<h4 id="项目逻辑"><a href="#项目逻辑" class="headerlink" title="项目逻辑"></a>项目逻辑</h4><p>在本项目中权限管理的逻辑主要包括：</p>
+<ol>
+<li><p><a href="https://github.com/ice-lab/miniapp-admin/blob/master/client/src/app.jsx#L12" target="_blank" rel="noopener">页面加载时从服务端获取权限数据</a></p>
+<pre><code class="hljs jsx"><span class="hljs-comment">// app.jsx</span>
+<span class="hljs-keyword">import</span> authService <span class="hljs-keyword">from</span> <span class="hljs-string">'@/services/auth'</span>;
+
+<span class="hljs-keyword">const</span> appConfig = &#123;
+  app: &#123;
+    <span class="hljs-comment">// 页面初始化时获取权限数据</span>
+    getInitialData: <span class="hljs-keyword">async</span> () =&gt; &#123;
+      <span class="hljs-keyword">const</span> roles = <span class="hljs-keyword">await</span> authService.getRoles();
+      <span class="hljs-keyword">return</span> &#123;
+        auth: &#123;
+          roles
+        &#125;
+      &#125;
+    &#125;
+    <span class="hljs-comment">// ...</span>
+  &#125;
+&#125;;</code></pre>
+</li>
+<li><p>创建<a href="https://github.com/ice-lab/miniapp-admin/blob/master/client/src/components/Auth/index.jsx" target="_blank" rel="noopener">权限管理组件</a>，并<a href="https://github.com/ice-lab/miniapp-admin/blob/master/client/src/layouts/BasicLayout/index.jsx#L92" target="_blank" rel="noopener">管理相应页面</a><br>权限管理组件 src/components/Auth</p>
+<pre><code class="hljs jsx"><span class="hljs-comment">// src/components/Auth/index.jsx</span>
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> &#123; useAuth, Redirect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'ice'</span>;
+
+<span class="hljs-keyword">const</span> WrapperPage = <span class="hljs-function">(<span class="hljs-params">PageComponent</span>) =&gt;</span> &#123;
+
+  <span class="hljs-keyword">const</span> WrappedPage = <span class="hljs-function">(<span class="hljs-params">props</span>) =&gt;</span> &#123;
+    <span class="hljs-keyword">const</span> [auth] = useAuth();
+    <span class="hljs-comment">// 页面鉴权 根据权限进行页面跳转</span>
+    <span class="hljs-keyword">const</span> needAuth = !auth.roles.includes(<span class="hljs-string">'user'</span>);
+    <span class="hljs-keyword">return</span> (
+      needAuth ? &lt;Redirect to="/user/login" /&gt; : &lt;PageComponent &#123;...props&#125; /&gt;
+    )
+  &#125;;
+  return WrappedPage;
+&#125;;
+
+export default WrapperPage;</code></pre>
+</li>
+<li><p>使用 Auth 组件管理 BasicLayout</p>
+<pre><code class="hljs jsx"><span class="hljs-comment">// src/layouts/BasicLayout/index.jsx</span>
+<span class="hljs-keyword">import</span> Auth <span class="hljs-keyword">from</span> <span class="hljs-string">'@/components/Auth'</span>;
+
+<span class="hljs-comment">// 具体布局组件</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">BasicLayout</span>(<span class="hljs-params"></span>)</span>&#123;
+  <span class="hljs-keyword">return</span> (
+    <span class="hljs-comment">// ... 省略逻辑</span>
+  )
+&#125;
+
+<span class="hljs-comment">// 使用 Auth 组件包装 BasicLayout</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Auth(BasicLayout)</code></pre>
+</li>
+<li><p>添加登录/登出逻辑</p>
+</li>
+</ol>
+<p>从<a href="https://github.com/ice-lab/icejs-miniapp-admin/client" target="_blank" rel="noopener">后台管理系统代码</a>中复制相应页面<br>替换 src/pages/Login：接入登录接口<br>替换 src/layouts/BasicLayout：接入登出接口，更改UI</p>
+<ol start="5">
+<li>运行项目查看效果</li>
+</ol>
+<ul>
+<li>访问 <a href="http://localhost:3333/#/user/login" target="_blank" rel="noopener">http://localhost:3333</a> 跳转至 <a href="http://localhost:3333/#/user/login" target="_blank" rel="noopener">http://localhost:3333/#/user/login</a></li>
+<li>登录-&gt;首页</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1599106556546-bd8421c8-8900-4934-8c4a-0f39bb83da70.png#align=left&display=inline&height=2079&margin=%5Bobject%20Object%5D&name=icejs15.png&originHeight=2079&originWidth=1917&size=257208&status=done&style=none&width=1917" alt="icejs15.png"></p>
+<ul>
+<li>登出-&gt;登录页</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1599106580084-e23119f8-0f77-49b1-956a-803061c6abec.png#align=left&display=inline&height=2079&margin=%5Bobject%20Object%5D&name=icejs16.png&originHeight=2079&originWidth=1918&size=265517&status=done&style=none&width=1918" alt="icejs16.png"></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文介绍了后台管理系统的搭建。内容主要包括页面权限管理方案的实现，渲染通过数据请求获取到的数据。</p>
+<p>Todo 的增删改查功能需要搭配服务端使用，该部分内容详见服务端篇。</p>
+<p>后台管理系统代码见 <a href="https://github.com/ice-lab/icejs-miniapp-admin/client" target="_blank" rel="noopener">icejs-miniapp-admin/client</a>，可结合服务端 <a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/server" target="_blank" rel="noopener">icejs-miniapp-admin/server</a> 一起运行查看效果。</p>
+<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
+<li><a href="https://ice.work/" target="_blank" rel="noopener">飞冰</a></li>
+<li><a href="https://ice.work/docs/miniprogram/start" target="_blank" rel="noopener">icejs 小程序官方文档</a></li>
+<li><a href="https://github.com/ice-lab/miniprogram-materials/tree/master/scaffolds/todos" target="_blank" rel="noopener">Todos 小程序代码</a></li>
+<li><a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/client" target="_blank" rel="noopener">Todos 后台管理系统代码</a></li>
+<li><a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/server" target="_blank" rel="noopener">Todos 服务端代码</a></li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/10/12/icejs-todos-server/" class="prev">PREV</a><a href="/2020/10/12/icejs-todos-miniprogram/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>

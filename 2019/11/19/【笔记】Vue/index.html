@@ -1,0 +1,30 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Vue 笔记 · f00bar</title><meta name="description" content="Vue 笔记 - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vue-笔记"><span class="toc-number">1.</span> <span class="toc-text">Vue 笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number">1.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始上手"><span class="toc-number">1.2.</span> <span class="toc-text">开始上手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关资源"><span class="toc-number">1.3.</span> <span class="toc-text">相关资源</span></a></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">Vue 笔记</h1><div class="post-info">Nov 19, 2019</div><div class="post-content"><h1 id="Vue-笔记"><a href="#Vue-笔记" class="headerlink" title="Vue 笔记"></a>Vue 笔记</h1><p><code>vue</code> 一个组件化、响应式的前端框架</p>
+<p><a href="https://vuejs.org" target="_blank" rel="noopener">官网</a>  <a href="https://github.com/vuejs/vue" target="_blank" rel="noopener">GitHub</a></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>不同于直接在 <code>.html</code> 文件中编写页面相关代码，<code>vue</code> 框架使得开发者以组件化的形式组织代码，增强代码的复用性。</p>
+<p>编写的 <code>.vue</code> 代码再通过 <a href="https://babeljs.io/" target="_blank" rel="noopener"><code>babel</code></a> 编译工具生成 <code>javascript</code>，<a href="https://eslint.org/" target="_blank" rel="noopener"><code>eslint</code></a> 格式化代码，使用 <a href="https://webpack.js.org/" target="_blank" rel="noopener"><code>webpack</code></a> 打包工具优化代码，自动化生成最终可部署的代码。</p>
+<p>Tips: </p>
+<ol>
+<li>前端路由。不同于在浏览器中输入链接就向后端请求对应的资源文件，<code>vue</code> 利用浏览器不会在 <code>https://example.com/#/...</code> # 符号变化后发起网络请求的特性，将路由控制权交由开发者编写的  <code>javascript</code> 代码，从而实现 # 符号后面不同路径渲染不同页面，发起相应的网络请求。</li>
+<li>单页面应用(Single Page Application)。通过引入前端路由实现在单一页面内渲染不同业务组件。</li>
+</ol>
+<h2 id="开始上手"><a href="#开始上手" class="headerlink" title="开始上手"></a>开始上手</h2><p>可通过两种方式使用 <code>vue</code></p>
+<ol>
+<li><p>在 <code>.html</code> 文件中直接通过 <code>script</code> 标签引入 <code>vue</code> 运行时</p>
+</li>
+<li><p>通过 <code>vue-cli</code> 脚手架生成项目文件结构</p>
+<pre><code class="hljs shell">npm install vue-cli // 通过 npm 包管理工具安装脚手架
+vue-cli create vue-demo // 通过脚手架生成项目文件
+// 修改相应文件实现不同逻辑
+npm run serve // 启动开发环境
+npm run build // 生成可部署的代码</code></pre>
+
+
+
+</li>
+</ol>
+<h2 id="相关资源"><a href="#相关资源" class="headerlink" title="相关资源"></a>相关资源</h2><ul>
+<li><a href="https://element.eleme.cn/" target="_blank" rel="noopener">Element UI 前端组件库</a></li>
+<li><a href="https://github.com/surmon-china/vue-quill-editor" target="_blank" rel="noopener">vue-quill-editor 在线编辑器</a></li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2019/11/22/%E3%80%90%E7%AC%94%E8%AE%B0%E3%80%91React/" class="prev">PREV</a><a href="/2019/10/17/%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%89%8D%E7%AB%AF%E9%9D%A2%E7%BB%8F%EF%BC%88%E6%97%A5%E5%B8%B8%E5%AE%9E%E4%B9%A0%E7%94%9F%EF%BC%89/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>

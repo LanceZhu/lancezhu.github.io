@@ -1,0 +1,30 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> docker cheatsheet · f00bar</title><meta name="description" content="docker cheatsheet - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#docker-cheatsheet"><span class="toc-number">1.</span> <span class="toc-text">docker cheatsheet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#configuration"><span class="toc-number">1.1.</span> <span class="toc-text">configuration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#镜像-image"><span class="toc-number">1.2.</span> <span class="toc-text">镜像 image</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器-container"><span class="toc-number">1.3.</span> <span class="toc-text">容器 container</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集群管理"><span class="toc-number">1.4.</span> <span class="toc-text">集群管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-compose"><span class="toc-number">1.4.1.</span> <span class="toc-text">docker-compose</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#账户管理"><span class="toc-number">1.4.2.</span> <span class="toc-text">账户管理</span></a></li></ol></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">docker cheatsheet</h1><div class="post-info">Apr 7, 2021</div><div class="post-content"><h1 id="docker-cheatsheet"><a href="#docker-cheatsheet" class="headerlink" title="docker cheatsheet"></a>docker cheatsheet</h1><h2 id="configuration"><a href="#configuration" class="headerlink" title="configuration"></a>configuration</h2><p>更换国内镜像源 - <a href="https://lug.ustc.edu.cn/wiki/mirrors/help/docker" target="_blank" rel="noopener">中科大 docker 镜像源</a></p>
+<h2 id="镜像-image"><a href="#镜像-image" class="headerlink" title="镜像 image"></a>镜像 image</h2><pre><code class="hljs bash">$ docker images <span class="hljs-comment"># 查看本机镜像</span>
+$ docker pull ubuntu <span class="hljs-comment"># 拉取镜像</span>
+$ docker rmi image_name <span class="hljs-comment"># 删除镜像</span>
+
+$ docker run -it image_name /bin/bash <span class="hljs-comment"># 交互式运行镜像，并进入 shell 环境， i interactive，t tty</span>
+$ docker run -d image_name <span class="hljs-comment"># 后台以 daemon 形式运行。注意 docker 1号进程不能以 daemon 状态运行，应前台运行</span></code></pre>
+
+<pre><code class="hljs bash"><span class="hljs-comment"># 根据 Dockerfile 构建镜像</span>
+$ cat Dockerfile
+FROM nginx:latest
+RUN apt-get update
+$ docker build -t docker-demo:v0.0.1 . <span class="hljs-comment"># 在当前目录根据 Dockerfile 构建镜像， t tag</span></code></pre>
+
+<h2 id="容器-container"><a href="#容器-container" class="headerlink" title="容器 container"></a>容器 container</h2><pre><code class="hljs bash">$ docker container ls <span class="hljs-comment"># 查看本机容器</span>
+$ docker ps -all <span class="hljs-comment"># 查看本机容器，包含 stopped container</span>
+$ docker <span class="hljs-built_in">exec</span> -it container_id /bin/bash <span class="hljs-comment"># 进入容器 shell ctrl+p+q 退出容器</span>
+$ docker stop container_id <span class="hljs-comment"># 关闭容器</span>
+$ docker rm container_id
+$ docker start container_id
+$ docker logs container_id <span class="hljs-comment"># 查看容器运行日志</span></code></pre>
+
+<h2 id="集群管理"><a href="#集群管理" class="headerlink" title="集群管理"></a>集群管理</h2><h3 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h3><pre><code class="hljs bash">$ docker-compose up -d <span class="hljs-comment"># 在 docker-compose.yaml 同目录下运行，启动多个容器</span>
+$ docker-compose ps <span class="hljs-comment"># 查看所有 container</span>
+$ docker-compose down <span class="hljs-comment"># 停止 -rmi all 移除 images</span></code></pre>
+
+<h3 id="账户管理"><a href="#账户管理" class="headerlink" title="账户管理"></a>账户管理</h3><pre><code class="hljs bash">$ docker login -u username <span class="hljs-comment"># 登录至 docker hub</span>
+$ docker push username/image <span class="hljs-comment"># 将本地 image 推送至 docker hub</span></code></pre>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/02/05/cheatsheet-nodejs/" class="prev">PREV</a><a href="/2020/02/05/cheatsheet-linux/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>

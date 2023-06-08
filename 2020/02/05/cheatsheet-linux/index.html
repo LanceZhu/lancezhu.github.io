@@ -1,0 +1,356 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Linux Cheatsheet · f00bar</title><meta name="description" content="Linux Cheatsheet - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-Cheatsheet"><span class="toc-number">1.</span> <span class="toc-text">Linux Cheatsheet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程访问"><span class="toc-number">1.1.</span> <span class="toc-text">远程访问</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh"><span class="toc-number">1.1.1.</span> <span class="toc-text">ssh</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ssh-三种代理功能-L-R-D"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">ssh 三种代理功能(-L -R -D)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ssh-远程登录保持连接不断开"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">ssh 远程登录保持连接不断开</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scp"><span class="toc-number">1.1.2.</span> <span class="toc-text">scp</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络管理"><span class="toc-number">1.2.</span> <span class="toc-text">网络管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#netstat"><span class="toc-number">1.2.1.</span> <span class="toc-text">netstat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iptables"><span class="toc-number">1.2.2.</span> <span class="toc-text">iptables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#configure-proxy"><span class="toc-number">1.2.3.</span> <span class="toc-text">configure proxy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#磁盘管理"><span class="toc-number">1.3.</span> <span class="toc-text">磁盘管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#df"><span class="toc-number">1.3.1.</span> <span class="toc-text">df</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#du"><span class="toc-number">1.3.2.</span> <span class="toc-text">du</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进程管理"><span class="toc-number">1.4.</span> <span class="toc-text">进程管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#systemctl"><span class="toc-number">1.4.1.</span> <span class="toc-text">systemctl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#top-htop"><span class="toc-number">1.4.2.</span> <span class="toc-text">top&#x2F;htop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ps"><span class="toc-number">1.4.3.</span> <span class="toc-text">ps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lsof"><span class="toc-number">1.4.4.</span> <span class="toc-text">lsof</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文本处理"><span class="toc-number">1.5.</span> <span class="toc-text">文本处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#more-head-tail-less"><span class="toc-number">1.5.1.</span> <span class="toc-text">more&#x2F;head&#x2F;tail&#x2F;less</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vi-或-vim"><span class="toc-number">1.5.2.</span> <span class="toc-text">vi 或 vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#awk"><span class="toc-number">1.5.3.</span> <span class="toc-text">awk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#grep"><span class="toc-number">1.5.4.</span> <span class="toc-text">grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sed"><span class="toc-number">1.5.5.</span> <span class="toc-text">sed</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#软件管理"><span class="toc-number">1.6.</span> <span class="toc-text">软件管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#软件源"><span class="toc-number">1.6.1.</span> <span class="toc-text">软件源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用软件"><span class="toc-number">1.6.2.</span> <span class="toc-text">常用软件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#终端复用"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">终端复用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shell"><span class="toc-number">1.7.</span> <span class="toc-text">shell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本语法"><span class="toc-number">1.7.1.</span> <span class="toc-text">基本语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#变量"><span class="toc-number">1.7.1.1.</span> <span class="toc-text">变量:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管道："><span class="toc-number">1.7.1.2.</span> <span class="toc-text">管道：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重定向"><span class="toc-number">1.7.1.3.</span> <span class="toc-text">重定向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#特殊变量"><span class="toc-number">1.7.1.4.</span> <span class="toc-text">特殊变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作符"><span class="toc-number">1.7.1.5.</span> <span class="toc-text">操作符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#程序结构"><span class="toc-number">1.7.1.6.</span> <span class="toc-text">程序结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数"><span class="toc-number">1.7.1.7.</span> <span class="toc-text">函数</span></a></li></ol></li></ol></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">Linux Cheatsheet</h1><div class="post-info">Oct 29, 2021</div><div class="post-content"><h1 id="Linux-Cheatsheet"><a href="#Linux-Cheatsheet" class="headerlink" title="Linux Cheatsheet"></a>Linux Cheatsheet</h1><p>本文记录了使用 Linux 操作系统进行软件开发时的常用操作。</p>
+<h2 id="远程访问"><a href="#远程访问" class="headerlink" title="远程访问"></a>远程访问</h2><h3 id="ssh"><a href="#ssh" class="headerlink" title="ssh"></a>ssh</h3><pre><code class="hljs bash">$ ssh-keygen <span class="hljs-comment"># 生成 rsa 公私钥对</span>
+$ ssh-copy-id [-i 公钥文件] [远程主机地址] <span class="hljs-comment"># 向远程主机添加公钥</span>
+$ ssh-agent
+$ ssh-add</code></pre>
+
+<pre><code class="hljs bash">$ cat ~/.ssh/config
+Host blog
+	HostName example.com
+	User f00bar
+
+$ ssh blog <span class="hljs-comment"># 登录到 blog</span></code></pre>
+
+<h4 id="ssh-三种代理功能-L-R-D"><a href="#ssh-三种代理功能-L-R-D" class="headerlink" title="ssh 三种代理功能(-L -R -D)"></a>ssh 三种代理功能(-L -R -D)</h4><p>-L 正向代理，将本地端口转发至远程端口。访问 local_host:local_port 的流量会转发至 remote_host:remote:port</p>
+<pre><code class="hljs bash">$ ssh -L local_host:local_port:remote_host:remote_port user@remote_host <span class="hljs-comment"># 本地机器执行</span></code></pre>
+
+<p>-R 反向代理，将远程端口转发至本地端口。访问 remote_host:remote_port 的流量会转发至 local_host:local_port</p>
+<pre><code class="hljs bash">$ ssh -R remote_host:remote_port:local_host:local_port user@remote_host <span class="hljs-comment"># 本地机器执行</span></code></pre>
+
+<p>使用场景示例：</p>
+<p>内网穿透：本地机器无公网IP，将本地机器某个端口反向代理至存在公网IP的主机，使得不与本地机器处于同一内网中的机器访问本地机器提供的服务，即访问存在公网IP的机器。</p>
+<p>-D 动态端口转发</p>
+<pre><code class="hljs bash">$ ssh -D local_host:local_port user@remote_host <span class="hljs-comment"># 本地机器执行</span></code></pre>
+
+<p>本地机器配置 sockets5 代理，IP、端口号为 local_host、local_port。之后本地机器网络请求均通过远程机器转发</p>
+<p>参考：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/57630633" target="_blank" rel="noopener">SSH 命令的三种代理功能（-L/-R/-D）</a></li>
+</ul>
+<h4 id="ssh-远程登录保持连接不断开"><a href="#ssh-远程登录保持连接不断开" class="headerlink" title="ssh 远程登录保持连接不断开"></a>ssh 远程登录保持连接不断开</h4><pre><code class="hljs bash">$ ssh blog -o ServerAliveInterval=60 <span class="hljs-comment"># 每60s发送心跳包</span></code></pre>
+
+<ul>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-configure-custom-connection-options-for-your-ssh-client" target="_blank" rel="noopener">https://www.digitalocean.com/community/tutorials/how-to-configure-custom-connection-options-for-your-ssh-client</a></li>
+<li><a href="https://blog.csdn.net/zhouguoqionghai/article/details/92134462" target="_blank" rel="noopener">ssh-agent 使用</a></li>
+</ul>
+<h3 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h3><pre><code class="hljs bash">$ scp file.txt user@ip:/home/user <span class="hljs-comment"># 复制本机文件至远程主机</span>
+$ scp user@ip:/home/user/file.txt file.txt <span class="hljs-comment"># 复制远程主机文件至本机</span>
+$ scp -r dir user@ip:/home/user <span class="hljs-comment"># 复制本机文件夹至远程主机，-r recrusive 递归复制</span></code></pre>
+
+<h2 id="网络管理"><a href="#网络管理" class="headerlink" title="网络管理"></a>网络管理</h2><h3 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h3><pre><code class="hljs bash">$ netstat -ntlp <span class="hljs-comment"># 查看开放 tcp 端口及对应应用</span></code></pre>
+
+<h3 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h3><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> iptables -F <span class="hljs-comment"># 清除所有规则</span></span></code></pre>
+
+<h3 id="configure-proxy"><a href="#configure-proxy" class="headerlink" title="configure proxy"></a>configure proxy</h3><pre><code class="hljs bash">$ cat ~/.bash_profile
+<span class="hljs-built_in">export</span> http_proxy=username:password@proxyhost.com:8080
+<span class="hljs-built_in">export</span> https_proxy=username:password@proxyhost.com:8081
+<span class="hljs-built_in">export</span> no_proxy=localhost, 127.0.0.1, *.my.lan</code></pre>
+
+<h2 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h2><h3 id="df"><a href="#df" class="headerlink" title="df"></a>df</h3><pre><code class="hljs bash">$ df -h <span class="hljs-comment"># 查看磁盘信息</span></code></pre>
+
+<h3 id="du"><a href="#du" class="headerlink" title="du"></a>du</h3><pre><code class="hljs bash">$ du /home -h <span class="hljs-comment"># 查看文件夹磁盘占用</span></code></pre>
+
+<h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><p>开机自启动 以clash为例</p>
+<pre><code class="hljs bash">$ cat /etc/systemd/system/clash.service <span class="hljs-comment"># 新建service</span>
+[Unit]
+Description=clash - proxy
+
+[Service]
+ExecStart=/home/lz/bin/clash/clash -d /home/lz/bin/clash
+
+[Install]
+WantedBy=multi-user.target
+$ systemctl start clash.service　<span class="hljs-comment"># 添加为service</span>
+$ systemctl <span class="hljs-built_in">enable</span> clash.service <span class="hljs-comment"># 设置开机自启动</span></code></pre>
+
+<p>ubuntu gnome GUI方法</p>
+<pre><code class="hljs bash">$ gnome-session-properties</code></pre>
+
+<h3 id="top-htop"><a href="#top-htop" class="headerlink" title="top/htop"></a>top/htop</h3><pre><code class="hljs bash">$ top <span class="hljs-comment"># 查看 CPU 占用信息</span>
+$ top -d 10 <span class="hljs-comment"># 信息刷新时间为10s</span>
+$ htop <span class="hljs-comment"># 信息显示更清晰</span></code></pre>
+
+<h3 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h3><pre><code class="hljs bash">$ ps -ef
+$ ps aux</code></pre>
+
+<h3 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h3><pre><code class="hljs bash">$ lsof <span class="hljs-comment"># 查看开放文件</span></code></pre>
+
+<h2 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h2><h3 id="more-head-tail-less"><a href="#more-head-tail-less" class="headerlink" title="more/head/tail/less"></a>more/head/tail/less</h3><pre><code class="hljs bash">$ more file
+$ head file
+$ head file -n 5 <span class="hljs-comment"># 显示文件</span>
+$ tail file
+$ tail file -n 5 <span class="hljs-comment"># 显示文件后5行</span>
+$ less file</code></pre>
+
+<h3 id="vi-或-vim"><a href="#vi-或-vim" class="headerlink" title="vi 或 vim"></a>vi 或 vim</h3><p>命令行文本编辑器</p>
+<p>常用两种模式：浏览模式、编辑模式，还有可视化模式</p>
+<p><code>vim file</code> 后默认进入浏览模式，按<code>i</code>，<code>a</code>进入编辑模式，<code>ESC</code>退回至浏览模式。<code>v</code>进入可视化模式。浏览模式下，<code>:q</code>退出文件编辑，<code>:!q</code>强制退出</p>
+<pre><code class="hljs bash">$ vim file</code></pre>
+
+<p><strong>常用操作：</strong></p>
+<ul>
+<li><p>跳转</p>
+<ul>
+<li><code>h j k l</code> 左下上右 移动光标</li>
+<li><code>gg G</code> 跳转至文件头，文件尾</li>
+<li><code>n</code>+<code>gg</code> 跳转至第n行</li>
+<li><code>^ $</code> 跳转至行首，行尾</li>
+</ul>
+</li>
+<li><p>编辑</p>
+<ul>
+<li><code>i</code> 当前光标处进入编辑模式</li>
+<li><code>a</code> 当前光标后进入编辑模式</li>
+<li><code>x</code> 删除当前光标所在处字符</li>
+<li><code>dd</code> 删除当前行</li>
+<li><code>dw</code> 删除当前word</li>
+<li><code>yy</code> 复制当前行</li>
+<li><code>p</code> 粘贴复制内容</li>
+<li><code>v</code> 进入可视化模式，进入后可通过光标移动选择内容</li>
+<li><code>:w</code>保存文件</li>
+</ul>
+</li>
+<li><p>退出vim（浏览模式下操作）</p>
+<ul>
+<li><code>:q</code> 直接退出</li>
+<li><code>:wq</code> 保存并退出</li>
+<li><code>!q</code> 强制退出</li>
+</ul>
+</li>
+</ul>
+<p>对于vim意外退出情况，所编辑文件同一目录下出现备份文件，<code>file</code>对应<code>.file.swp</code>，如不需要恢复，应删除。</p>
+<h3 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h3><h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>推荐 egrep，等价于 grep -E</p>
+<p>grep 默认正则为基本正则即 BRE，egrep 默认正则为扩展正则即 ERE。</p>
+<p>扩展正则相比于基本正则去掉了许多转义字符，方便使用。</p>
+<h3 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h3><p>流式编辑器</p>
+<p>文本显示/过滤</p>
+<pre><code class="hljs bash"><span class="hljs-comment"># 显示文件全部内容</span>
+$ sed -n p file
+<span class="hljs-comment"># 显示文件第5行内容</span>
+$ sed -n 5p file
+<span class="hljs-comment"># 显示文件中所有包含 LANG 的行</span>
+$ sed -n /LANG/p file</code></pre>
+
+<p>文本修改</p>
+<pre><code class="hljs bash"><span class="hljs-comment"># 第一个出现 foo 的行中，foo 替换为 bar。s表示substitude</span>
+$ sed <span class="hljs-string">'s/foo/bar/'</span> file
+<span class="hljs-comment"># 所有包含 foo 的行中，foo 替换为 bar。g表示global</span>
+$ sed <span class="hljs-string">'s/foo/bar/g'</span> file
+<span class="hljs-comment"># 支持正则表达式，将!或多个连续出现的！替换为.。\+表示对+转义</span>
+$ sed <span class="hljs-string">'s/!\+/./g'</span> file
+<span class="hljs-comment"># 启用扩展正则表达式，无需对+转义</span>
+$ sed <span class="hljs-string">'s/!+/./g'</span> file</code></pre>
+
+<h2 id="软件管理"><a href="#软件管理" class="headerlink" title="软件管理"></a>软件管理</h2><h3 id="软件源"><a href="#软件源" class="headerlink" title="软件源"></a>软件源</h3><p>对于 Ubuntu，编辑 /etc/apt/sources.list，添加 Ubuntu 国内软件源：<a href="https://developer.aliyun.com/mirror/ubuntu" target="_blank" rel="noopener">阿里镜像源</a>、<a href="https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/" target="_blank" rel="noopener">清华镜像源</a></p>
+<h3 id="常用软件"><a href="#常用软件" class="headerlink" title="常用软件"></a>常用软件</h3><h4 id="终端复用"><a href="#终端复用" class="headerlink" title="终端复用"></a>终端复用</h4><ul>
+<li><a href="./tmux">tmux - terminal multiplexer</a></li>
+<li>screen</li>
+</ul>
+<h2 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h2><p>默认 <code>bash</code>，可执行文件 <code>bin/bash</code></p>
+<p>推荐 <code>zsh</code>，<code>zsh</code> 可安装 <a href="https://github.com/ohmyzsh" target="_blank" rel="noopener"><code>ohmyzsh</code></a>, <code>ohmyzsh</code> 提供了丰富的主题，突出显示终端中关键信息，自动补全功能强大。</p>
+<h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><h4 id="变量"><a href="#变量" class="headerlink" title="变量:"></a>变量:</h4><pre><code class="hljs bash"><span class="hljs-comment"># 变量声明及访问</span>
+$ name=bob <span class="hljs-comment"># 定义变量 bob</span>
+
+$ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$name</span>
+bob
+$ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$&#123;name&#125;</span>
+bob
+
+<span class="hljs-comment"># 命令替换</span>
+$ output=$(date) <span class="hljs-comment"># date 命令的输出赋值给 output</span>
+$ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$output</span>
+Sun Oct 18 09:09:12 CST 2020
+
+$ output=`date`
+$ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$output</span>
+Sun Oct 18 09:09:27 CST 2020
+
+<span class="hljs-comment"># 数组</span>
+$ arr_number=(1 2 3) <span class="hljs-comment"># 数字</span>
+$ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$&#123;arr_number[0]&#125;</span>
+1
+$ arr_nubmer[0]=4
+$ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$&#123;arr_number[0]&#125;</span>
+4
+
+$ arr_string=(<span class="hljs-string">'a'</span> <span class="hljs-string">'b'</span> <span class="hljs-string">'c'</span>)
+$ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$&#123;arr_string[0]&#125;</span>
+
+<span class="hljs-meta">#!/bin.bash</span>
+<span class="hljs-comment"># 遍历数组</span>
+<span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> <span class="hljs-variable">$&#123;arr_nubmer[@]&#125;</span>; <span class="hljs-keyword">do</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-variable">$v</span>;
+<span class="hljs-keyword">done</span></code></pre>
+
+<h4 id="管道："><a href="#管道：" class="headerlink" title="管道："></a>管道：</h4><p>管道运算符：<code>|</code>，将上一步命令的输出传递给下一命令</p>
+<pre><code class="hljs bash"><span class="hljs-comment"># 管道将 find . 的标准输出作为标准输入传递给 egrep tmp</span>
+$ find . | egrep tmp <span class="hljs-comment"># 列出当前文件夹内容，并查找名称包含 tmp 的文件</span></code></pre>
+
+<hr>
+<p>xargs</p>
+<p>对于不接受标准输入作为参数的命令，可通过 xargs 将标准输出传递给命令行参数</p>
+<pre><code class="hljs bash">$ ls *.txt | xargs rm <span class="hljs-comment"># 删除当前文件夹下，后缀为 .txt 的文件</span></code></pre>
+
+<h4 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h4><p>重定向运算符：<code>&gt;</code>、<code>&gt;&gt;</code></p>
+<pre><code class="hljs bash"><span class="hljs-comment"># 执行命令，运行结果输出至 debug.log</span>
+$ ls . &gt; debug.log <span class="hljs-comment"># &gt; 每次运行命令会对 debug.log 内容进行覆盖</span>
+$ ls . &gt;&gt; debug.log <span class="hljs-comment"># &gt;&gt; 每次运行命令会将后续内容补充至 debug.log</span></code></pre>
+
+<hr>
+<p>标准输入：用户键盘输入</p>
+<p>标准输出：命令正常运行的输出，标识符 1</p>
+<p>标准错误：命令运行异常输出，标识符 2</p>
+<pre><code class="hljs bash">$ non_exist_cmd 2&gt;error.log <span class="hljs-comment"># 标准错误输出值 error.log</span>
+$ non_exist_cmd 1&gt;debug.log 2&gt;&amp;1 <span class="hljs-comment"># 标准错误传递给标准输出，并将标准输出记录到 debug.log</span></code></pre>
+
+<hr>
+<p>tee</p>
+<p>将标准输入同时输出至标准输出和文件</p>
+<pre><code class="hljs bash"><span class="hljs-comment"># 通过 tee，可以将某些耗时的命令输出同时输出至终端和文件</span>
+<span class="hljs-comment"># 输出至终端可以试试查看运行进度，输出至文件用于记录和后续分析</span>
+$ find / -name <span class="hljs-string">'tmp'</span> | tee run.log</code></pre>
+
+<h4 id="特殊变量"><a href="#特殊变量" class="headerlink" title="特殊变量"></a>特殊变量</h4><table>
+<thead>
+<tr>
+<th>变量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$#</td>
+<td>参数数量</td>
+</tr>
+<tr>
+<td>$$</td>
+<td>当前进程号</td>
+</tr>
+<tr>
+<td>$*</td>
+<td>所有参数</td>
+</tr>
+<tr>
+<td>$@</td>
+<td>所有参数</td>
+</tr>
+<tr>
+<td>$?</td>
+<td>shell 运行返回值（正常运行，返回值为0）</td>
+</tr>
+<tr>
+<td>$0</td>
+<td>运行文件名称</td>
+</tr>
+<tr>
+<td>$1</td>
+<td>第一个参数</td>
+</tr>
+</tbody></table>
+<p>示例脚本如下</p>
+<pre><code class="hljs bash">$ cat variables.sh <span class="hljs-comment"># 程序内容</span>
+<span class="hljs-comment">#/bin/bash</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">'$# 参数数量'</span>： <span class="hljs-variable">$#</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">'$$ 当前进程号：'</span> $$
+<span class="hljs-built_in">echo</span> <span class="hljs-string">'$* 所有参数：'</span> $*
+<span class="hljs-built_in">echo</span> <span class="hljs-string">'$@ 所有参数：'</span> <span class="hljs-variable">$@</span>
+
+<span class="hljs-built_in">test</span> 1 -eq 1
+<span class="hljs-built_in">echo</span> <span class="hljs-string">'$? 1 == 1 返回值：'</span> $?
+<span class="hljs-built_in">test</span> 1 -eq 2
+<span class="hljs-built_in">echo</span> <span class="hljs-string">'$? 1 == 2 返回值：'</span> $?
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">'$0 文件名称：'</span> <span class="hljs-variable">$0</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">'$1 第一个参数：'</span> <span class="hljs-variable">$1</span>
+
+$ bash variables.sh hello world <span class="hljs-comment"># 执行</span>
+<span class="hljs-variable">$#</span> 参数数量： 2
+$$ 当前进程号： 4323
+$* 所有参数： hello world
+<span class="hljs-variable">$@</span> 所有参数： hello world
+$? 1 == 1 返回值： 0
+$? 1 == 2 返回值： 1
+<span class="hljs-variable">$0</span> 文件名称： variables.sh
+<span class="hljs-variable">$1</span> 第一个参数： hello</code></pre>
+
+<h4 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h4><p>加减乘除：+ - * /</p>
+<p>比较：</p>
+<ul>
+<li><p>字符串比较</p>
+<p>==</p>
+<p>!==</p>
+<p>[ -z $string ] 字符串长度为0</p>
+<p>[ -n $string ] 字符串长度非0</p>
+</li>
+<li><p>整数比较</p>
+<p>[ $num1 -eq $num2 ] 两数是否相等</p>
+<p>[ $num1 -ge $num2 ] num1 &gt;= num2</p>
+<p>[ $num1 -le $num2 ] num1 &lt;= num2</p>
+</li>
+<li><p>文件比较</p>
+<p>[ -f $file ] file 存在且为常规文件</p>
+<p>[ -d $file ] file 存在且为文件夹</p>
+<p>[ -e $file ] file 存在</p>
+</li>
+</ul>
+<h4 id="程序结构"><a href="#程序结构" class="headerlink" title="程序结构"></a>程序结构</h4><p>if 条件结构</p>
+<pre><code class="hljs bash">$ cat if.sh
+<span class="hljs-keyword">if</span> [ 1 -le 1 ]
+<span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">'1 == 1'</span>
+<span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">'1 !== 1'</span>
+<span class="hljs-keyword">fi</span>
+$ bash if.sh
+1 == 1</code></pre>
+
+<p>while 循环结构</p>
+<pre><code class="hljs bash">$ cat while.sh
+x=1
+<span class="hljs-keyword">while</span> [ <span class="hljs-variable">$x</span> -le 5 ]
+<span class="hljs-keyword">do</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-variable">$x</span>
+        <span class="hljs-built_in">let</span> x=<span class="hljs-variable">$x</span>+1
+<span class="hljs-keyword">done</span>
+$ bash while.sh
+1
+2
+3
+4
+5</code></pre>
+
+<p>for 循环结构</p>
+<pre><code class="hljs bash">$ cat for.sh
+<span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> `seq 5`
+<span class="hljs-keyword">do</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-variable">$v</span>
+<span class="hljs-keyword">done</span>
+$ bash for.sh
+1
+2
+3
+4
+5</code></pre>
+
+<p>break: 跳出循环体</p>
+<p>continue: 跳出当前循环</p>
+<p>exit: 退出程序，后跟返回码 exit 1</p>
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><p>函数定义及调用</p>
+<pre><code class="hljs bash">$ cat function.sh
+<span class="hljs-comment"># 函数声明</span>
+<span class="hljs-function"><span class="hljs-title">func1</span></span>() &#123;
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">'parameters number: '</span> <span class="hljs-variable">$#</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">'parameters: '</span> $*
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">'parameter 1: '</span> <span class="hljs-variable">$1</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">'process id: '</span> $$
+&#125;
+
+<span class="hljs-comment"># 函数调用</span>
+func1 $*
+$ bash function.sh 1 2
+parameters number:  2
+parameters:  1 2
+parameter 1:  1
+process id:  897</code></pre>
+
+</div></article></div></main><footer><div class="paginator"><a href="/2020/02/05/cheatsheet-docker/" class="prev">PREV</a><a href="/2019/11/22/%E3%80%90%E7%AC%94%E8%AE%B0%E3%80%91React/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> node.js cheatsheet · f00bar</title><meta name="description" content="node.js cheatsheet - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Node-js-cheatsheet"><span class="toc-number">1.</span> <span class="toc-text">Node.js cheatsheet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#版本管理工具-nvm"><span class="toc-number">1.1.</span> <span class="toc-text">版本管理工具 nvm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#包管理工具-npm-amp-yarn"><span class="toc-number">1.2.</span> <span class="toc-text">包管理工具 npm &amp; yarn</span></a></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">node.js cheatsheet</h1><div class="post-info">Feb 5, 2020</div><div class="post-content"><h1 id="Node-js-cheatsheet"><a href="#Node-js-cheatsheet" class="headerlink" title="Node.js cheatsheet"></a>Node.js cheatsheet</h1><h2 id="版本管理工具-nvm"><a href="#版本管理工具-nvm" class="headerlink" title="版本管理工具 nvm"></a>版本管理工具 nvm</h2><ul>
+<li><p><a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener">nvm - node version manager</a></p>
+<pre><code class="hljs shell">nvm install node // 安装最新版 node.js
+nvm install 6.14.4 // 安装指定版本
+nvm ls // 查看已安装所有版本
+nvm use 4.14.1 // 使用指定版本</code></pre>
+
+
+
+</li>
+</ul>
+<h2 id="包管理工具-npm-amp-yarn"><a href="#包管理工具-npm-amp-yarn" class="headerlink" title="包管理工具 npm &amp; yarn"></a>包管理工具 npm &amp; yarn</h2><ul>
+<li><p><strong><code>npm(node program manager)</code></strong></p>
+<p>Node.js 内置包管理工具。 官方网站 <a href="https://www.npmjs.com/" target="_blank" rel="noopener">npm</a></p>
+<p>可进行 代码包 的下载及发布。</p>
+<p><strong>常用命令列表</strong></p>
+<pre><code class="hljs shell">npm config set registry https://registry.npm.taobao.org // 更换软件源为淘宝镜像
+
+npm init // 当前文件夹初始化为 npm 包
+
+npm view lodash // 查看指定包信息
+npm repo lodash // 查看指定包仓库地址
+npm docs lodash // 查看指定包文档
+
+npm install lodash // 安装指定包
+npm install --save-dev // 安装指定包 作为开发时依赖
+npm install -g lodash // 全局安装指定包
+npm install lodash --registry=https://registry.npm.taobao.org // 通过指定镜像安装指定包
+
+npm link local-package // 链接本地包，用于开发时调试</code></pre>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p><strong><code>yarn</code></strong></p>
+<p>官方网站 <a href="https://github.com/yarnpkg/yarn" target="_blank" rel="noopener">yarn</a></p>
+</li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/03/10/blog-migration/" class="prev">PREV</a><a href="/2020/02/05/cheatsheet-docker/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>

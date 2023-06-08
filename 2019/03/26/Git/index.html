@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Git · f00bar</title><meta name="description" content="Git - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#【笔记】Git"><span class="toc-number">1.</span> <span class="toc-text">【笔记】Git</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#个人开发基本工作流"><span class="toc-number">1.1.</span> <span class="toc-text">个人开发基本工作流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单分支工作"><span class="toc-number">1.1.1.</span> <span class="toc-text">单分支工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建版本库"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">创建版本库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置用户名及邮箱"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">配置用户名及邮箱</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#添加远程仓库"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">添加远程仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#从远程仓库克隆"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">从远程仓库克隆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#添加到本地stage"><span class="toc-number">1.1.1.5.</span> <span class="toc-text">添加到本地stage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交到本地仓库"><span class="toc-number">1.1.1.6.</span> <span class="toc-text">提交到本地仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#向远程仓库提交"><span class="toc-number">1.1.1.7.</span> <span class="toc-text">向远程仓库提交</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多分支工作"><span class="toc-number">1.1.2.</span> <span class="toc-text">多分支工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#新建分支并切换到新分支"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">新建分支并切换到新分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除分支"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">删除分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看分支"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">查看分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开发分支修改合并到主分支"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">开发分支修改合并到主分支</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#版本回退"><span class="toc-number">1.1.3.</span> <span class="toc-text">版本回退</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#丢弃工作区修改"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">丢弃工作区修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#暂存区回退到工作区"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">暂存区回退到工作区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#版本回退-1"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">版本回退</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#commit-历史查看"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">commit 历史查看</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标签管理"><span class="toc-number">1.1.4.</span> <span class="toc-text">标签管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Commits-提交记录修改"><span class="toc-number">1.1.5.</span> <span class="toc-text">Commits 提交记录修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同步远程库"><span class="toc-number">1.1.6.</span> <span class="toc-text">同步远程库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.2.</span> <span class="toc-text">Reference</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的问题"><span class="toc-number">1.3.</span> <span class="toc-text">遇到的问题</span></a></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">Git</h1><div class="post-info">May 10, 2020</div><div class="post-content"><h1 id="【笔记】Git"><a href="#【笔记】Git" class="headerlink" title="【笔记】Git"></a>【笔记】Git</h1><h2 id="个人开发基本工作流"><a href="#个人开发基本工作流" class="headerlink" title="个人开发基本工作流"></a>个人开发基本工作流</h2><h3 id="单分支工作"><a href="#单分支工作" class="headerlink" title="单分支工作"></a>单分支工作</h3><h4 id="创建版本库"><a href="#创建版本库" class="headerlink" title="创建版本库"></a>创建版本库</h4><pre><code class="hljs bash">$ git init</code></pre>
+
+<h4 id="配置用户名及邮箱"><a href="#配置用户名及邮箱" class="headerlink" title="配置用户名及邮箱"></a>配置用户名及邮箱</h4><pre><code class="hljs bash">$ git config --global user.name <span class="hljs-string">"Your Name"</span>  <span class="hljs-comment"># --global参数表示对本机所有仓库生效</span>
+$ git config --global user.email <span class="hljs-string">"Your Email"</span></code></pre>
+
+<h4 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h4><pre><code class="hljs bash">$ git remote add origin git@github.com:username/program.git
+$ git remote <span class="hljs-built_in">set</span>-url origin git@github.com:username/program.git <span class="hljs-comment"># 修改源</span></code></pre>
+
+<h4 id="从远程仓库克隆"><a href="#从远程仓库克隆" class="headerlink" title="从远程仓库克隆"></a>从远程仓库克隆</h4><pre><code class="hljs bash">$ git <span class="hljs-built_in">clone</span> git@github.com:username/program.git</code></pre>
+
+<h4 id="添加到本地stage"><a href="#添加到本地stage" class="headerlink" title="添加到本地stage"></a>添加到本地stage</h4><pre><code class="hljs bash">$ git add test.txt <span class="hljs-comment"># 添加指定文件</span>
+$ git add . <span class="hljs-comment"># 添加当前目录下所有修改文件</span></code></pre>
+
+<h4 id="提交到本地仓库"><a href="#提交到本地仓库" class="headerlink" title="提交到本地仓库"></a>提交到本地仓库</h4><pre><code class="hljs bash">$ git commit -m <span class="hljs-string">"description about this commit"</span></code></pre>
+
+<h4 id="向远程仓库提交"><a href="#向远程仓库提交" class="headerlink" title="向远程仓库提交"></a>向远程仓库提交</h4><pre><code class="hljs bash">$ git push origin <span class="hljs-built_in">local</span>:remote <span class="hljs-comment"># 其中remote可省略</span>
+$ git push origin :remote <span class="hljs-comment"># 删除远程分支</span>
+$ git push origin HEAD <span class="hljs-comment"># HEAD: current branch</span></code></pre>
+
+<h3 id="多分支工作"><a href="#多分支工作" class="headerlink" title="多分支工作"></a>多分支工作</h3><h4 id="新建分支并切换到新分支"><a href="#新建分支并切换到新分支" class="headerlink" title="新建分支并切换到新分支"></a>新建分支并切换到新分支</h4><pre><code class="hljs bash">$ git branch dev
+$ git checkout dev</code></pre>
+
+<p>or</p>
+<pre><code class="hljs bash">$ git branch -b dev</code></pre>
+
+<h4 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h4><pre><code class="hljs bash">$ git branch -d dev <span class="hljs-comment"># 删除无新提交分支</span>
+$ git branch -D dev <span class="hljs-comment"># 删除未 merge 分支</span></code></pre>
+
+<h4 id="查看分支"><a href="#查看分支" class="headerlink" title="查看分支"></a>查看分支</h4><pre><code class="hljs bash">$ git branch <span class="hljs-comment"># 查看本地分支</span>
+$ git branch -a <span class="hljs-comment"># 查看本地+远程分支</span>
+$ git remote <span class="hljs-comment"># 查看远程分支</span>
+$ git remote -v <span class="hljs-comment"># 查看远程分支具体信息</span></code></pre>
+
+<h4 id="开发分支修改合并到主分支"><a href="#开发分支修改合并到主分支" class="headerlink" title="开发分支修改合并到主分支"></a>开发分支修改合并到主分支</h4><pre><code class="hljs bash">$ git checkout master <span class="hljs-comment"># 切换到主分支</span>
+
+$ git merge dev <span class="hljs-comment"># 合并 dev 分支修改到 master 分支，merge 形式</span>
+$ git rebase dev <span class="hljs-comment"># 合并 dev 分支修改到 master 分支，rebase 形式</span></code></pre>
+
+<h3 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h3><h4 id="丢弃工作区修改"><a href="#丢弃工作区修改" class="headerlink" title="丢弃工作区修改"></a>丢弃工作区修改</h4><pre><code class="hljs bash">$ git checkout -- filename
+$ git clean -f <span class="hljs-comment"># remove untracked files. -f force</span></code></pre>
+
+<h4 id="暂存区回退到工作区"><a href="#暂存区回退到工作区" class="headerlink" title="暂存区回退到工作区"></a>暂存区回退到工作区</h4><pre><code class="hljs bash">$ git reset HEAD filename <span class="hljs-comment"># 指定文件从暂存区回退到工作区</span></code></pre>
+
+<h4 id="版本回退-1"><a href="#版本回退-1" class="headerlink" title="版本回退"></a>版本回退</h4><pre><code class="hljs bash">$ git reset --hard HEAD^ <span class="hljs-comment"># 回退到上次 commit 版本</span>
+$ git reset --hard HEAD^ <span class="hljs-comment"># 回退到上上次 commit 版本</span>
+$ git reset --hard asdfasdf <span class="hljs-comment"># 回退到指定 commit 版本</span></code></pre>
+
+<h4 id="commit-历史查看"><a href="#commit-历史查看" class="headerlink" title="commit 历史查看"></a>commit 历史查看</h4><pre><code class="hljs bash">$ git <span class="hljs-built_in">log</span> <span class="hljs-comment"># 查看 commit 历史，排列顺序由新到旧</span>
+$ git reflog <span class="hljs-comment"># 查看分支所有操作，版本回退后根据版本号可恢复</span>
+$ git <span class="hljs-built_in">log</span> --pretty=oneline <span class="hljs-comment"># 单行显示 commit 历史</span>
+$ git <span class="hljs-built_in">log</span> --graph --pretty=oneline --abbrev-commit <span class="hljs-comment"># 图形显示 commit 历史，单行显示，缩略版本号</span></code></pre>
+
+<h3 id="标签管理"><a href="#标签管理" class="headerlink" title="标签管理"></a>标签管理</h3><pre><code class="hljs bash">$ git tag v1.0 <span class="hljs-comment"># 给当前 commit 打标签 v1.0</span>
+$ git tag v1.0 30429e7 <span class="hljs-comment"># 给指定 commit 打标签 v1.0</span>
+$ git tag -a v1.0 -m <span class="hljs-string">"description about this tag"</span> <span class="hljs-comment"># 指定标签说明信息</span></code></pre>
+
+<pre><code class="hljs bash">$ git tag <span class="hljs-comment"># 查看所有标签</span>
+$ git show v1.0 <span class="hljs-comment"># 查看标签详细信息</span></code></pre>
+
+<pre><code class="hljs bash">$ git tag -d v1.0 <span class="hljs-comment"># 删除本地标签</span>
+$ git tag origin :refs/tags/v1.0 <span class="hljs-comment"># 删除远程标签</span></code></pre>
+
+<pre><code class="hljs bash">$ git push origin v1.0 <span class="hljs-comment"># 远程推送指定标签</span>
+$ git push origin --tags <span class="hljs-comment"># 远程推送本地尚未推送的所有标签</span></code></pre>
+
+<h3 id="Commits-提交记录修改"><a href="#Commits-提交记录修改" class="headerlink" title="Commits 提交记录修改"></a>Commits 提交记录修改</h3><pre><code class="hljs bash">$ git commit --amend <span class="hljs-comment"># 修改最新提交记录，比如修改注释信息、添加文件至提交中</span></code></pre>
+
+<pre><code class="hljs bash">$ git revert <span class="hljs-comment"># 安全的删除历史某条 commit 记录</span></code></pre>
+
+<pre><code class="hljs bash">$ git cherry-pick commit-id <span class="hljs-comment"># 在目的分支操作，选择性提交源分支 commits</span></code></pre>
+
+<pre><code class="hljs bash">$ git rebase -i HEAD~5 <span class="hljs-comment"># 修改分支历史记录，~5 操作5条</span></code></pre>
+
+<h3 id="同步远程库"><a href="#同步远程库" class="headerlink" title="同步远程库"></a>同步远程库</h3><pre><code class="hljs bash">$ git remote add upstream my-program.git <span class="hljs-comment"># 添加远程库</span>
+$ git fetch upstream <span class="hljs-comment"># 取回最新远程库</span>
+$ git rebase upstream/master <span class="hljs-comment"># 变基</span></code></pre>
+
+<p>or</p>
+<pre><code class="hljs bash">$ git pull origin your_branch --rebase</code></pre>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener">廖雪峰的官方网站-Git教程</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html" target="_blank" rel="noopener">常用Git命令清单-阮一峰的网络日志</a></p>
+<p><a href="http://hungyuhei.github.io/2012/08/07/better-git-commit-graph-using-pull---rebase-and-merge---no-ff.html" target="_blank" rel="noopener">洁癖者用 Git：pull –rebase 和 merge –no-ff</a></p>
+<p><a href="https://thoughtbot.com/blog/git-interactive-rebase-squash-amend-rewriting-history" target="_blank" rel="noopener">git rebase -i 详解</a></p>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><ul>
+<li>向远程仓库提交失败</li>
+</ul>
+<pre><code class="hljs plain">git pull --rebase git@github.com:username&#x2F;program.git</code></pre>
+
+<ul>
+<li><p><a href="https://blog.csdn.net/wolfking0608/article/details/78512171" target="_blank" rel="noopener">一台电脑上使用两个github账户</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/u012900536/article/details/50951099" target="_blank" rel="noopener">git 使用ssh-add添加密钥</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/wh_19910525/article/details/7554489" target="_blank" rel="noopener">git merge和git rebase小结</a></p>
+</li>
+<li><p>github 作为collaborators协作</p>
+</li>
+</ul>
+<pre><code class="hljs plain">将owner的仓库克隆到本地，开发，正常提交即可</code></pre>
+<pre><code class="hljs plain">忽略已提交到版本库中的文件
+modify .gitignore &#x2F;&#x2F; 修改 .gitignore 文件
+git rm --cached test.txt &#x2F;&#x2F; 从缓存中清除文件 test.txt, 文件夹 -r</code></pre>
+<ul>
+<li><p><strong>windows 下拉取的 git repository 在 windows subsystem linux 中执行 <code>git status</code> 中文件显示<code>modified</code></strong></p>
+<p>windows 中关闭 <code>autocrlf</code> : <code>git config --global core.autocrlf false</code></p>
+<p>wsl 中 关闭 <code>filemode</code>: <code>git config core.filemode false // --global</code></p>
+</li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2019/05/26/Ubuntu%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" class="prev">PREV</a><a href="/2019/03/23/%E3%80%90%E7%AC%94%E8%AE%B0%E3%80%91Web-%E5%89%8D%E7%AB%AF/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>

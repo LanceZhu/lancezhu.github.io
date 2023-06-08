@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> tmux · f00bar</title><meta name="description" content="tmux - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#tmux"><span class="toc-number">1.</span> <span class="toc-text">tmux</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#tmux-terminal-multiplexer"><span class="toc-number">1.1.</span> <span class="toc-text">tmux - terminal multiplexer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作流"><span class="toc-number">1.2.</span> <span class="toc-text">工作流</span></a></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">tmux</h1><div class="post-info">Mar 28, 2021</div><div class="post-content"><h1 id="tmux"><a href="#tmux" class="headerlink" title="tmux"></a>tmux</h1><h2 id="tmux-terminal-multiplexer"><a href="#tmux-terminal-multiplexer" class="headerlink" title="tmux - terminal multiplexer"></a>tmux - terminal multiplexer</h2><p>通过 session window pane 三个维度复用</p>
+<h2 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h2><pre><code class="hljs shell">tmux // 新建session
+
+ctrl+b % // 左右分割为两个pane
+ctrl+b " // 上下分割为两个pane
+
+ctrl+b w // 显示 window
+ctrl+b q // 显示pane对应序号
+ctrl+b o // 千幻 pane
+
+ctrl+b x // 关闭当前pane
+ctrl+b d // detach 当前 session
+
+tmux list-session // 列出所有session
+
+tmux attach-session -t 序号 // attach到对应session
+
+tmux kill-session -t 序号 // kill 对应 session</code></pre>
+
+</div></article></div></main><footer><div class="paginator"><a href="/2020/08/01/ssh-access-analysis/" class="prev">PREV</a><a href="/2020/05/18/tt-rss/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>

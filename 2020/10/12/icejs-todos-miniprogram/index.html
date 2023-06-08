@@ -1,0 +1,964 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> icejs-todos-miniprogram · f00bar</title><meta name="description" content="icejs-todos-miniprogram - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何同时开发小程序-中后台应用-feat-icejs-小程序篇"><span class="toc-number">1.</span> <span class="toc-text">如何同时开发小程序+中后台应用(feat: icejs) - 小程序篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number">1.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小程序"><span class="toc-number">1.2.</span> <span class="toc-text">小程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#项目初始化"><span class="toc-number">1.2.1.</span> <span class="toc-text">项目初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面编写"><span class="toc-number">1.2.2.</span> <span class="toc-text">页面编写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Todos-列表页"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">Todos 列表页</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#添加-Todo-页"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">添加 Todo 页</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目配置"><span class="toc-number">1.2.3.</span> <span class="toc-text">项目配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据请求"><span class="toc-number">1.2.4.</span> <span class="toc-text">数据请求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#以获取某用户的-Todos-为例"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">以获取某用户的 Todos 为例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据存储"><span class="toc-number">1.2.5.</span> <span class="toc-text">数据存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">1.2.6.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐阅读"><span class="toc-number">1.3.</span> <span class="toc-text">推荐阅读</span></a></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">icejs-todos-miniprogram</h1><div class="post-info">Oct 12, 2020</div><div class="post-content"><h1 id="如何同时开发小程序-中后台应用-feat-icejs-小程序篇"><a href="#如何同时开发小程序-中后台应用-feat-icejs-小程序篇" class="headerlink" title="如何同时开发小程序+中后台应用(feat: icejs) - 小程序篇"></a>如何同时开发小程序+中后台应用(feat: icejs) - 小程序篇</h1><blockquote>
+<p>知乎：<a href="https://zhuanlan.zhihu.com/p/216507810" target="_blank" rel="noopener">使用 React + icejs 开发一个完整的 Todo 应用 - 小程序篇</a><br>语雀：<a href="https://www.yuque.com/f00bar/bsa44q/gfw19c" target="_blank" rel="noopener">如何同时开发小程序+中后台应用(feat: icejs) - 小程序篇</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://ice.work/" target="_blank" rel="noopener">icejs</a> 主要应用场景为开发中后台应用。但 <a href="mailto:icejs@1.7.0">icejs@1.7.0</a> 版本开始支持<a href="https://ice.work/docs/miniprogram/start" target="_blank" rel="noopener">小程序开发</a>。如果你想使用 React 同时开发中后台应用和小程序，那么 icejs 即可满足你。使用同一套技术体系，减少技术切换成本，提高研发效率。</p>
+</blockquote>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文将演示如何使用 icejs 构建 Todo 小程序 + 后台管理系统，同时包括相应服务端。</p>
+<p>Todo 应用的功能或需求为：</p>
+<ul>
+<li>小程序端：展示 Todo 列表，支持增删改查，以及同步数据到服务端。</li>
+<li>后台管理系统：小程序用户信息和增删改查的管理系统。</li>
+</ul>
+<p>整体的技术栈设计如下：</p>
+<ul>
+<li>*<em>小程序 *</em><ul>
+<li>icejs 框架</li>
+<li>universal-request 数据请求</li>
+</ul>
+</li>
+<li><strong>后台管理系统</strong><ul>
+<li>icejs 框架</li>
+<li>icejs build-plugin-ice-auth 插件，权限管理</li>
+<li>fusion design UI 组件库</li>
+</ul>
+</li>
+<li><strong>服务端</strong> + <strong>数据库</strong><ul>
+<li>eggjs 服务端框架</li>
+<li>egg-sequelize + mysql2 用于 eggjs 连接 MySQL 数据库</li>
+<li>MySQL 数据库</li>
+<li>uuid 唯一 id 生成</li>
+</ul>
+</li>
+</ul>
+<p>因篇幅较长，如何同时开发小程序+中后台应用（feat: icejs）将分为三篇分别介绍。</p>
+<ul>
+<li>小程序篇（本文）</li>
+</ul>
+<p>使用 icejs 开发 Todo 小程序。</p>
+<ul>
+<li>后台管理系统篇</li>
+</ul>
+<p>使用 icejs 开发 Todo 小程序后台管理系统。</p>
+<ul>
+<li>服务端篇</li>
+</ul>
+<p>搭建服务 Todo 小程序及后台管理系统的服务端。</p>
+<h2 id="小程序"><a href="#小程序" class="headerlink" title="小程序"></a>小程序</h2><blockquote>
+<p>项目代码见：<a href="https://github.com/ice-lab/miniprogram-materials/tree/master/scaffolds/todos" target="_blank" rel="noopener">miniprogram-materials/scaffolds/todos</a><br>小程序开发基于icejs，详细内容见 <a href="https://github.com/ice-lab/miniprogram-materials/tree/master/scaffolds/todos" target="_blank" rel="noopener">icejs 小程序开发文档</a></p>
+</blockquote>
+<h3 id="项目初始化"><a href="#项目初始化" class="headerlink" title="项目初始化"></a>项目初始化</h3><p>创建文件夹存放代码</p>
+<pre><code class="hljs bash">$ mkdir todos &amp;&amp; <span class="hljs-built_in">cd</span> todos</code></pre>
+
+
+<p>基于 icejs 小程序 JavaScript 模板初始化项目</p>
+<pre><code class="hljs bash">$ npm init ice . <span class="hljs-comment"># 在当前目录下初始项目</span></code></pre>
+
+
+<p>选择 JavaScript 小程序模板即 Lightweight JavaScript template with miniapp Program</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598521001177-8b125520-f5d4-46f2-a6f8-598e2150ffed.png#align=left&display=inline&height=192&margin=%5Bobject%20Object%5D&originHeight=192&originWidth=471&status=done&style=none&width=471" alt=""></p>
+<p>启动项目</p>
+<pre><code class="hljs bash">$ npm install &amp;&amp; npm run start
+
+<span class="hljs-comment"># 从微信开发者工具中导入构建完成后的产物可以看到项目正常运行</span>
+<span class="hljs-comment"># 构建产物位置位于 ./build 目录中。./build/miniapp 为支付宝小程序；./build/wechat-miniprogram 为微信小程序</span></code></pre>
+
+
+<blockquote>
+<p><a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/devtools.html" target="_blank" rel="noopener">微信开发者工具下载</a><br><a href="https://render.alipay.com/p/f/fd-jwq8nu2a/pages/home/index.html" target="_blank" rel="noopener">支付宝小程序开发工具下载</a></p>
+</blockquote>
+<p>使用微信开发者工具管理小程序<br><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598931377928-a0bf4ffa-3dad-4bc7-81c7-18b5d0d8d087.png#align=left&display=inline&height=344&margin=%5Bobject%20Object%5D&name=image.png&originHeight=688&originWidth=1016&size=108179&status=done&style=none&width=508" alt="image.png"><br>导入构建的小程序包</p>
+<blockquote>
+<p>此处 AppID 应填写自己所申请的小程序 AppID 或使用 测试号</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598931459380-01eb51a3-e13f-436b-9ff9-a7fe90111b59.png#align=left&display=inline&height=345&margin=%5Bobject%20Object%5D&name=image.png&originHeight=689&originWidth=1015&size=45416&status=done&style=none&width=507.5" alt="image.png"><br>开发者工具中小程序编译成功<br><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598931572145-a4d6e362-5612-4fcb-87c9-b324ee4db9cb.png#align=left&display=inline&height=511&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1022&originWidth=1916&size=170663&status=done&style=none&width=958" alt="image.png"><br>项目目录结构为：</p>
+<pre><code class="hljs plain">.
+├── .ice&#x2F;                          # 运行时生成的临时目录
+├── build&#x2F;                         # 构建产物目录
+├── src&#x2F;                           # 源码目录
+│    ├── components                # 应用的公共组件
+│    │     └── Logo             
+│    │       ├── index.module.less # Logo 组件的样式文件
+│    │       └── index.jsx         # Logo 组件 JSX 源码           
+│    └── pages                     # 页面
+│    │     └── Home                # home 页面
+│    │         └── index.jsx
+│    ├── app.js                    # 应用入口文件
+│    └── app.json                  # 应用配置，包括路由配置，小程序 window 配置等
+├── README.md                      # 项目说明
+├── build.json                     # 项目构建配置
+├── package.json
+└── tsconfig.json</code></pre>
+
+
+<h3 id="页面编写"><a href="#页面编写" class="headerlink" title="页面编写"></a>页面编写</h3><p>页面编写与使用 React 开发基本一致。</p>
+<p>对于小程序中的生命周期函数，可使用 <code>usePageShow</code>、<code>usePageHide</code> 或者 <code>withPageLifeCycle</code> 等方法进行监听。详细文档见<a href="">页面配置#生命周期</a>。</p>
+<h4 id="Todos-列表页"><a href="#Todos-列表页" class="headerlink" title="Todos 列表页"></a>Todos 列表页</h4><p><strong>创建 src/pages/todos 编写 UI</strong></p>
+<pre><code class="hljs jsx"><span class="hljs-keyword">import</span> React, &#123; useState &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+
+<span class="hljs-keyword">import</span> &#123; usePageShow &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'ice'</span>;
+
+<span class="hljs-keyword">import</span> AddButton <span class="hljs-keyword">from</span> <span class="hljs-string">'@/components/add-button'</span>; <span class="hljs-comment">// 组件：添加新 Todo按钮</span>
+<span class="hljs-keyword">import</span> logo <span class="hljs-keyword">from</span> <span class="hljs-string">'@/public/logo.svg'</span>;
+<span class="hljs-keyword">import</span> styles <span class="hljs-keyword">from</span> <span class="hljs-string">'./index.module.scss'</span>;
+
+<span class="hljs-keyword">const</span> Todos = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;
+  <span class="hljs-comment">// state</span>
+  <span class="hljs-keyword">const</span> [userInfo, setUserInfo] = useState(&#123;&#125;);
+  <span class="hljs-keyword">const</span> [todos, setTodos] = useState([]);
+
+  <span class="hljs-comment">// handlers</span>
+  <span class="hljs-keyword">const</span> onTodoChange = <span class="hljs-keyword">async</span> id =&gt; &#123;
+    <span class="hljs-keyword">let</span> changedContent = &#123;&#125;;
+    <span class="hljs-keyword">const</span> changedTodos = todos.map(<span class="hljs-function"><span class="hljs-params">todo</span> =&gt;</span> &#123;
+      <span class="hljs-keyword">const</span> &#123; <span class="hljs-attr">id</span>: curId &#125; = todo;
+      <span class="hljs-keyword">const</span> &#123; completed &#125; = todo.content;
+      <span class="hljs-keyword">if</span> (id === curId) &#123;
+        changedContent = &#123;
+          ...todo.content,
+          completed: id === curId ? !completed : completed
+        &#125;;
+      &#125;
+
+      <span class="hljs-keyword">return</span> &#123;
+        ...todo,
+        content: &#123;
+          ...todo.content,
+          completed: id === curId ? !completed : completed
+        &#125;
+      &#125;;
+    &#125;);
+
+    setTodos(changedTodos);
+  &#125;;
+
+  <span class="hljs-comment">// lifecycle function</span>
+  usePageShow(<span class="hljs-keyword">async</span> () =&gt; &#123;
+    <span class="hljs-keyword">const</span> defaultTodos = [
+      &#123;
+        content: &#123; <span class="hljs-attr">text</span>: <span class="hljs-string">'Learning Javascript'</span>, <span class="hljs-attr">completed</span>: <span class="hljs-literal">true</span> &#125;,
+        id: <span class="hljs-number">0</span>
+      &#125;,
+      &#123;
+        content: &#123; <span class="hljs-attr">text</span>: <span class="hljs-string">'Learning ES2016'</span>, <span class="hljs-attr">completed</span>: <span class="hljs-literal">true</span> &#125;,
+        id: <span class="hljs-number">1</span>
+      &#125;,
+      &#123;
+        content: &#123; <span class="hljs-attr">text</span>: <span class="hljs-string">'Learning 小程序'</span>, <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span> &#125;,
+        id: <span class="hljs-number">2</span>
+      &#125;,
+    ]
+
+    <span class="hljs-comment">// 暂时使用默认 Todos 测试 UI</span>
+    setTodos(defaultTodos);
+  &#125;)
+
+  <span class="hljs-keyword">return</span> (
+    &lt;div className=&#123;styles[<span class="hljs-string">'page-todos'</span>]&#125;&gt;
+      &lt;div className=&#123;styles.user&#125;&gt;
+        &lt;button type=<span class="hljs-string">'button'</span> className=&#123;styles[<span class="hljs-string">'login-button'</span>]&#125; &gt;
+          &lt;div style=&#123;&#123;<span class="hljs-attr">display</span>: <span class="hljs-string">'flex'</span>, <span class="hljs-attr">flexDirection</span>: <span class="hljs-string">'column'</span>&#125;&#125;&gt;
+            &lt;img className=&#123;styles.avatar&#125; src=&#123;userInfo.avatarUrl ? userInfo.avatarUrl : logo&#125; alt=<span class="hljs-string">"用户头像"</span> /&gt;
+            &lt;span className=&#123;styles.nickname&#125;&gt;&#123;userInfo.nickName ? <span class="hljs-string">`<span class="hljs-subst">$&#123;userInfo.nickName&#125;</span>'s`</span> : <span class="hljs-string">'My'</span> &#125; Todo List&lt;<span class="hljs-regexp">/span&gt;</span>
+<span class="hljs-regexp">          &lt;/</span>div&gt;
+        &lt;<span class="hljs-regexp">/button&gt;</span>
+<span class="hljs-regexp">      &lt;/</span>div&gt;
+      
+      &lt;div className=&#123;styles[<span class="hljs-string">'todo-items'</span>]&#125;&gt;
+        &lt;div className=&#123;styles[<span class="hljs-string">'todo-items-group'</span>]&#125;&gt;
+          &#123;
+            todos.map(<span class="hljs-function"><span class="hljs-params">todo</span> =&gt;</span> (
+              &lt;div style=&#123;&#123;<span class="hljs-attr">position</span>: <span class="hljs-string">'relative'</span>&#125;&#125; key=&#123;todo.id&#125;&gt;
+                &lt;div
+                  className=&#123;<span class="hljs-string">`<span class="hljs-subst">$&#123;styles[<span class="hljs-string">'todo-item'</span>]&#125;</span> <span class="hljs-subst">$&#123;todo.content.completed ? styles.checked : <span class="hljs-string">''</span>&#125;</span>`</span>&#125;
+                  onClick=&#123;() =&gt; onTodoChange(todo.id)&#125;
+                &gt;
+                  &lt;checkbox className=&#123;styles[<span class="hljs-string">'todo-item-checkbox'</span>]&#125; checked=&#123;todo.content.completed&#125; /&gt;
+                  &lt;span className=&#123;styles[<span class="hljs-string">'todo-item-text'</span>]&#125;&gt;&#123;todo.content.text&#125;&lt;<span class="hljs-regexp">/span&gt;</span>
+<span class="hljs-regexp">                &lt;/</span>div&gt;
+                &lt;div
+                  className=&#123;styles[<span class="hljs-string">'close-wrapper'</span>]&#125;
+                  &gt;
+                  &lt;div className=&#123;styles.close&#125;/&gt;
+                &lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp">              &lt;/</span>div&gt;
+            ))
+          &#125;
+        &lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp">      &lt;/</span>div&gt;
+
+      &lt;div className=&#123;styles[<span class="hljs-string">'todo-footer'</span>]&#125;&gt;
+        &lt;AddButton text=<span class="hljs-string">"Add Todo"</span> /&gt;
+      &lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp">    &lt;/</span>div&gt;
+  );
+&#125;;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Todos;</code></pre>
+<p><strong>添加样式</strong></p>
+<pre><code class="hljs css">// src/pages/todos/index.module.scss
+<span class="hljs-selector-tag">page</span> &#123;
+  <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>;
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#323239</span>;
+  <span class="hljs-attribute">font-family</span>: <span class="hljs-string">"pingFang SC"</span> <span class="hljs-string">"pingFang"</span>;
+&#125;
+
+<span class="hljs-selector-tag">body</span> &#123;
+  <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>;
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#323239</span>;
+  <span class="hljs-attribute">font-family</span>: <span class="hljs-string">"pingFang SC"</span> <span class="hljs-string">"pingFang"</span>;
+&#125;
+
+<span class="hljs-selector-class">.page-todos</span> &#123;
+  <span class="hljs-attribute">font-family</span>: <span class="hljs-string">"pingFang SC"</span> <span class="hljs-string">"pingFang"</span>;
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">flex-direction</span>: column;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">750</span>rpx;
+  <span class="hljs-attribute">max-height</span>: <span class="hljs-number">100vh</span>;
+&#125;
+
+<span class="hljs-selector-class">.user</span> &#123;
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">flex-shrink</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">30px</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#FFF</span>;
+  <span class="hljs-attribute">flex-direction</span>: column;
+  <span class="hljs-attribute">align-items</span>: center;
+&#125;
+
+<span class="hljs-selector-class">.login-button</span> &#123;
+  <span class="hljs-attribute">display</span>: inline-block;
+  <span class="hljs-attribute">background</span>: none;
+  <span class="hljs-attribute">border</span>: none;
+  <span class="hljs-attribute">width</span>: auto;
+  <span class="hljs-attribute">height</span>: auto;
+&#125;
+
+<span class="hljs-selector-class">.login-button</span><span class="hljs-selector-pseudo">:after</span>&#123;
+  <span class="hljs-attribute">content</span>: none;
+&#125;
+
+<span class="hljs-selector-class">.avatar</span> &#123;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">130</span>rpx;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">130</span>rpx;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50%</span>;
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#FFF</span>;
+  <span class="hljs-attribute">align-self</span>: center;
+&#125;
+
+<span class="hljs-selector-class">.nickname</span> &#123;
+  <span class="hljs-attribute">padding-top</span>: <span class="hljs-number">40</span>rpx;
+  <span class="hljs-attribute">text-align</span>: center;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">40</span>rpx;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">100</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#FFF</span>;
+&#125;
+
+<span class="hljs-selector-class">.todo-items</span> &#123;
+  <span class="hljs-attribute">flex-grow</span>: <span class="hljs-number">1</span>;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">34</span>rpx;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span> <span class="hljs-number">120</span>rpx;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#0EFFD6</span>;
+  <span class="hljs-attribute">overflow</span>: auto;
+&#125;
+
+<span class="hljs-selector-class">.todo-items-group</span> &#123;
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">flex-direction</span>: column;
+&#125;
+
+<span class="hljs-selector-class">.todo-item</span> &#123;
+  <span class="hljs-attribute">position</span>: relative;
+  <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">50</span>rpx;
+  <span class="hljs-attribute">padding-left</span>:<span class="hljs-number">80</span>rpx;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">70</span>rpx;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">80</span>rpx;
+  <span class="hljs-attribute">box-sizing</span>: border-box;
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">2px</span> solid <span class="hljs-built_in">rgb</span>(14, 255, 214);
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">100</span>rpx;
+  <span class="hljs-attribute">overflow</span>: hidden;
+  <span class="hljs-attribute">text-overflow</span>: ellipsis;
+  <span class="hljs-comment">/* white-space:nowrap; */</span>
+
+  <span class="hljs-attribute">transition</span>: border <span class="hljs-number">0.2s</span>;
+&#125;
+
+<span class="hljs-selector-class">.todo-item</span><span class="hljs-selector-pseudo">:last-child</span> &#123;
+  <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">0</span>;
+&#125;
+
+<span class="hljs-selector-class">.todo-item</span><span class="hljs-selector-pseudo">::before</span> &#123;
+  <span class="hljs-attribute">content</span>: <span class="hljs-string">''</span>;
+  <span class="hljs-attribute">position</span>: absolute;
+  <span class="hljs-attribute">left</span>: <span class="hljs-number">12</span>rpx;
+  <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">20</span>rpx;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">45</span>rpx;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">45</span>rpx;
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgba</span>(14, 222, 255, 0.3);
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50%</span>;
+  <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;
+  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateY</span>(-50%);
+
+  <span class="hljs-attribute">transition</span>: background-color <span class="hljs-number">0.2s</span>;
+&#125;
+
+<span class="hljs-selector-class">.todo-item</span><span class="hljs-selector-pseudo">::after</span> &#123;
+  <span class="hljs-attribute">content</span>: <span class="hljs-string">''</span>;
+  <span class="hljs-attribute">position</span>: absolute;
+  <span class="hljs-attribute">left</span>: <span class="hljs-number">29</span>rpx;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">8</span>rpx;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">18</span>rpx;
+  <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;
+  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateY</span>(-60%) <span class="hljs-built_in">rotate</span>(38deg);
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">4</span>rpx solid <span class="hljs-number">#FFF</span>;
+  <span class="hljs-attribute">border-width</span>: <span class="hljs-number">0</span> <span class="hljs-number">4</span>rpx <span class="hljs-number">4</span>rpx <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;
+
+  <span class="hljs-attribute">transition</span>: opacity <span class="hljs-number">0.2s</span>;
+&#125;
+
+<span class="hljs-selector-class">.todo-item-checkbox</span> &#123;
+  <span class="hljs-attribute">display</span>: none;
+&#125;
+
+<span class="hljs-selector-class">.checked</span> <span class="hljs-selector-class">.todo-item-text</span> &#123;
+  <span class="hljs-attribute">text-decoration</span>: line-through;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#1AA0B8</span>;
+&#125;
+
+<span class="hljs-selector-class">.checked</span><span class="hljs-selector-class">.todo-item</span> &#123;
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">2px</span> solid <span class="hljs-built_in">rgba</span>(14, 222, 255, 0.2);
+&#125;
+
+<span class="hljs-selector-class">.checked</span><span class="hljs-selector-class">.todo-item</span><span class="hljs-selector-pseudo">::before</span> &#123;
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgba</span>(14, 222, 255, 0.2);
+&#125;
+
+<span class="hljs-selector-class">.checked</span><span class="hljs-selector-class">.todo-item</span><span class="hljs-selector-pseudo">::after</span> &#123;
+  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;
+&#125;
+
+<span class="hljs-selector-class">.todo-item-operation</span> &#123;
+  <span class="hljs-attribute">display</span>: inline-block;
+  <span class="hljs-attribute">background</span>: none;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#FFF</span>;
+  <span class="hljs-attribute">border</span>: none;
+&#125;
+
+<span class="hljs-selector-class">.todo-item-operation</span><span class="hljs-selector-pseudo">:after</span> &#123;
+  <span class="hljs-attribute">content</span>: none;
+&#125;
+
+<span class="hljs-selector-class">.close-wrapper</span> &#123;
+  <span class="hljs-attribute">box-sizing</span>: border-box;
+  <span class="hljs-attribute">position</span>: absolute;
+  <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">right</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">80</span>rpx;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">80</span>rpx;
+  <span class="hljs-attribute">padding-top</span>: <span class="hljs-number">20</span>rpx;
+  <span class="hljs-attribute">padding-left</span>: <span class="hljs-number">20</span>rpx;
+&#125;
+
+<span class="hljs-selector-class">.close</span> &#123;
+  <span class="hljs-attribute">box-sizing</span>: border-box;
+  <span class="hljs-attribute">position</span>: relative;
+  <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">right</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">40</span>rpx;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">40</span>rpx;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50%</span>;
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgba</span>(14, 222, 255, 0.3);
+&#125;
+
+<span class="hljs-selector-class">.close</span><span class="hljs-selector-pseudo">::before</span> &#123;
+    <span class="hljs-attribute">position</span>: absolute;
+    <span class="hljs-attribute">content</span>: <span class="hljs-string">' '</span>;
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#2c2c2c</span>;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">8</span>rpx;
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">30</span>rpx;
+    <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;
+    <span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span>;
+    <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translate</span>(-50%, -50%) <span class="hljs-built_in">rotate</span>(45deg);
+&#125;
+<span class="hljs-selector-class">.close</span><span class="hljs-selector-pseudo">::after</span> &#123;
+    <span class="hljs-attribute">position</span>: absolute;
+    <span class="hljs-attribute">content</span>: <span class="hljs-string">' '</span>;
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#2c2c2c</span>;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">8</span>rpx;
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">30</span>rpx;
+    <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">4</span>rpx;
+    <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;
+    <span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span>;
+    <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translate</span>(-50%, -50%) <span class="hljs-built_in">rotate</span>(-45deg);
+&#125;
+
+<span class="hljs-selector-class">.todo-footer</span> &#123;
+  <span class="hljs-attribute">flex-shrink</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">50</span>rpx <span class="hljs-number">0</span> <span class="hljs-number">100</span>rpx;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">48</span>rpx;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">200</span>;
+  <span class="hljs-attribute">text-align</span>: center;
+&#125;</code></pre>
+<p><strong>编写所需组件 add-button</strong></p>
+<pre><code class="hljs jsx"><span class="hljs-comment">// src/components/add-button/index.jsx</span>
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> styles <span class="hljs-keyword">from</span> <span class="hljs-string">'./index.module.scss'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">AddButton</span> (<span class="hljs-params">props</span>) </span>&#123;
+  <span class="hljs-keyword">const</span> &#123; text, onClickMe &#125; = props;
+
+  <span class="hljs-keyword">return</span> (
+    &lt;button type=<span class="hljs-string">'button'</span> className=&#123;styles[<span class="hljs-string">'add-button'</span>]&#125; onClick=&#123;onClickMe&#125;&gt;
+      &lt;span className=&#123;styles[<span class="hljs-string">'add-icon'</span>]&#125;&gt;+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span>
+      &lt;span&gt;&#123;text&#125;&lt;<span class="hljs-regexp">/span&gt;</span>
+<span class="hljs-regexp">    &lt;/</span>button&gt;
+  );
+&#125;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> AddButton;</code></pre>
+<p><strong>为组件添加样式</strong></p>
+<pre><code class="hljs jsx"><span class="hljs-comment">// src/components/add-button/index.module.scss</span>
+.add-button &#123;
+  display: inline-block;
+  background: none;
+  color: #FFF;
+  border: none;
+  width: <span class="hljs-number">300</span>rpx;
+&#125;
+
+.add-button:after &#123;
+  content: none;
+&#125;
+
+.add-icon &#123;
+  font-size: <span class="hljs-number">52</span>rpx;
+  color: #00FFD6;
+  margin-right: <span class="hljs-number">10</span>rpx;
+&#125;</code></pre>
+<p><strong>添加 logo 图片</strong><br>src/public/logo.svg</p>
+<pre><code class="hljs jsx">&lt;svg xmlns=<span class="hljs-string">"http://www.w3.org/2000/svg"</span> viewBox=<span class="hljs-string">"-11.5 -10.23174 23 20.46348"</span>&gt;
+  &lt;title&gt;React Logo&lt;<span class="hljs-regexp">/title&gt;</span>
+<span class="hljs-regexp">  &lt;circle cx="0" cy="0" r="2.05" fill="#61dafb"/</span>&gt;
+  &lt;g stroke=<span class="hljs-string">"#61dafb"</span> stroke-width=<span class="hljs-string">"1"</span> fill=<span class="hljs-string">"none"</span>&gt;
+    &lt;ellipse rx=<span class="hljs-string">"11"</span> ry=<span class="hljs-string">"4.2"</span>/&gt;
+    &lt;ellipse rx=<span class="hljs-string">"11"</span> ry=<span class="hljs-string">"4.2"</span> transform=<span class="hljs-string">"rotate(60)"</span>/&gt;
+    &lt;ellipse rx=<span class="hljs-string">"11"</span> ry=<span class="hljs-string">"4.2"</span> transform=<span class="hljs-string">"rotate(120)"</span>/&gt;
+  &lt;<span class="hljs-regexp">/g&gt;</span>
+<span class="hljs-regexp">&lt;/</span>svg&gt;</code></pre>
+<p><strong>添加路由</strong><br>编辑 src/app.json</p>
+<pre><code class="hljs json">&#123;
+  <span class="hljs-attr">"routes"</span>: [ // 页面路由数组
+    &#123;
+      "path": "/todos",  // /todos 路由
+      "source": "pages/todos/index" // 实际 React 组件，即上面所写组件
+    &#125;,
+  ]
+&#125;</code></pre>
+<p><strong>构建小程序</strong></p>
+<pre><code class="hljs bash">$ npm run start <span class="hljs-comment"># 构建小程序</span>
+
+<span class="hljs-comment"># 将构建产物 ./build/wechat-miniprogram 导入至微信开发者工具中</span></code></pre>
+<p>小程序开发者工具进行编译，实际效果为：<br><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598962296957-1a3b3424-96af-4052-9b78-65457af2956b.png#align=left&display=inline&height=710&margin=%5Bobject%20Object%5D&name=image.png&originHeight=710&originWidth=399&size=45216&status=done&style=none&width=399" alt="image.png"><br>切换 Todo 完成状态<br><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598962311241-f7112c35-8ea1-4ff4-b89c-add990a04713.png#align=left&display=inline&height=709&margin=%5Bobject%20Object%5D&name=image.png&originHeight=709&originWidth=400&size=45554&status=done&style=none&width=400" alt="image.png"><br>Todos 列表页面样式完成。可切换 Todo 完成情况。</p>
+<h4 id="添加-Todo-页"><a href="#添加-Todo-页" class="headerlink" title="添加 Todo 页"></a>添加 Todo 页</h4><p><strong>编写 UI</strong></p>
+<pre><code class="hljs jsx"><span class="hljs-comment">// src/pages/add-todo/index.jsx</span>
+<span class="hljs-keyword">import</span> React, &#123; useState &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+
+<span class="hljs-keyword">import</span> AddButton <span class="hljs-keyword">from</span> <span class="hljs-string">'@/components/add-button'</span>;
+<span class="hljs-keyword">import</span> styles <span class="hljs-keyword">from</span> <span class="hljs-string">'./index.module.scss'</span>;
+
+<span class="hljs-keyword">const</span> AddTodo = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;
+  <span class="hljs-comment">// state</span>
+  <span class="hljs-keyword">const</span> [value, setValue] = useState(<span class="hljs-string">''</span>);
+
+  <span class="hljs-comment">// handlers</span>
+  <span class="hljs-keyword">const</span> onChange = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> &#123;
+    setValue(e.target.value);
+  &#125;;
+
+  <span class="hljs-comment">// 省略添加 Todo 逻辑</span>
+  <span class="hljs-keyword">const</span> add = <span class="hljs-keyword">async</span> () =&gt; &#123;&#125;;
+
+  <span class="hljs-keyword">return</span> (
+    &lt;div className=&#123;styles[<span class="hljs-string">'page-add-todo'</span>]&#125;&gt;
+      &lt;div className=&#123;styles[<span class="hljs-string">'add-todo'</span>]&#125;&gt;
+        &lt;input
+          className=&#123;styles[<span class="hljs-string">'add-todo-input'</span>]&#125;
+          placeholder=<span class="hljs-string">"What needs to be done?"</span>
+          value=&#123;value&#125;
+          onChange=&#123;() =&gt; &#123;&#125;&#125;
+          onInput=&#123;onChange&#125; /&gt;
+      &lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp"></span>
+<span class="hljs-regexp">      &lt;div className=&#123;styles['todo-footer']&#125;&gt;</span>
+<span class="hljs-regexp">        &lt;AddButton text="Add Todo" onClickMe=&#123;add&#125;/</span>&gt;
+      &lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp">    &lt;/</span>div&gt;
+  );
+&#125;;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> AddTodo;</code></pre>
+<p><strong>添加样式</strong></p>
+<pre><code class="hljs css">// src/pages/add-todo/index.module.scss
+<span class="hljs-selector-tag">page</span> &#123;
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#323239</span>;
+  <span class="hljs-attribute">font-family</span>: <span class="hljs-string">"pingFang SC"</span> <span class="hljs-string">"pingFang"</span>;
+&#125;
+
+<span class="hljs-selector-class">.page-add-todo</span> &#123;
+  <span class="hljs-attribute">font-family</span>: <span class="hljs-string">"pingFang SC"</span> <span class="hljs-string">"pingFang"</span>;
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>;
+  <span class="hljs-attribute">flex-direction</span>: column;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">750</span>rpx;
+&#125;
+
+<span class="hljs-selector-class">.add-todo</span> &#123;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">40px</span>;
+  <span class="hljs-attribute">flex-grow</span>: <span class="hljs-number">1</span>;
+  <span class="hljs-attribute">display</span>: flex;
+  <span class="hljs-attribute">justify-content</span>: center;
+  <span class="hljs-attribute">align-items</span>: center;
+&#125;
+
+<span class="hljs-selector-class">.add-todo-input</span> &#123;
+  <span class="hljs-attribute">display</span>: block;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">50</span>rpx;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">100</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">5px</span> <span class="hljs-number">5px</span>;
+  <span class="hljs-attribute">background</span>: none;
+  <span class="hljs-attribute">border</span>:none;
+  <span class="hljs-attribute">border-bottom</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#DFDFDF</span>;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#0EFFD6</span>;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+&#125;
+
+<span class="hljs-selector-class">.todo-footer</span> &#123;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">50</span>rpx <span class="hljs-number">0</span> <span class="hljs-number">100</span>rpx;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">48</span>rpx;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">200</span>;
+  <span class="hljs-attribute">text-align</span>: center;
+&#125;</code></pre>
+<p><strong>配置路由</strong></p>
+<pre><code class="hljs json">&#123;
+  <span class="hljs-attr">"routes"</span>: [
+  	&#123;
+      <span class="hljs-attr">"path"</span>: <span class="hljs-string">"/add-todo"</span>,
+      <span class="hljs-attr">"source"</span>: <span class="hljs-string">"pages/add-todo/index"</span>
+    &#125;，
+    &#123;
+      <span class="hljs-attr">"path"</span>: <span class="hljs-string">"/todos"</span>,
+      <span class="hljs-attr">"source"</span>: <span class="hljs-string">"pages/todos/index"</span>
+    &#125;
+  ]
+&#125;</code></pre>
+<p><strong>微信小程序开发者工具中执行自定义编译</strong></p>
+<ul>
+<li>添加编译模式</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598962397413-735fe7cc-aa62-4f6d-a057-2e684d6cd649.png#align=left&display=inline&height=1027&margin=%5Bobject%20Object%5D&name=mp3.png&originHeight=1027&originWidth=1916&size=190538&status=done&style=none&width=1916" alt="mp3.png"></p>
+<ul>
+<li>配置启动页面为 pages/add-todo/index</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598962502120-9a9a2d4f-b951-479d-8652-477896eead25.png#align=left&display=inline&height=1023&margin=%5Bobject%20Object%5D&name=mp4.png&originHeight=1023&originWidth=1920&size=183598&status=done&style=none&width=1920" alt="mp4.png"><br>编译后可看到添加 Todo 页面效果<br><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598962525365-97c4d6f9-d180-4bc8-bda7-f88518ac119d.png#align=left&display=inline&height=358&margin=%5Bobject%20Object%5D&name=image.png&originHeight=715&originWidth=397&size=25057&status=done&style=none&width=198.5" alt="image.png">)<img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598962542690-911bb7a4-0ad6-4e75-9de7-a26687f3559a.png#align=left&display=inline&height=357&margin=%5Bobject%20Object%5D&name=image.png&originHeight=714&originWidth=403&size=21665&status=done&style=none&width=201.5" alt="image.png"><br><strong>此时的目录结构为：</strong></p>
+<blockquote>
+<p>原有 Logo 组件及 Home 页面未使用可删除。</p>
+</blockquote>
+<pre><code class="hljs markdown">.
+├── public
+│   └── index.html
+├── src
+│   ├── components
+│   │   └── add-button     // 新增组件 add-button
+│   ├── pages
+│   │   ├── add-todo       // 新增页面 add-todo
+│   │   └── todos          // 新增页面 todos
+│   ├── public
+│   │   └── logo.svg       // 新增 logo 图片
+│   ├── app.js
+│   └── app.json
+├── .eslintrc.js
+├── .gitignore
+├── README.md
+├── build.json
+├── mini.project.json
+├── package-lock.json
+├── package.json
+└── tsconfig.json</code></pre>
+<h3 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h3><p>与编写 Web 应用不同的是，需要为小程序增加一些配置。如页面路由、tabBar、页面标题等小程序特有属性。</p>
+<p>本程序配置如下：</p>
+<pre><code class="hljs json">// app.json
+&#123;
+  <span class="hljs-attr">"routes"</span>: [ // 页面路由
+    &#123;
+      <span class="hljs-attr">"path"</span>: <span class="hljs-string">"/todos"</span>,
+      <span class="hljs-attr">"source"</span>: <span class="hljs-string">"pages/todos/index"</span> // React 组件
+    &#125;,
+    &#123;
+      <span class="hljs-attr">"path"</span>: <span class="hljs-string">"/add-todo"</span>,
+      <span class="hljs-attr">"source"</span>: <span class="hljs-string">"pages/add-todo/index"</span>
+    &#125;
+  ],
+  "window": &#123; // 页面标题、颜色
+    "title": "Todo App",
+    "titleBarColor": "#323239"
+  &#125;
+&#125;</code></pre>
+<p>可看到头部颜色及标题发生变化<br><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1598963028284-83c512f9-1fb0-4c72-b3c0-b79aa4c84006.png#align=left&display=inline&height=715&margin=%5Bobject%20Object%5D&name=mp-window.png&originHeight=715&originWidth=850&size=61654&status=done&style=none&width=850" alt="mp-window.png"></p>
+<h3 id="数据请求"><a href="#数据请求" class="headerlink" title="数据请求"></a>数据请求</h3><p>通过与后台 API 接口交互将 Todos 同步到远程数据库中。需要用到 universal-request，该库对数据请求进行了封装，使得用户无需关心 web端、微信小程序、支付宝小程序等多平台差异。一套代码、多处运行。</p>
+<h4 id="以获取某用户的-Todos-为例"><a href="#以获取某用户的-Todos-为例" class="headerlink" title="以获取某用户的 Todos 为例"></a>以获取某用户的 Todos 为例</h4><blockquote>
+<p>相关接口见后文服务端</p>
+</blockquote>
+<p>安装 universal-request</p>
+<pre><code class="hljs bash">$ npm install universal-request</code></pre>
+<p>定义数据请求 service</p>
+<pre><code class="hljs javascript"><span class="hljs-comment">// src/services/todos.js</span>
+<span class="hljs-keyword">import</span> request <span class="hljs-keyword">from</span> <span class="hljs-string">'universal-request'</span>;
+
+<span class="hljs-comment">// 此处为 mock 接口，仅包含查询固定 todos 列表。其他功能如对小程序的增删改查需要服务端</span>
+<span class="hljs-keyword">const</span> URL_PREFIX = <span class="hljs-string">'https://easy-mock.bookset.io/mock/5f4f05642ff5d50508b3d21b/todos_mock'</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+  <span class="hljs-comment">// 根据用户 openId 获取对应 todo 列表</span>
+  <span class="hljs-keyword">async</span> list (&#123; openId &#125;) &#123;
+      <span class="hljs-keyword">let</span> todos = [];
+      <span class="hljs-keyword">try</span> &#123;
+          <span class="hljs-comment">// openId 未使用，可随意填写</span>
+          <span class="hljs-keyword">const</span> URL = <span class="hljs-string">`<span class="hljs-subst">$&#123;URL_PREFIX&#125;</span>/api/mp/todos?openId=<span class="hljs-subst">$&#123;openId&#125;</span>`</span>;
+          <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> request(&#123;
+              url: URL
+          &#125;);
+          todos = res.data.data.todos;
+      &#125; <span class="hljs-keyword">catch</span> (err) &#123;
+          <span class="hljs-built_in">console</span>.error(err);
+      &#125;
+      <span class="hljs-keyword">return</span> todos;
+  &#125;
+&#125;</code></pre>
+<p>Todos 组件中调用该数据请求 service，移除默认 Todos</p>
+<pre><code class="hljs diff">// src/pages/todos/index.jsx
+<span class="hljs-addition">+ import todosService from '@/services/todos'; // 引入 todos service</span>
+
+const Todos = () =&gt; &#123;
+  // ...
+  // lifecycle function
+  // usePageShow 函数修改如下
+  usePageShow(async () =&gt; &#123;
+    // 通过数据请求获取 Todos 数据
+    const todos = await todosService.list(1); // 1 为 openId，暂时未使用可随意填写
+    setTodos(todos);
+  &#125;)
+
+  return (
+    // 渲染 todos
+  );
+&#125;;</code></pre>
+<p>编译</p>
+<blockquote>
+<p>注意应在微信开发者工具中开启<strong>不校验合法域名</strong></p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1599028238912-aa9c1d35-bdfd-4a63-8ff2-21bcfd95a90e.png#align=left&display=inline&height=1028&margin=%5Bobject%20Object%5D&name=mp5.png&originHeight=1028&originWidth=1913&size=181778&status=done&style=none&width=1913" alt="mp5.png"><br>执行编译后可得<br><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1599028284047-baa3a7c1-4ffd-4b76-90d1-06ae6d034c71.png#align=left&display=inline&height=713&margin=%5Bobject%20Object%5D&name=image.png&originHeight=713&originWidth=401&size=44389&status=done&style=none&width=401" alt="image.png"><br>对于 Todos 列表的增删改查操作需要服务端的支持，此处仅使用 Mock 接口验证数据请求。真实请求逻辑可在服务端篇查看。</p>
+<h3 id="数据存储"><a href="#数据存储" class="headerlink" title="数据存储"></a>数据存储</h3><p>数据请求小节介绍了如何发起数据请求，但数据请求需要相应的服务端，服务端未完成的情况下，Todo 小程序无法完成 Todo 的增删改查。</p>
+<p>本小节使用微信所提供的数据存储服务，将 Todos 持久化，实现 Todo 的增删改查。</p>
+<ul>
+<li><p>新建数据存储 service</p>
+<pre><code class="hljs javascript"><span class="hljs-keyword">const</span> storageKey = &#123;
+  todos: <span class="hljs-string">'todos'</span>,
+  userInfo: <span class="hljs-string">'userInfo'</span>
+&#125;;
+
+<span class="hljs-comment">// 获取存储的 Todos</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getStoredTodos</span> (<span class="hljs-params"></span>) </span>&#123;
+  <span class="hljs-keyword">let</span> todos;
+  <span class="hljs-keyword">try</span> &#123;
+    <span class="hljs-comment">// eslint-disable-next-line</span>
+    <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> wx.getStorage(&#123;
+      key: storageKey.todos
+    &#125;);
+    todos = res.data.todos;
+  &#125; <span class="hljs-keyword">catch</span> (err) &#123;
+    <span class="hljs-built_in">console</span>.error(err);
+  &#125;
+  <span class="hljs-keyword">return</span> todos;
+&#125;
+
+<span class="hljs-comment">// 存储 Todos</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">storeTodos</span> (<span class="hljs-params">todos</span>) </span>&#123;
+  <span class="hljs-comment">// eslint-disable-next-line</span>
+  <span class="hljs-keyword">await</span> wx.setStorage(&#123;
+    key: storageKey.todos,
+    data: &#123;
+      todos
+    &#125;
+  &#125;);
+&#125;
+
+<span class="hljs-comment">// 获取存储的 userInfo</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUserInfo</span> (<span class="hljs-params"></span>) </span>&#123;
+  <span class="hljs-keyword">let</span> userInfo;
+  <span class="hljs-keyword">try</span> &#123;
+    <span class="hljs-comment">// eslint-disable-next-line</span>
+    <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> wx.getStorage(&#123;
+      key: storageKey.userInfo
+    &#125;);
+    userInfo = res.data.userInfo;
+  &#125; <span class="hljs-keyword">catch</span> (err) &#123;
+    <span class="hljs-built_in">console</span>.error(err);
+  &#125;
+  <span class="hljs-keyword">return</span> userInfo;
+&#125;
+
+<span class="hljs-comment">// 存储 userInfo</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setUserInfo</span> (<span class="hljs-params">userInfo</span>) </span>&#123;
+  <span class="hljs-comment">// eslint-disable-next-line</span>
+  <span class="hljs-keyword">await</span> wx.setStorage(&#123;
+    key: storageKey.userInfo,
+    data: &#123;
+      userInfo
+    &#125;
+  &#125;);
+&#125;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;
+  todos: &#123;
+    <span class="hljs-keyword">get</span>: getStoredTodos,
+    <span class="hljs-keyword">set</span>: storeTodos
+  &#125;,
+  userInfo: &#123;
+    <span class="hljs-keyword">get</span>: getUserInfo,
+    <span class="hljs-keyword">set</span>: setUserInfo
+  &#125;
+&#125;;</code></pre>
+</li>
+<li><p>todos 组件和 add-todo 组件添加逻辑</p>
+</li>
+</ul>
+<p>todos 组件：</p>
+<ul>
+<li>增加获取用户信息函数 getUserInfo</li>
+<li>增加初始化 Todos 函数：initTodos</li>
+<li>增加添加 Todo 函数：addTodo</li>
+<li>增加删除 Todo 函数：delTodo</li>
+<li>修改编辑 Todo 函数：onTodoChange<pre><code class="hljs jsx"><span class="hljs-comment">// src/pages/todos/index.jsx</span>
+<span class="hljs-keyword">import</span> React, &#123; useState &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> &#123; usePageShow &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'ice'</span>;
+
+<span class="hljs-comment">// 引入 storage service</span>
+<span class="hljs-keyword">import</span> storageService <span class="hljs-keyword">from</span> <span class="hljs-string">'@/services/storage'</span>;
+
+<span class="hljs-keyword">import</span> AddButton <span class="hljs-keyword">from</span> <span class="hljs-string">'@/components/add-button'</span>;
+<span class="hljs-keyword">import</span> logo <span class="hljs-keyword">from</span> <span class="hljs-string">'@/public/logo.svg'</span>;
+<span class="hljs-keyword">import</span> styles <span class="hljs-keyword">from</span> <span class="hljs-string">'./index.module.scss'</span>;
+
+<span class="hljs-keyword">const</span> Todos = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;
+  <span class="hljs-comment">// state</span>
+  <span class="hljs-keyword">const</span> [userInfo, setUserInfo] = useState(&#123;&#125;);
+  <span class="hljs-keyword">const</span> [todos, setTodos] = useState([]);
+
+  <span class="hljs-comment">// handlers</span>
+  <span class="hljs-comment">// user</span>
+  <span class="hljs-keyword">const</span> getUserInfo = <span class="hljs-keyword">async</span> () =&gt; &#123;
+    <span class="hljs-comment">// eslint-disable-next-line</span>
+    <span class="hljs-keyword">const</span> storedUserInfo = <span class="hljs-keyword">await</span> storageService.userInfo.get();
+    <span class="hljs-comment">// eslint-disable-next-line</span>
+    <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> wx.getUserInfo(); <span class="hljs-comment">// 获取用户信息</span>
+    <span class="hljs-keyword">const</span> userInfo = res.userInfo;
+
+    setUserInfo(userInfo);
+
+    <span class="hljs-keyword">await</span> storageService.userInfo.set(userInfo);
+  &#125;;
+
+  <span class="hljs-comment">// todos</span>
+  <span class="hljs-comment">// 添加 Todo</span>
+  <span class="hljs-keyword">const</span> addTodo = <span class="hljs-keyword">async</span> () =&gt; &#123;
+    wx.redirectTo(&#123;
+      url: <span class="hljs-string">'/pages/add-todo/index'</span>
+    &#125;);
+  &#125;;
+
+  <span class="hljs-comment">// 修改 Todo 完成状态</span>
+  <span class="hljs-keyword">const</span> onTodoChange = <span class="hljs-keyword">async</span> id =&gt; &#123;
+    <span class="hljs-keyword">let</span> changedContent = &#123;&#125;;
+    <span class="hljs-keyword">const</span> changedTodos = todos.map(<span class="hljs-function"><span class="hljs-params">todo</span> =&gt;</span> &#123;
+      <span class="hljs-keyword">const</span> &#123; <span class="hljs-attr">id</span>: curId &#125; = todo;
+      <span class="hljs-keyword">const</span> &#123; completed &#125; = todo.content;
+      <span class="hljs-keyword">if</span> (id === curId) &#123;
+        changedContent = &#123;
+          ...todo.content,
+          completed: id === curId ? !completed : completed
+        &#125;;
+      &#125;
+
+      <span class="hljs-keyword">return</span> &#123;
+        ...todo,
+        content: &#123;
+          ...todo.content,
+          completed: id === curId ? !completed : completed
+        &#125;
+      &#125;;
+    &#125;);
+
+    setTodos(changedTodos);
+  
+    <span class="hljs-keyword">await</span> storageService.todos.set(changedTodos);
+  &#125;;
+
+  <span class="hljs-comment">// 删除 Todo</span>
+  <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">delTodo</span> (<span class="hljs-params">id</span>) </span>&#123;
+    <span class="hljs-keyword">const</span> changedTodos = todos.filter(<span class="hljs-function"><span class="hljs-params">todo</span> =&gt;</span> &#123;
+      <span class="hljs-keyword">const</span> &#123; <span class="hljs-attr">id</span>: curId &#125; = todo;
+      <span class="hljs-keyword">return</span> id !== curId;
+    &#125;);
+
+    setTodos(changedTodos);
+    <span class="hljs-keyword">await</span> storageService.todos.set(changedTodos);
+  &#125;;
+
+  <span class="hljs-comment">// 初始化 Todos</span>
+  <span class="hljs-keyword">const</span> initTodos = <span class="hljs-keyword">async</span> () =&gt; &#123;
+    <span class="hljs-keyword">const</span> storedTodos = <span class="hljs-keyword">await</span> storageService.todos.get();
+
+    <span class="hljs-keyword">const</span> mergedTodos = storedTodos || [];
+
+    <span class="hljs-built_in">console</span>.log(storedTodos, mergedTodos);
+
+    setTodos(mergedTodos);
+
+    <span class="hljs-keyword">await</span> storageService.todos.set(mergedTodos);
+  &#125;;
+
+  <span class="hljs-comment">// lifecyle function</span>
+  usePageShow(<span class="hljs-keyword">async</span> () =&gt; &#123;
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'page show'</span>);
+
+    <span class="hljs-comment">// eslint-disable-next-line</span>
+    <span class="hljs-keyword">const</span> storedUserInfo = <span class="hljs-keyword">await</span> storageService.userInfo.get();
+    setUserInfo(storedUserInfo || &#123;&#125;);
+
+    <span class="hljs-keyword">await</span> initTodos();
+  &#125;);
+
+  <span class="hljs-keyword">return</span> (
+    &lt;div className=&#123;styles[<span class="hljs-string">'page-todos'</span>]&#125;&gt;
+      &lt;div className=&#123;styles.user&#125;&gt;
+        &lt;button type=<span class="hljs-string">'button'</span> open-type=<span class="hljs-string">"getUserInfo"</span> onClick=&#123;getUserInfo&#125; className=&#123;styles[<span class="hljs-string">'login-button'</span>]&#125; &gt;
+          &lt;div style=&#123;&#123;<span class="hljs-attr">display</span>: <span class="hljs-string">'flex'</span>, <span class="hljs-attr">flexDirection</span>: <span class="hljs-string">'column'</span>&#125;&#125;&gt;
+            &lt;img className=&#123;styles.avatar&#125; src=&#123;userInfo.avatarUrl ? userInfo.avatarUrl : logo&#125; alt=<span class="hljs-string">"用户头像"</span> /&gt;
+            &lt;span className=&#123;styles.nickname&#125;&gt;&#123;userInfo.nickName ? <span class="hljs-string">`<span class="hljs-subst">$&#123;userInfo.nickName&#125;</span>'s`</span> : <span class="hljs-string">'My'</span> &#125; Todo List&lt;<span class="hljs-regexp">/span&gt;</span>
+<span class="hljs-regexp">          &lt;/</span>div&gt;
+        &lt;<span class="hljs-regexp">/button&gt;</span>
+<span class="hljs-regexp">      &lt;/</span>div&gt;
+      
+      &lt;div className=&#123;styles[<span class="hljs-string">'todo-items'</span>]&#125;&gt;
+        &lt;div className=&#123;styles[<span class="hljs-string">'todo-items-group'</span>]&#125;&gt;
+          &#123;
+            todos.map(<span class="hljs-function"><span class="hljs-params">todo</span> =&gt;</span> (
+              &lt;div style=&#123;&#123;<span class="hljs-attr">position</span>: <span class="hljs-string">'relative'</span>&#125;&#125; key=&#123;todo.id&#125;&gt;
+                &lt;div
+                  className=&#123;<span class="hljs-string">`<span class="hljs-subst">$&#123;styles[<span class="hljs-string">'todo-item'</span>]&#125;</span> <span class="hljs-subst">$&#123;todo.content.completed ? styles.checked : <span class="hljs-string">''</span>&#125;</span>`</span>&#125;
+                  onClick=&#123;() =&gt; onTodoChange(todo.id)&#125;
+                &gt;
+                  &lt;checkbox className=&#123;styles[<span class="hljs-string">'todo-item-checkbox'</span>]&#125; checked=&#123;todo.content.completed&#125; /&gt;
+                  &lt;span className=&#123;styles[<span class="hljs-string">'todo-item-text'</span>]&#125;&gt;&#123;todo.content.text&#125;&lt;<span class="hljs-regexp">/span&gt;</span>
+<span class="hljs-regexp">                &lt;/</span>div&gt;
+                &lt;div
+                  className=&#123;styles[<span class="hljs-string">'close-wrapper'</span>]&#125;
+                  onClick=&#123;() =&gt; delTodo(todo.id)&#125;&gt;
+                  &lt;div className=&#123;styles.close&#125;/&gt;
+                &lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp">              &lt;/</span>div&gt;
+            ))
+          &#125;
+        &lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp">      &lt;/</span>div&gt;
+
+      &lt;div className=&#123;styles[<span class="hljs-string">'todo-footer'</span>]&#125;&gt;
+        &lt;AddButton text=<span class="hljs-string">"Add Todo"</span> onClickMe=&#123;addTodo&#125; /&gt;
+      &lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp">    &lt;/</span>div&gt;
+  );
+&#125;;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Todos;</code></pre>
+add-todo 组件</li>
+</ul>
+<ul>
+<li>修改添加 Todo 函数：add<pre><code class="hljs jsx"><span class="hljs-comment">// src/pages/add-todo/index.jsx</span>
+<span class="hljs-keyword">import</span> React, &#123; useState &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+
+<span class="hljs-comment">// 引入 storage service</span>
+<span class="hljs-keyword">import</span> storageService <span class="hljs-keyword">from</span> <span class="hljs-string">'@/services/storage'</span>;
+
+<span class="hljs-keyword">import</span> AddButton <span class="hljs-keyword">from</span> <span class="hljs-string">'@/components/add-button'</span>;
+<span class="hljs-keyword">import</span> styles <span class="hljs-keyword">from</span> <span class="hljs-string">'./index.module.scss'</span>;
+
+<span class="hljs-keyword">const</span> AddTodo = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;
+  <span class="hljs-comment">// state</span>
+  <span class="hljs-keyword">const</span> [value, setValue] = useState(<span class="hljs-string">''</span>);
+
+  <span class="hljs-comment">// handlers</span>
+  <span class="hljs-comment">// 输入监听函数</span>
+  <span class="hljs-keyword">const</span> onChange = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> &#123;
+    setValue(e.target.value);
+  &#125;;
+
+  <span class="hljs-comment">// 添加 Todo</span>
+  <span class="hljs-keyword">const</span> add = <span class="hljs-keyword">async</span> () =&gt; &#123;
+    <span class="hljs-keyword">const</span> curTodos = <span class="hljs-keyword">await</span> storageService.todos.get();
+
+    <span class="hljs-keyword">const</span> todo = &#123;
+      id: (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()).getTime(),
+      content: &#123;
+        text: value,
+        completed: <span class="hljs-literal">false</span>
+      &#125;
+    &#125;
+
+    <span class="hljs-keyword">const</span> newTodos = curTodos.concat(todo);
+    storageService.todos.set(newTodos);
+
+    <span class="hljs-comment">// eslint-disable-next-line</span>
+    wx.redirectTo(&#123;
+      url: <span class="hljs-string">'/pages/todos/index'</span>
+    &#125;);
+  &#125;;
+
+
+  <span class="hljs-keyword">return</span> (
+    &lt;div className=&#123;styles[<span class="hljs-string">'page-add-todo'</span>]&#125;&gt;
+      &lt;div className=&#123;styles[<span class="hljs-string">'add-todo'</span>]&#125;&gt;
+        &lt;input
+          className=&#123;styles[<span class="hljs-string">'add-todo-input'</span>]&#125;
+          placeholder=<span class="hljs-string">"What needs to be done?"</span>
+          value=&#123;value&#125;
+          onChange=&#123;() =&gt; &#123;&#125;&#125;
+          onInput=&#123;onChange&#125; /&gt;
+      &lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp"></span>
+<span class="hljs-regexp">      &lt;div className=&#123;styles['todo-footer']&#125;&gt;</span>
+<span class="hljs-regexp">        &lt;AddButton text="Add Todo" onClickMe=&#123;add&#125;/</span>&gt;
+      &lt;<span class="hljs-regexp">/div&gt;</span>
+<span class="hljs-regexp">    &lt;/</span>div&gt;
+  );
+&#125;;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> AddTodo;</code></pre>
+执行编译，运行项目<br>此时，本程序可获取用户基本信息，增加 Todo。</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2070295/1599037234361-0165b321-d833-4de3-9ac4-75924cc989b5.png#align=left&display=inline&height=1559&margin=%5Bobject%20Object%5D&name=mp11.png&originHeight=1559&originWidth=1276&size=112351&status=done&style=none&width=1276" alt="mp11.png"></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>至此，小程序部分已基本完成。</p>
+<p>本文介绍了使用 icejs开发小程序的基本流程，包括使用组件 UI 的编写；路由及其它小程序相关的项目配置；发起数据请求；调用微信小程序 API 获取用户信息和存储数据。</p>
+<p>小程序同步 Todo 列表至服务端需要服务端的配合，故将该功能在服务端篇进行实现。</p>
+<p>小程序代码见 <a href="https://github.com/ice-lab/miniprogram-materials/tree/master/scaffolds/todos" target="_blank" rel="noopener">miniprogram-materials/scaffolds/todos</a>，可结合服务端 <a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/server" target="_blank" rel="noopener">icejs-miniapp-admin/server</a> 一起运行查看效果。</p>
+<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
+<li><a href="https://ice.work/" target="_blank" rel="noopener">飞冰</a></li>
+<li><a href="https://ice.work/docs/miniprogram/start" target="_blank" rel="noopener">icejs 小程序官方文档</a></li>
+<li><a href="https://github.com/ice-lab/miniprogram-materials/tree/master/scaffolds/todos" target="_blank" rel="noopener">Todos 小程序代码</a></li>
+<li><a href="https://github.com/ice-lab/icejs-miniapp-admin/client" target="_blank" rel="noopener">Todos 后台管理系统代码</a></li>
+<li><a href="https://github.com/ice-lab/icejs-miniapp-admin/tree/master/server" target="_blank" rel="noopener">Todos 服务端代码</a></li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/10/12/icejs-todos-management/" class="prev">PREV</a><a href="/2020/10/12/cheatsheet-emoji/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>

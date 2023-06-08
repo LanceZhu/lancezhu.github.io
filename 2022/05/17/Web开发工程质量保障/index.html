@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Web开发工程质量保障 · f00bar</title><meta name="description" content="Web开发工程质量保障 - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Web开发工程质量保障"><span class="toc-number">1.</span> <span class="toc-text">Web开发工程质量保障</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#保证编码质量"><span class="toc-number">1.1.</span> <span class="toc-text">保证编码质量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#统一代码风格"><span class="toc-number">1.1.1.</span> <span class="toc-text">统一代码风格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引入类型系统"><span class="toc-number">1.1.2.</span> <span class="toc-text">引入类型系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#合理抽象代码逻辑"><span class="toc-number">1.1.3.</span> <span class="toc-text">合理抽象代码逻辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#错误处理"><span class="toc-number">1.2.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置管理"><span class="toc-number">1.3.</span> <span class="toc-text">配置管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日志记录"><span class="toc-number">1.4.</span> <span class="toc-text">日志记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可用性及并发性"><span class="toc-number">1.5.</span> <span class="toc-text">可用性及并发性</span></a></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">Web开发工程质量保障</h1><div class="post-info">May 21, 2022</div><div class="post-content"><h1 id="Web开发工程质量保障"><a href="#Web开发工程质量保障" class="headerlink" title="Web开发工程质量保障"></a>Web开发工程质量保障</h1><blockquote>
+<p>本文根据个人实践总结了一些提高 Web 开发交付质量可复用的模块。</p>
+</blockquote>
+<blockquote>
+<p>主要涉及到的技术领域为前端开发、后端开发。</p>
+</blockquote>
+<blockquote>
+<p>主要涉及到的编程语言：JavaScript、Node.js、Golang、Python。</p>
+</blockquote>
+<h2 id="保证编码质量"><a href="#保证编码质量" class="headerlink" title="保证编码质量"></a>保证编码质量</h2><p>Web前端开发最常用的编程语言为JavaScript，其作为一种弱类型语言，具有高度的灵活性。在带来编码灵活性的同时，也带来了维护和协作上的复杂度。为了提升编码质量，可通过统一代码风格、引入类型系统和合理抽象代码逻辑的方式进行保障。</p>
+<h3 id="统一代码风格"><a href="#统一代码风格" class="headerlink" title="统一代码风格"></a>统一代码风格</h3><p>在多人协作的项目中，每个人代码风格各有不同，如在行尾加或不加<code>;</code>，这势必造成协作上的不协调。为了解决这一问题可引入<a href="https://eslint.org/" target="_blank" rel="noopener">Eslint</a>格式化代码。</p>
+<p>Eslint通过设置各种规则来统一代码格式，如不能出现连续空行、每行长度不可过长等限制。将各种规则汇总起来便构成一种代码风格。Eslint中比较流行的有 <a href="https://github.com/airbnb/javascript/" target="_blank" rel="noopener">Airbnb</a>、<a href="https://github.com/standard/standard" target="_blank" rel="noopener">standard</a>。Airbnb相比于stanard限制程度更高。</p>
+<p>以下示例中，eslint提示对常量<code>num</code>重新赋值。</p>
+<pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> cat index.js</span>
+const num = 1
+num = 2
+<span class="hljs-meta">$</span><span class="bash"> eslint index.js</span>
+
+index.js
+  2:1  error  'num' is constant                         no-const-assign
+  2:1  error  'num' is assigned a value but never used  no-unused-vars
+
+✖ 2 problems (2 errors, 0 warnings)</code></pre>
+
+<h3 id="引入类型系统"><a href="#引入类型系统" class="headerlink" title="引入类型系统"></a>引入类型系统</h3><p>JavaScript是一种弱类型语言，即某个变量的类型在运行过程中是可变的。</p>
+<pre><code class="hljs javascript"><span class="hljs-keyword">let</span> num = <span class="hljs-number">1</span>
+num = <span class="hljs-string">'1'</span> <span class="hljs-comment">// 正常运行</span></code></pre>
+
+<p>弱类型提高了编码的灵活性，但也容易导致预期外的错误。</p>
+<pre><code class="hljs javascript"><span class="hljs-number">1</span> == <span class="hljs-string">'1'</span>
+<span class="hljs-comment">// 预期输出：false</span>
+<span class="hljs-comment">// 实际输出：true</span>
+<span class="hljs-comment">// 原因：未校验类型</span></code></pre>
+
+<p>为了解决这一问题，可通过引入类型系统，使用<a href="https://www.typescriptlang.org/" target="_blank" rel="noopener">TypeScript</a>。</p>
+<p>以下示例TypeScript检测出类型错误。</p>
+<pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> cat index.ts </span>
+type User = &#123;
+  name: string
+&#125;
+
+let user1: User = &#123;
+  age: 18
+&#125;
+<span class="hljs-meta">$</span><span class="bash"> tsc index.ts</span>
+index.ts:6:3 - error TS2322: Type '&#123; age: number; &#125;' is not assignable to type 'User'.
+  Object literal may only specify known properties, and 'age' does not exist in type 'User'.
+
+6   age: 18
+    ~~~~~~~
+
+
+Found 1 error in index.ts:6</code></pre>
+
+<h3 id="合理抽象代码逻辑"><a href="#合理抽象代码逻辑" class="headerlink" title="合理抽象代码逻辑"></a>合理抽象代码逻辑</h3><p>当业务逻辑变得复杂时，代码量增加，代码容易产生冗余和逻辑杂乱。此时可依据设计模式对代码逻辑合理抽象。</p>
+<p>如Vue.js中实现数据在视图层和逻辑层的双向绑定便使用了观察者模式、后端维护单一的数据库连接即为单例模式、函数的编写应参考SOLID原则，做到单一职责、开闭原则等。</p>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>程序在运行过程中不可避免的会产生错误，需要对可预期的错误做好处理，根据业务逻辑选择是否停止运行和对使用者的提示。</p>
+<p>在Web开发中，HTTP接口调用随处可见，前端提交表单，后端根据表单处理业务逻辑返回数据给前端。</p>
+<p>在这一过程中，可预期的错误有：</p>
+<p>前端：后端接口出错（返回码非200）、后端接口正常但提交表单不符合业务逻辑（用户名格式不符合要求）、网络错误（断网）。</p>
+<p>后端：前端提交表单不符合业务逻辑（缺少字段，字段格式不对）、依赖的其他服务出错（MySQL、Redis等）。</p>
+<p>对于以上可预期的错误均需做好应对，并对用户提示。如后端遇到前端提交表单不符合业务逻辑的情形，需要将捕获到的错误对前端返回并退出之后的逻辑处理。</p>
+<h2 id="配置管理"><a href="#配置管理" class="headerlink" title="配置管理"></a>配置管理</h2><p>在软件的研发至上线过程中一般存在本地开发、上线测试环境、上线生产环境三个阶段。</p>
+<p>不同的环境下MySQL、Redis等服务往往需要不同的配置。</p>
+<p>首先要做的是区别不同的环境，这一任务可通过配置环境变量实现，</p>
+<pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> cat .env</span>
+NODE_ENV='prod' # 生产环境</code></pre>
+
+<p>并根据不同的环境使用对应的配置，配置可放在环境变量中或者独立的配置文件中。</p>
+<h2 id="日志记录"><a href="#日志记录" class="headerlink" title="日志记录"></a>日志记录</h2><p>软件上线后，在运行过程中产生的错误没有日志记录的话难以定位和调试。日志的存在也帮助理解用户对于软件的使用方式，方便之后的升级优化。</p>
+<p>同时日志应注意分级记录（error、info等），不同级别方便日志筛选，错误排查。</p>
+<h2 id="可用性及并发性"><a href="#可用性及并发性" class="headerlink" title="可用性及并发性"></a>可用性及并发性</h2><p>要保障软件的可用性，一是要提高软件本身的可靠性，尽可能做到自检、出现错误可自行重启恢复，二是对于软件自身不可恢复的情形下，做好告警，第一时间可通知到负责人进行检修。</p>
+<p>软件上线时应预估可能的用户量，确保具备足够的承载能力，对于软件中资源消耗严重的部分（计算密集、IO密集）做好优化。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2022/12/24/%E7%A0%94%E7%A9%B6%E7%94%9F%E4%B8%89%E5%B9%B4/" class="prev">PREV</a><a href="/2022/02/14/devops/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>

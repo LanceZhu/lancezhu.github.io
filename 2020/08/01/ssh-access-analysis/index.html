@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> ssh 访问日志分析 · f00bar</title><meta name="description" content="ssh 访问日志分析 - lancezhu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/naruto.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.4.1/styles/github.min.css"><link rel="search" type="application/opensearchdescription+xml" href="https://lancezhu.github.io/atom.xml" title="f00bar"><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="f00bar" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/naruto.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/LanceZhu" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SSH-访问日志分析"><span class="toc-number">1.</span> <span class="toc-text">SSH 访问日志分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析内容"><span class="toc-number">1.2.</span> <span class="toc-text">分析内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体分析"><span class="toc-number">1.3.</span> <span class="toc-text">具体分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#未清洗数据"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">未清洗数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#清洗数据"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">清洗数据</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析结果"><span class="toc-number">1.4.</span> <span class="toc-text">分析结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐阅读"><span class="toc-number">1.5.</span> <span class="toc-text">推荐阅读</span></a></li></ol></li></ol><div class="post"><article class="post-block"><h1 class="post-title">ssh 访问日志分析</h1><div class="post-info">Aug 1, 2020</div><div class="post-content"><h1 id="SSH-访问日志分析"><a href="#SSH-访问日志分析" class="headerlink" title="SSH 访问日志分析"></a>SSH 访问日志分析</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本科毕业，<a href="https://cloud.tencent.com/act/campus" target="_blank" rel="noopener">腾讯云 + 校园</a> 学生认证身份过期，无法享用之前每月仅需一元的优惠，<a href="blog-migration">博客迁移</a> 至 <a href="https://promotion.aliyun.com/ntms/act/campus2018.html?userCode=zxog1qrs&tag=share_component&share_source=copy_link" target="_blank" rel="noopener">阿里云</a>。之前有看到过对服务器 <code>SSH</code>日志分析的一篇文章，故也想做些类似的分析。</p>
+<h2 id="分析内容"><a href="#分析内容" class="headerlink" title="分析内容"></a>分析内容</h2><p><code>SSH</code> 访问数据</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 访问日志总量</li>
+<li><input checked="" disabled="" type="checkbox"> 用户名 top10</li>
+<li><input checked="" disabled="" type="checkbox"> 访问 IP top10</li>
+<li><input disabled="" type="checkbox"> 访问 IP 分布，借助<a href="https://github.com/animalize/qqwry-python3" target="_blank" rel="noopener">纯真数据库</a></li>
+<li><input disabled="" type="checkbox"> <del>访问时间分布</del></li>
+</ul>
+<h2 id="具体分析"><a href="#具体分析" class="headerlink" title="具体分析"></a>具体分析</h2><blockquote>
+<p>本部分比较混乱，可不看，结论见 <code>分析结果</code>。</p>
+</blockquote>
+<h4 id="未清洗数据"><a href="#未清洗数据" class="headerlink" title="未清洗数据"></a>未清洗数据</h4><pre><code class="hljs sh">// 统计所有日志文件及文件行数
+$ ls | xargs wc -l | awk <span class="hljs-string">'&#123;print $2, $1&#125;'</span>
+
+auth.log 70039
+auth.log-201905101557440703 444627
+auth.log-201905231558563904 419331
+auth.log-201906071559859904 417979
+auth.log-201906241561328703 412512
+auth.log-201907041562192703 415592
+auth.log-201907171563315904 426805
+auth.log-201907271564179903 422477
+auth.log-201908081565216703 405232
+auth.log-201908211566339904 408350
+auth.log-201909061567722303 426589
+auth.log-201909171568672705 400635
+auth.log-201910021569968703 390301
+auth.log-201910141571005504 393317
+auth.log-201910261572042303 414514
+auth.log-201911031572733505 401419
+auth.log-201911171573943103 410552
+auth.log-201911301575066303 420348
+auth.log-201912071575671103 423932
+auth.log-201912121576103103 395790
+auth.log-201912181576621504 453579
+auth.log-201912271577399104 403452
+auth.log-202001081578435903 469772
+auth.log-202001211579559103 399332
+auth.log-202002061580941504 409619
+auth.log-202003041583274305 390374
+total 10446469</code></pre>
+
+<pre><code class="hljs sh">// 统计文件大小
+$ ls -l | awk <span class="hljs-string">'BEGIN &#123;sum=0&#125; NR!=1 &#123;sum+=$5; print $9, $5&#125; END &#123;print "total " sum " " sum/1024/1024 "M"&#125;'</span>
+auth.log 7235504
+auth.log-201905101557440703 46798951
+auth.log-201905231558563904 42868529
+auth.log-201906071559859904 42887760
+auth.log-201906241561328703 43018812
+auth.log-201907041562192703 43343508
+auth.log-201907171563315904 44048692
+auth.log-201907271564179903 43478168
+auth.log-201908081565216703 42309178
+auth.log-201908211566339904 42010693
+auth.log-201909061567722303 45996353
+auth.log-201909171568672705 42921548
+auth.log-201910021569968703 42086718
+auth.log-201910141571005504 42284091
+auth.log-201910261572042303 44426083
+auth.log-201911031572733505 43654955
+auth.log-201911171573943103 43578151
+auth.log-201911301575066303 44902797
+auth.log-201912071575671103 45356384
+auth.log-201912121576103103 41986986
+auth.log-201912181576621504 48834325
+auth.log-201912271577399104 42789719
+auth.log-202001081578435903 49508107
+auth.log-202001211579559103 42864190
+auth.log-202002061580941504 44967557
+auth.log-202003041583274305 41996783
+total 1106154542 1054.91M</code></pre>
+
+<h4 id="清洗数据"><a href="#清洗数据" class="headerlink" title="清洗数据"></a>清洗数据</h4><p><strong>合并文件</strong></p>
+<pre><code class="hljs sh">$ ls | awk <span class="hljs-string">'/^auth.log*/'</span> | xargs cat &gt;&gt; total.log</code></pre>
+
+<p><strong>筛选无效登录</strong></p>
+<pre><code class="hljs sh">$ grep <span class="hljs-string">'Failed'</span> total.log &gt; failed_auth/total.log</code></pre>
+
+<p><strong>统计数据量</strong></p>
+<pre><code class="hljs sh">$ wc -l failed_auth/total.log
+1977438 failed_auth/total.log</code></pre>
+
+<p>筛选无效登录</p>
+<pre><code class="hljs sh">$ grep <span class="hljs-string">'invalid'</span> failed_auth/total.log &gt; failed_auth/failed.log</code></pre>
+
+<p><strong>统计无效用户名</strong></p>
+<pre><code class="hljs sh">$ wc -l failed_auth/invalid.log
+870098 failed_auth/invalid.log</code></pre>
+
+<pre><code class="hljs sh">$ cat failed_auth/invalid.log | awk <span class="hljs-string">'&#123;print $11&#125;'</span> | sort -r | uniq -c | sort -rn | head -10
+  59789 admin
+  19975 <span class="hljs-built_in">test</span>
+  10894 user
+   9207 oracle
+   7733 guest
+   7318 postgres
+   5374 git
+   5089 ubnt
+   4851 nagios
+   4473 support</code></pre>
+
+<pre><code class="hljs sh">10691 45.136.108.85
+ 9469 43.248.189.33
+ 6728 95.110.201.243
+ 4232 139.217.230.232
+ 4187 45.141.86.128
+ 3139 193.105.134.96
+ 3128 103.82.28.2
+ 3032 185.153.199.155
+ 2987 185.153.199.125
+ 2889 109.89.51.159</code></pre>
+
+<p><strong>统计有效用户名</strong></p>
+<pre><code class="hljs sh">$ grep -v <span class="hljs-string">'invalid'</span> failed_auth/total.log &gt; failed_auth/valid.log</code></pre>
+
+<pre><code class="hljs sh">$ wc -l failed_auth/valid.log
+1107340 failed_auth/valid.log</code></pre>
+
+<pre><code class="hljs sh">$ grep -v <span class="hljs-string">'repeated'</span> failed_auth/valid.log &gt; failed_auth/valid_without_repeated_message.log</code></pre>
+
+<pre><code class="hljs sh">$ wc -l failed_auth/valid_without_repeated_message.log
+1041122 failed_auth/valid_without_repeated_message.log</code></pre>
+
+<pre><code class="hljs sh">$ cat failed_auth/valid_without_repeated_message.log | awk <span class="hljs-string">'&#123;print $11&#125;'</span> | sort -r | uniq -c | sort -rn | head -10
+  40537 139.198.122.90
+  32721 139.198.17.33
+  25118 43.248.189.33
+  23543 139.198.13.87
+  23540 139.219.236.62
+  23536 139.199.132.175
+  23528 139.199.19.153
+  22029 139.217.233.36
+  19751 139.219.3.80
+  14781 139.198.18.152</code></pre>
+
+<h2 id="分析结果"><a href="#分析结果" class="headerlink" title="分析结果"></a>分析结果</h2><p><strong>日志基本数据</strong></p>
+<ul>
+<li><p>时间：2019/05 - 2020/03</p>
+</li>
+<li><p>大小：1.1G</p>
+</li>
+<li><p>数据量：</p>
+<ul>
+<li>10446469 条</li>
+</ul>
+</li>
+</ul>
+<p><strong>用户名 top10</strong></p>
+<p>统计访问日志中登录失败用户名 top10。</p>
+<pre><code class="hljs shell">admin
+test
+user
+oracle
+guest
+postgres
+git
+ubnt
+nagios
+support</code></pre>
+
+<p><strong>访问 IP top10</strong></p>
+<p>统计访问日志中登录失败对应 IP top10.</p>
+<pre><code class="hljs shell">139.198.122.90
+139.198.17.33
+43.248.189.33
+139.198.13.87
+139.219.236.62
+139.199.132.175
+139.199.19.153
+139.217.233.36
+139.219.3.80
+139.198.18.152</code></pre>
+
+<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
+<li><a href="https://coolshell.cn/articles/19219.html" target="_blank" rel="noopener">打造高效的工作环境 – SHELL 篇</a></li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/10/12/cheatsheet-Java/" class="prev">PREV</a><a href="/2020/07/11/tmux/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2023 <a href="https://lancezhu.github.io">lancezhu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script><script src="/js/copy-codeblock.js"></script></body></html>
