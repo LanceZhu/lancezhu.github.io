@@ -1,6 +1,6 @@
 {
-  "name": "lancezhu's blog",
-  "version": "1.0.0",
+  "name": "lancezhu_blog",
+  "version": "2.0.0",
   "private": true,
   "author": "Lance Zhu",
   "repository": {
@@ -11,8 +11,9 @@
     "version": "4.2.1"
   },
   "scripts": {
-    "dev": "hexo s",
-    "gen": "hexo g"
+    "serve": "hexo serve",
+    "build": "hexo clean && hexo generate",
+    "delopy": "hexo clean && hexo deploy"
   },
   "dependencies": {
     "hexo": "^4.2.0",
