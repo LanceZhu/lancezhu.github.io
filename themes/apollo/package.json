@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A hexo theme based on hexo-theme-apollo",
   "scripts": {
+    "sass": "gulp sass",
     "gulp": "npm run gulp:build",
     "gulp:build": "gulp build",
     "gulp:watch": "gulp"
@@ -19,10 +20,9 @@
   "author": "Lance Zhu",
   "license": "MIT",
   "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^8.0.0",
-    "gulp-sass": "^5.1.0",
-    "sass": "^1.58.3"
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.0.2",
+    "gulp-sass": "^2.0.4"
   },
   "engines": {
     "node": "^16.0.0"
